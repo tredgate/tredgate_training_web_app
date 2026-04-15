@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-gray-100 min-h-screen antialiased;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl;
+  }
+  .btn-neon {
+    @apply px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 cursor-pointer;
+  }
+  .btn-neon-purple {
+    @apply btn-neon bg-neon-purple/80 hover:bg-neon-purple text-white shadow-glow-purple hover:shadow-glow-purple;
+  }
+  .btn-neon-blue {
+    @apply btn-neon bg-electric-blue/80 hover:bg-electric-blue text-white shadow-glow-blue hover:shadow-glow-blue;
+  }
+  .input-dark {
+    @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-gray-100
+           placeholder-gray-500 focus:outline-none focus:border-neon-purple/50
+           focus:ring-1 focus:ring-neon-purple/30 transition-all duration-300;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-5px, 5px);
+  }
+  40% {
+    transform: translate(-5px, -5px);
+  }
+  60% {
+    transform: translate(5px, 5px);
+  }
+  80% {
+    transform: translate(5px, -5px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes pulse-ominous {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.glitch-text {
+  animation: glitch 0.3s infinite;
+}
+
+.chaos-bg {
+  animation: pulse-ominous 2s ease-in-out infinite;
+}
