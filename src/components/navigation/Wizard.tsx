@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { JSX } from "react";
 import { Check } from "lucide-react";
 
+export type WizardAction = "next" | "back" | "cancel" | "submit";
+
 export interface WizardStep {
   label: string;
   content: React.ReactNode;

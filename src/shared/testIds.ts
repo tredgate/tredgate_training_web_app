@@ -1,3 +1,7 @@
+import type { WizardAction } from "../components/navigation/Wizard";
+import type { BadgeType } from "../components/feedback/StatusBadge";
+import type { EmptyStateVariant } from "../components/feedback/EmptyState";
+
 export const TEST_IDS = {
   login: {
     page: "login-page",
@@ -136,13 +140,13 @@ export const wizardStep = (prefix: string, stepNum: number): string =>
   `${prefix}-wizard-step-${stepNum}`;
 export const wizardContent = (prefix: string): string =>
   `${prefix}-wizard-content`;
-export const wizardBtn = (prefix: string, action: string): string =>
+export const wizardBtn = (prefix: string, action: WizardAction): string =>
   `${prefix}-wizard-btn-${action}`;
 
 // ─── StatusBadge builders ──────────────────────────────────────────────
 export const statusBadgeTestId = (
   prefix: string,
-  type: string,
+  type: BadgeType,
   value: string,
 ): string => `${prefix}-badge-${type}-${value}`;
 
@@ -160,6 +164,5 @@ export const modalTitle = (testId: string): string => `${testId}-title`;
 export const modalBtnClose = (testId: string): string => `${testId}-btn-close`;
 
 // ─── EmptyState builder ───────────────────────────────────────────────
-import type { EmptyStateVariant } from "../components/feedback/EmptyState";
 export const emptyState = (variant: EmptyStateVariant): string =>
   `empty-state-${variant}`;
