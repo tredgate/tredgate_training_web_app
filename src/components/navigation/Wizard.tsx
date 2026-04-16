@@ -115,7 +115,7 @@ export default function Wizard({
         <div className="flex gap-3">
           {currentStep > 0 && (
             <button
-              data-testid={`${testIdPrefix}-wizard-btn-prev`}
+              data-testid={`${testIdPrefix}-wizard-btn-back`}
               onClick={handleBack}
               className="btn-ghost"
             >
