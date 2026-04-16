@@ -105,3 +105,49 @@ export const buildTestId = (
   element: string,
   qualifier: string,
 ): string => `${scope}-${element}-${qualifier}`;
+
+// ─── DataTable dynamic builders ────────────────────────────────────────
+export const dataTableRow = (prefix: string, id: number | string): string =>
+  `${prefix}-row-${id}`;
+export const dataTableCell = (
+  prefix: string,
+  column: string,
+  id: number | string,
+): string => `${prefix}-cell-${column}-${id}`;
+export const dataTableBtn = (prefix: string, action: string): string =>
+  `${prefix}-btn-${action}`;
+export const dataTableCheckbox = (prefix: string, qualifier: string): string =>
+  `${prefix}-checkbox-${qualifier}`;
+
+// ─── Tabs builders ─────────────────────────────────────────────────────
+export const tabsTestId = (prefix: string): string => `${prefix}-tabs`;
+export const tabTestId = (prefix: string, key: string): string =>
+  `${prefix}-tab-${key}`;
+export const tabBadge = (prefix: string, key: string): string =>
+  `${prefix}-tab-badge-${key}`;
+export const tabPanel = (prefix: string, key: string): string =>
+  `${prefix}-tab-panel-${key}`;
+
+// ─── Wizard builders ───────────────────────────────────────────────────
+export const wizardTestId = (prefix: string): string => `${prefix}-wizard`;
+export const wizardStepIndicator = (prefix: string): string =>
+  `${prefix}-wizard-step-indicator`;
+export const wizardStep = (prefix: string, stepNum: number): string =>
+  `${prefix}-wizard-step-${stepNum}`;
+export const wizardContent = (prefix: string): string =>
+  `${prefix}-wizard-content`;
+export const wizardBtn = (prefix: string, action: string): string =>
+  `${prefix}-wizard-btn-${action}`;
+
+// ─── StatusBadge builders ──────────────────────────────────────────────
+export const statusBadgeTestId = (prefix: string, type: string, value: string): string =>
+  `${prefix}-badge-${type}-${value}`;
+
+// ─── Display component builders ────────────────────────────────────────
+export const statCardValue = (testId: string): string => `${testId}-value`;
+export const statCardTrend = (testId: string): string => `${testId}-trend`;
+export const timelineEntry = (
+  testId: string,
+  entryId: number | string,
+): string => `${testId}-entry-${entryId}`;
+export const avatarRole = (testId: string): string => `${testId}-role`;

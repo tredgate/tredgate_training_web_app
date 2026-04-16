@@ -30,9 +30,24 @@ function validateLogin(values: LoginFormValues): FormErrors<LoginFormValues> {
 const REMEMBER_KEY = "tqh_remember_username";
 
 const USER_HINTS = [
-  { role: "tester", username: "tester", password: "test123", color: "bg-blue-500/20 text-blue-400 border-blue-500/30" },
-  { role: "qa_lead", username: "lead", password: "lead123", color: "bg-purple-500/20 text-purple-400 border-purple-500/30" },
-  { role: "admin", username: "admin", password: "admin123", color: "bg-red-500/20 text-red-400 border-red-500/30" },
+  {
+    role: "tester",
+    username: "tester",
+    password: "test123",
+    color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  },
+  {
+    role: "qa_lead",
+    username: "lead",
+    password: "lead123",
+    color: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  },
+  {
+    role: "admin",
+    username: "admin",
+    password: "admin123",
+    color: "bg-red-500/20 text-red-400 border-red-500/30",
+  },
 ] as const;
 
 export default function Login() {
@@ -145,7 +160,10 @@ export default function Login() {
           </div>
 
           {loginError && (
-            <p data-testid={TEST_IDS.login.error} className="text-red-400 text-sm text-center">
+            <p
+              data-testid={TEST_IDS.login.error}
+              className="text-red-400 text-sm text-center"
+            >
               {loginError}
             </p>
           )}
@@ -159,10 +177,7 @@ export default function Login() {
           </button>
         </form>
 
-        <div
-          data-testid={TEST_IDS.login.userHints}
-          className="mt-8 space-y-2"
-        >
+        <div data-testid={TEST_IDS.login.userHints} className="mt-8 space-y-2">
           <p className="text-xs text-gray-500 text-center mb-3">
             Demo credentials
           </p>
@@ -171,7 +186,9 @@ export default function Login() {
               key={hint.role}
               className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs ${hint.color}`}
             >
-              <span className="font-medium capitalize">{hint.role.replace("_", " ")}</span>
+              <span className="font-medium capitalize">
+                {hint.role.replace("_", " ")}
+              </span>
               <span>
                 {hint.username} / {hint.password}
               </span>

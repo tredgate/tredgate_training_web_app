@@ -50,7 +50,7 @@ const TRANSITIONS: readonly TransitionRule[] = [
     from: "resolved",
     action: "verify",
     to: "verified",
-    roles: ["tester", "qa_lead"],
+    roles: ["tester", "qa_lead", "admin"],
     label: "Verify",
   },
   {
@@ -64,7 +64,7 @@ const TRANSITIONS: readonly TransitionRule[] = [
     from: "verified",
     action: "reopen",
     to: "in_progress",
-    roles: ["tester", "qa_lead"],
+    roles: ["tester", "qa_lead", "admin"],
     label: "Reopen",
   },
   {

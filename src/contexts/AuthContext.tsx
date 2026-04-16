@@ -1,7 +1,10 @@
 import { createContext, useState, useCallback, type ReactNode } from "react";
 import type { User, Role, DefectStatus } from "../data/entities";
 import { getAll } from "../data/store";
-import { hasPermission as checkPermission, type PermissionKey } from "../utils/permissions";
+import {
+  hasPermission as checkPermission,
+  type PermissionKey,
+} from "../utils/permissions";
 
 export interface AuthUser {
   id: number;

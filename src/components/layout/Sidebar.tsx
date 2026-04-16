@@ -118,10 +118,7 @@ export default function Sidebar() {
           </span>
         )}
         {collapsed && (
-          <span
-            data-testid={TEST_IDS.sidebar.logo}
-            className="sr-only"
-          >
+          <span data-testid={TEST_IDS.sidebar.logo} className="sr-only">
             TQH
           </span>
         )}
