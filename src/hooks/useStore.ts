@@ -27,9 +27,9 @@ export function useStore<T extends { id: number }>(
 
   const refresh = () => {
     // Cast getAll to handle type mismatches
-    const data = (store.getAll as <U extends { id: number }>(
-      key: EntityKey,
-    ) => U[])<T>(entityKey);
+    const data = (
+      store.getAll as <U extends { id: number }>(key: EntityKey) => U[]
+    )<T>(entityKey);
     setItems(data);
   };
 
@@ -39,10 +39,12 @@ export function useStore<T extends { id: number }>(
 
   const create = (data: Omit<T, "id" | "createdAt" | "updatedAt">): T => {
     // Runtime behavior: all entities work with store.create despite type mismatches
-    const created = (store.create as <U extends { id: number }>(
-      key: EntityKey,
-      data: Omit<U, "id" | "createdAt" | "updatedAt">,
-    ) => U)<T>(entityKey, data);
+    const created = (
+      store.create as <U extends { id: number }>(
+        key: EntityKey,
+        data: Omit<U, "id" | "createdAt" | "updatedAt">,
+      ) => U
+    )<T>(entityKey, data);
     refresh();
     return created;
   };
@@ -52,11 +54,13 @@ export function useStore<T extends { id: number }>(
     data: Partial<Omit<T, "id" | "createdAt">>,
   ): T => {
     // Runtime behavior: all entities work with store.update despite type mismatches
-    const updated = (store.update as <U extends { id: number }>(
-      key: EntityKey,
-      id: number,
-      data: Partial<Omit<U, "id" | "createdAt">>,
-    ) => U)<T>(entityKey, id, data);
+    const updated = (
+      store.update as <U extends { id: number }>(
+        key: EntityKey,
+        id: number,
+        data: Partial<Omit<U, "id" | "createdAt">>,
+      ) => U
+    )<T>(entityKey, id, data);
     refresh();
     return updated;
   };
@@ -68,10 +72,12 @@ export function useStore<T extends { id: number }>(
 
   const getById = (id: number): T | null => {
     // Cast getById to handle type mismatches
-    return (store.getById as <U extends { id: number }>(
-      key: EntityKey,
-      id: number,
-    ) => U | null)<T>(entityKey, id);
+    return (
+      store.getById as <U extends { id: number }>(
+        key: EntityKey,
+        id: number,
+      ) => U | null
+    )<T>(entityKey, id);
   };
 
   return {

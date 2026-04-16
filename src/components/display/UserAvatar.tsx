@@ -1,10 +1,10 @@
-import type { JSX } from 'react';
-import type { Role } from '../../data/entities';
+import type { JSX } from "react";
+import type { Role } from "../../data/entities";
 
-export type UserAvatarSize = 'sm' | 'md' | 'lg';
+export type UserAvatarSize = "sm" | "md" | "lg";
 
 export interface UserAvatarProps {
-  'data-testid': string;
+  "data-testid": string;
   fullName: string;
   avatarColor: string;
   role?: Role | null;
@@ -14,36 +14,36 @@ export interface UserAvatarProps {
 
 function getInitials(fullName: string): string {
   return fullName
-    .split(' ')
+    .split(" ")
     .map((word) => word.charAt(0))
-    .join('')
+    .join("")
     .toUpperCase()
     .slice(0, 2);
 }
 
 function getRoleLabel(role: Role): string {
   switch (role) {
-    case 'qa_lead':
-      return 'Lead';
-    case 'admin':
-      return 'Admin';
-    case 'tester':
-      return 'Test';
+    case "qa_lead":
+      return "Lead";
+    case "admin":
+      return "Admin";
+    case "tester":
+      return "Test";
   }
 }
 
 export default function UserAvatar({
-  'data-testid': testId,
+  "data-testid": testId,
   fullName,
   avatarColor,
   role,
-  size = 'md',
-  className = '',
+  size = "md",
+  className = "",
 }: UserAvatarProps): JSX.Element {
   const sizeClasses = {
-    sm: 'w-8 h-8 text-xs',
-    md: 'w-10 h-10 text-sm',
-    lg: 'w-14 h-14 text-base',
+    sm: "w-8 h-8 text-xs",
+    md: "w-10 h-10 text-sm",
+    lg: "w-14 h-14 text-base",
   };
 
   return (

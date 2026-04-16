@@ -45,11 +45,15 @@ describe("permissions", () => {
     });
 
     it("allows qa_lead transition from verified status", () => {
-      expect(hasPermission("qa_lead", "defect:transition", "verified")).toBe(true);
+      expect(hasPermission("qa_lead", "defect:transition", "verified")).toBe(
+        true,
+      );
     });
 
     it("allows admin transition from verified status", () => {
-      expect(hasPermission("admin", "defect:transition", "verified")).toBe(true);
+      expect(hasPermission("admin", "defect:transition", "verified")).toBe(
+        true,
+      );
     });
 
     it("allows tester transition from assigned status", () => {

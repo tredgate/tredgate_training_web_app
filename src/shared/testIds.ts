@@ -140,8 +140,11 @@ export const wizardBtn = (prefix: string, action: string): string =>
   `${prefix}-wizard-btn-${action}`;
 
 // ─── StatusBadge builders ──────────────────────────────────────────────
-export const statusBadgeTestId = (prefix: string, type: string, value: string): string =>
-  `${prefix}-badge-${type}-${value}`;
+export const statusBadgeTestId = (
+  prefix: string,
+  type: string,
+  value: string,
+): string => `${prefix}-badge-${type}-${value}`;
 
 // ─── Display component builders ────────────────────────────────────────
 export const statCardValue = (testId: string): string => `${testId}-value`;
@@ -151,3 +154,12 @@ export const timelineEntry = (
   entryId: number | string,
 ): string => `${testId}-entry-${entryId}`;
 export const avatarRole = (testId: string): string => `${testId}-role`;
+
+// ─── Modal builders ────────────────────────────────────────────────────
+export const modalTitle = (testId: string): string => `${testId}-title`;
+export const modalBtnClose = (testId: string): string => `${testId}-btn-close`;
+
+// ─── EmptyState builder ───────────────────────────────────────────────
+import type { EmptyStateVariant } from "../components/feedback/EmptyState";
+export const emptyState = (variant: EmptyStateVariant): string =>
+  `empty-state-${variant}`;

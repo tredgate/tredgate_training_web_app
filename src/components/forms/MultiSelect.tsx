@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from "react";import type { JSX } from 'react';import { ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import type { JSX } from "react";
+import { ChevronDown } from "lucide-react";
 
 export interface SelectOption {
   value: string;

@@ -288,7 +288,11 @@ describe("useForm", () => {
 
       form.setFieldTouched("username");
       form.validate();
-      form.reset({ username: "reset", email: "reset@example.com", password: "" });
+      form.reset({
+        username: "reset",
+        email: "reset@example.com",
+        password: "",
+      });
 
       expect(form.values.username).toBe("reset");
       expect(Object.keys(form.touched).length).toBe(0);

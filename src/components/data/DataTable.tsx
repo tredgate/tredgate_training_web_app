@@ -1,4 +1,6 @@
-import { useState, useMemo } from "react";import type { JSX } from 'react';import { ChevronUp, ChevronDown, Search } from "lucide-react";
+import { useState, useMemo } from "react";
+import type { JSX } from "react";
+import { ChevronUp, ChevronDown, Search } from "lucide-react";
 
 export interface Column<T> {
   key: keyof T | string;

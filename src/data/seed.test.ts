@@ -69,8 +69,6 @@ describe("seed", () => {
       expect(admin?.username).toBe("admin");
       expect(admin?.password).toBe("admin123");
     });
-
-
   });
 
   describe("SEED_PROJECTS", () => {
