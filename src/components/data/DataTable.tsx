@@ -27,7 +27,7 @@ export interface DataTableProps<T extends { id: number }> {
   pageSizeOptions?: readonly number[];
   selectable?: boolean;
   onRowClick?: (row: T) => void;
-  onSelectionChange?: (selectedIds: number[]) => void;
+  onSelectionChange?: (selectedIds: (number | string)[]) => void;
   emptyMessage?: string;
   testIdPrefix?: string;
   className?: string;
@@ -62,7 +62,9 @@ export default function DataTable<T extends { id: number }>(
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(pageSize);
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const [selectedIds, setSelectedIds] = useState<Set<number | string>>(
+    new Set(),
+  );
 
   // Apply search filter
   const searchedData = useMemo(() => {
@@ -140,16 +142,23 @@ export default function DataTable<T extends { id: number }>(
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedIds(new Set(pageData.map((row) => row.id)));
+      setSelectedIds(
+        new Set(pageData.map((row) => String(row[keyField as keyof T]))),
+      );
     } else {
       setSelectedIds(new Set());
     }
     if (onSelectionChange) {
-      onSelectionChange(checked ? pageData.map((row) => row.id) : []);
+      onSelectionChange(
+        checked ? pageData.map((row) => String(row[keyField as keyof T])) : [],
+      );
     }
   };
 
-  const handleSelectRow = (id: number, checked: boolean) => {
+  const handleSelectRow = (
+    id: number | string,
+    checked: boolean,
+  ) => {
     const newSelected = new Set(selectedIds);
     if (checked) {
       newSelected.add(id);
@@ -163,18 +172,8 @@ export default function DataTable<T extends { id: number }>(
   };
 
   const allSelected =
-    pageData.length > 0 && pageData.every((row) => selectedIds.has(row.id));
-
-  if (sortedData.length === 0) {
-    return (
-      <div
-        data-testid={`${testIdPrefix}-table`}
-        className={`glass overflow-hidden ${className}`}
-      >
-        <div className="p-8 text-center text-gray-400">{emptyMessage}</div>
-      </div>
-    );
-  }
+    pageData.length > 0 &&
+    pageData.every((row) => selectedIds.has(String(row[keyField as keyof T])));
 
   return (
     <div
@@ -254,50 +253,64 @@ export default function DataTable<T extends { id: number }>(
             </tr>
           </thead>
           <tbody>
-            {pageData.map((row) => (
-              <tr
-                key={row.id}
-                data-testid={`${testIdPrefix}-row-${row.id}`}
-                onClick={() => !selectable && onRowClick && onRowClick(row)}
-                className={`border-b border-white/10 ${
-                  onRowClick && !selectable
-                    ? "hover:bg-white/5 cursor-pointer"
-                    : ""
-                }`}
-              >
-                {selectable && (
-                  <td className="px-4 py-3 w-10">
-                    <input
-                      data-testid={`${testIdPrefix}-checkbox-row-${row.id}`}
-                      type="checkbox"
-                      checked={selectedIds.has(row.id)}
-                      onChange={(e) =>
-                        handleSelectRow(row.id, e.target.checked)
-                      }
-                      onClick={(e) => e.stopPropagation()}
-                      className="w-4 h-4"
-                    />
-                  </td>
-                )}
-                {columns.map((col) => (
-                  <td
-                    key={String(col.key)}
-                    data-testid={`${testIdPrefix}-cell-${String(col.key)}-${row.id}`}
-                    className="px-4 py-3 text-gray-100"
-                  >
-                    {col.render
-                      ? col.render(row[col.key as keyof T], row)
-                      : String(row[col.key as keyof T] ?? "")}
-                  </td>
-                ))}
+            {pageData.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={
+                    columns.length + (selectable ? 1 : 0)
+                  }
+                  className="px-4 py-8 text-center text-gray-400"
+                >
+                  {emptyMessage}
+                </td>
               </tr>
-            ))}
+            ) : (
+              pageData.map((row) => {
+                const rowKeyValue = String(row[keyField as keyof T]);
+                return (
+                  <tr
+                    key={rowKeyValue}
+                    data-testid={`${testIdPrefix}-row-${rowKeyValue}`}
+                    onClick={() => onRowClick && onRowClick(row)}
+                    className={`border-b border-white/10 ${
+                      onRowClick ? "hover:bg-white/5 cursor-pointer" : ""
+                    }`}
+                  >
+                    {selectable && (
+                      <td className="px-4 py-3 w-10">
+                        <input
+                          data-testid={`${testIdPrefix}-checkbox-row-${rowKeyValue}`}
+                          type="checkbox"
+                          checked={selectedIds.has(rowKeyValue)}
+                          onChange={(e) =>
+                            handleSelectRow(rowKeyValue, e.target.checked)
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                          className="w-4 h-4"
+                        />
+                      </td>
+                    )}
+                    {columns.map((col) => (
+                      <td
+                        key={String(col.key)}
+                        data-testid={`${testIdPrefix}-cell-${String(col.key)}-${rowKeyValue}`}
+                        className="px-4 py-3 text-gray-100"
+                      >
+                        {col.render
+                          ? col.render(row[col.key as keyof T], row)
+                          : String(row[col.key as keyof T] ?? "")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Pagination */}
-      {pagination && (
+      {/* Pagination — only show if there is data */}
+      {pagination && sortedData.length > 0 && (
         <div
           data-testid={`${testIdPrefix}-pagination`}
           className="p-4 border-t border-white/10 flex flex-wrap justify-between items-center gap-4"
