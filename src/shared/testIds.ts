@@ -128,17 +128,32 @@ export const TEST_IDS = {
     selectAssignee: "defect-form-select-assignee",
     selectTestCases: "defect-form-select-test-cases",
   },
-  testPlanList: {
-    page: "test-plan-list-page",
+  testplanList: {
+    page: "testplan-list-page",
+    btnNew: "testplan-list-btn-new",
   },
-  testPlanDetail: {
-    page: "test-plan-detail-page",
+  testplanDetail: {
+    page: "testplan-detail-page",
+    btnEdit: "testplan-detail-btn-edit",
+    btnExecute: "testplan-detail-btn-execute",
+    overview: "testplan-detail-overview",
+    cases: "testplan-detail-cases",
+    history: "testplan-detail-history",
   },
-  testPlanForm: {
-    page: "test-plan-form-page",
+  testplanForm: {
+    page: "testplan-form-page",
+    inputName: "testplan-form-input-name",
+    selectProject: "testplan-form-select-project",
+    inputDescription: "testplan-form-input-description",
+    selectAssignee: "testplan-form-select-assignee",
+    btnAddCase: "testplan-form-btn-add-case",
   },
-  testRunExecution: {
-    page: "test-run-execution-page",
+  testrunExecution: {
+    page: "testrun-execution-page",
+    progressBar: "testrun-progress-bar",
+    btnPrevCase: "testrun-btn-prev-case",
+    btnNextCase: "testrun-btn-next-case",
+    btnComplete: "testrun-btn-complete",
   },
   teamList: {
     page: "team-list-page",
@@ -233,3 +248,17 @@ export const defectDetailBtn = (action: string): string =>
   `defect-detail-btn-${action}`;
 export const defectCommentEntry = (commentId: number): string =>
   `defect-detail-comment-${commentId}`;
+
+// ─── TestPlan-related builders ────────────────────────────────────────
+export const testplanCase = (caseIndex: number): string =>
+  `testplan-case-${caseIndex}`;
+export const testplanCaseToggle = (caseIndex: number): string =>
+  `testplan-case-${caseIndex}-toggle`;
+export const testplanFormCaseRow = (caseIndex: number): string =>
+  `testplan-form-case-${caseIndex}`;
+export const testplanFormStepRow = (caseIndex: number, stepIndex: number): string =>
+  `testplan-form-case-${caseIndex}-step-${stepIndex}`;
+
+// ─── TestRun Execution builders ───────────────────────────────────────
+export const testrunStepBtn = (caseIdx: number, stepIdx: number, verdict: "pass" | "fail" | "skip"): string =>
+  `testrun-step-${caseIdx}-${stepIdx}-${verdict}`;

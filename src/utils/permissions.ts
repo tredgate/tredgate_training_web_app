@@ -9,6 +9,7 @@ export type PermissionKey =
   | "project:edit"
   | "project:delete"
   | "testplan:create"
+  | "testplan:edit"
   | "testplan:execute"
   | "user:manage"
   | "settings:manage"
@@ -30,6 +31,7 @@ const PERMISSIONS: Record<PermissionKey, PermissionDef> = {
   "project:edit": ["qa_lead", "admin"],
   "project:delete": ["admin"],
   "testplan:create": ["qa_lead", "admin"],
+  "testplan:edit": ["qa_lead", "admin"],
   "testplan:execute": ["tester", "qa_lead", "admin"],
   "user:manage": ["admin"],
   "settings:manage": ["admin"],
