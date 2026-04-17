@@ -53,6 +53,18 @@ export const TEST_IDS = {
   },
   dashboard: {
     page: "dashboard-page",
+    cardTotalDefects: "dashboard-card-total-defects",
+    cardOpenDefects: "dashboard-card-open-defects",
+    cardTestPlans: "dashboard-card-test-plans",
+    cardPassRate: "dashboard-card-pass-rate",
+    cardTotalUsers: "dashboard-card-total-users",
+    cardTotalProjects: "dashboard-card-total-projects",
+    cardActiveProjects: "dashboard-card-active-projects",
+    myDefectsTable: "dashboard-my-defects-table",
+    myRunsTable: "dashboard-my-runs-table",
+    unassignedTable: "dashboard-unassigned-table",
+    verificationTable: "dashboard-verification-table",
+    activityTimeline: "dashboard-activity-timeline",
   },
   profile: {
     page: "profile-page",
