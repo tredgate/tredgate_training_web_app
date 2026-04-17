@@ -94,12 +94,39 @@ export const TEST_IDS = {
   },
   defectList: {
     page: "defect-list-page",
+    btnNew: "defect-list-btn-new",
+    table: "defect-list-table",
+    inputSearch: "defect-list-input-search",
+    selectSeverityFilter: "defect-list-select-severity-filter",
+    selectStatusFilter: "defect-list-select-status-filter",
+    selectPriorityFilter: "defect-list-select-priority-filter",
+    selectProjectFilter: "defect-list-select-project-filter",
   },
   defectDetail: {
     page: "defect-detail-page",
+    btnEdit: "defect-detail-btn-edit",
+    description: "defect-detail-description",
+    comments: "defect-detail-comments",
+    inputComment: "defect-detail-input-comment",
+    btnAddComment: "defect-detail-btn-add-comment",
+    cardStatus: "defect-detail-card-status",
+    cardAssignment: "defect-detail-card-assignment",
+    cardDetails: "defect-detail-card-details",
+    timeline: "defect-detail-timeline",
+    modalAssign: "modal-assign-defect",
+    modalAssignSelect: "modal-assign-select-assignee",
   },
   defectForm: {
     page: "defect-form-page",
+    inputTitle: "defect-form-input-title",
+    selectProject: "defect-form-select-project",
+    selectSeverity: "defect-form-select-severity",
+    selectPriority: "defect-form-select-priority",
+    inputDescription: "defect-form-input-description",
+    inputSteps: "defect-form-input-steps",
+    selectEnvironment: "defect-form-select-environment",
+    selectAssignee: "defect-form-select-assignee",
+    selectTestCases: "defect-form-select-test-cases",
   },
   testPlanList: {
     page: "test-plan-list-page",
@@ -198,3 +225,11 @@ export const projectFormEnvRow = (index: number): string =>
   `project-form-env-row-${index}`;
 export const projectFormEnvRemove = (index: number): string =>
   `project-form-btn-remove-env-${index}`;
+
+// ─── Defect-related builders ───────────────────────────────────────────
+export const defectBadge = (type: "severity" | "status" | "priority", id: number): string =>
+  `defect-badge-${type}-${id}`;
+export const defectDetailBtn = (action: string): string =>
+  `defect-detail-btn-${action}`;
+export const defectCommentEntry = (commentId: number): string =>
+  `defect-detail-comment-${commentId}`;
