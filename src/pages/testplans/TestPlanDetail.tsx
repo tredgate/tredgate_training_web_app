@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { TEST_IDS, dataTableCell, dataTableRow } from "../../shared/testIds";
+import {
+  TEST_IDS,
+  dataTableCell,
+  dataTableRow,
+  testplanCase,
+  testplanCaseToggle,
+} from "../../shared/testIds";
 import PageHeader from "../../components/layout/PageHeader";
 import Tabs from "../../components/navigation/Tabs";
 import EmptyState from "../../components/feedback/EmptyState";
@@ -105,9 +111,10 @@ export default function TestPlanDetail() {
     const newRun = createTestRun({
       testPlanId: testPlan.id,
       executorId: user.id,
+      status: "in_progress" as const,
       results: testPlan.testCases.map((tc) => ({
         testCaseId: tc.id,
-        status: "not_run",
+        status: "not_run" as const,
         notes: "",
         duration: null,
       })),
@@ -182,6 +189,7 @@ export default function TestPlanDetail() {
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Status</p>
                   <StatusBadge
+                    data-testid="testplan-detail-status"
                     type="testplan_status"
                     value={testPlan.status}
                   />
@@ -200,8 +208,10 @@ export default function TestPlanDetail() {
                   <p className="text-sm text-gray-400 mb-1">Assignee</p>
                   {assignee ? (
                     <UserAvatar
-                      userId={assignee.id}
-                      users={users}
+                      data-testid="testplan-detail-assignee-avatar"
+                      fullName={assignee.fullName}
+                      avatarColor={assignee.avatarColor}
+                      role={assignee.role}
                       size="sm"
                     />
                   ) : (
@@ -210,11 +220,15 @@ export default function TestPlanDetail() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Created</p>
-                  <p className="text-gray-300">{formatDate(testPlan.createdAt)}</p>
+                  <p className="text-gray-300">
+                    {formatDate(testPlan.createdAt)}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-400 mb-1">Updated</p>
-                  <p className="text-gray-300">{formatDate(testPlan.updatedAt)}</p>
+                  <p className="text-gray-300">
+                    {formatDate(testPlan.updatedAt)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -230,7 +244,9 @@ export default function TestPlanDetail() {
                 <p className="text-sm text-gray-400">Total Steps</p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
-                <p className="text-2xl font-bold text-white">{lastRunPassRate}%</p>
+                <p className="text-2xl font-bold text-white">
+                  {lastRunPassRate}%
+                </p>
                 <p className="text-sm text-gray-400">
                   {lastRun ? "Last Run Pass Rate" : "No runs yet"}
                 </p>
@@ -255,7 +271,7 @@ export default function TestPlanDetail() {
                     <div
                       className="flex items-center justify-between cursor-pointer"
                       onClick={() => toggleCaseExpansion(testCase.id)}
-                      data-testid={TEST_IDS.testplanCaseToggle(caseIdx)}
+                      data-testid={testplanCaseToggle(caseIdx)}
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-3">
@@ -275,6 +291,7 @@ export default function TestPlanDetail() {
                         )}
                       </div>
                       <StatusBadge
+                        data-testid={`testplan-case-priority-${caseIdx}`}
                         type="testcase_priority"
                         value={testCase.priority}
                       />
@@ -283,7 +300,7 @@ export default function TestPlanDetail() {
                     {isExpanded && (
                       <div
                         className="mt-4 ml-6 space-y-2"
-                        data-testid={TEST_IDS.testplanCase(caseIdx)}
+                        data-testid={testplanCase(caseIdx)}
                       >
                         <p className="text-xs text-gray-500 font-semibold mb-3">
                           STEPS
@@ -312,10 +329,7 @@ export default function TestPlanDetail() {
 
         {/* Execution History Tab */}
         {activeTab === "history" && (
-          <div
-            data-testid={TEST_IDS.testplanDetail.history}
-            className="mt-6"
-          >
+          <div data-testid={TEST_IDS.testplanDetail.history} className="mt-6">
             {planRuns.length === 0 ? (
               <p className="text-gray-400">No test runs yet.</p>
             ) : (
@@ -326,11 +340,15 @@ export default function TestPlanDetail() {
                     label: "Executed By",
                     sortable: false,
                     render: (val) => {
-                      const executor = users.find((u) => u.id === (val as number));
+                      const executor = users.find(
+                        (u) => u.id === (val as number),
+                      );
                       return executor ? (
                         <UserAvatar
-                          userId={executor.id}
-                          users={users}
+                          data-testid={`testplan-history-executor-${executor.id}`}
+                          fullName={executor.fullName}
+                          avatarColor={executor.avatarColor}
+                          role={executor.role}
                           size="sm"
                         />
                       ) : (
@@ -344,8 +362,9 @@ export default function TestPlanDetail() {
                     sortable: true,
                     render: (val) => (
                       <StatusBadge
+                        data-testid="testplan-history-run-status"
                         type="testrun_status"
-                        value={val as string}
+                        value={val as "in_progress" | "completed"}
                       />
                     ),
                   },
@@ -380,6 +399,8 @@ export default function TestPlanDetail() {
       {/* Results Modal */}
       {resultsModal.run && (
         <Modal
+          isOpen={!!resultsModal.run}
+          data-testid="testplan-results-modal"
           title="Test Run Results"
           onClose={() => setResultsModal({ run: null })}
         >
@@ -387,6 +408,7 @@ export default function TestPlanDetail() {
             <div>
               <p className="text-sm text-gray-400 mb-1">Status</p>
               <StatusBadge
+                data-testid="testplan-results-run-status"
                 type="testrun_status"
                 value={resultsModal.run.status}
               />
@@ -401,6 +423,7 @@ export default function TestPlanDetail() {
                         Test Case {result.testCaseId}
                       </span>
                       <StatusBadge
+                        data-testid={`testplan-results-case-${idx}`}
                         type="testcase_result"
                         value={result.status}
                       />
@@ -416,12 +439,16 @@ export default function TestPlanDetail() {
             </div>
             <div>
               <p className="text-sm text-gray-400 mb-1">Started</p>
-              <p className="text-gray-300">{formatDateTime(resultsModal.run.startedAt)}</p>
+              <p className="text-gray-300">
+                {formatDateTime(resultsModal.run.startedAt)}
+              </p>
             </div>
             {resultsModal.run.completedAt && (
               <div>
                 <p className="text-sm text-gray-400 mb-1">Completed</p>
-                <p className="text-gray-300">{formatDateTime(resultsModal.run.completedAt)}</p>
+                <p className="text-gray-300">
+                  {formatDateTime(resultsModal.run.completedAt)}
+                </p>
               </div>
             )}
           </div>

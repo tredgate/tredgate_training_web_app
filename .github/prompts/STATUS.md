@@ -15,26 +15,31 @@ Keep this file short: just the table + minimal notes. No prose logs.
 
 ## Tasks
 
-| Task | Title                            | Status         | Depends on         | Started    | Completed  | Commit  | Notes                                            |
-| ---- | -------------------------------- | -------------- | ------------------ | ---------- | ---------- | ------- | ------------------------------------------------ |
-| T1   | Data Layer                       | ✅ done        | —                  | 2026-04-15 | 2026-04-15 | 88a152e |                                                  |
-| T2   | Auth, Router, Layout Shell       | ✅ done        | T1                 | 2026-04-16 | 2026-04-16 | 5c697ed |                                                  |
-| T3   | DataTable                        | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T4   | Modal, EmptyState                | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T5   | Wizard                           | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T6   | Tabs                             | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T7   | Forms, StatusBadge, Display      | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T8   | Entity Hooks (useStore + domain) | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
-| T9   | Dashboard                        | ✅ done        | T2, T7, T8         | 2026-04-17 | 2026-04-17 | 2f8440f |                                                  |
-| T10  | Projects Module                  | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | 950af1b |                                                  |
-| T11  | Defects Module                   | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | e9beb0a |                                                  |
-| T12  | Test Plans & Runs                | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | b9a684d |                                                  |
-| T13  | Team Module                      | ✅ done        | T2, T3, T4, T7, T8 | 2026-04-17 | 2026-04-17 | 77caa22 |                                                  |
-| T14  | Reports, Settings, Profile       | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | a9c5d2f |                                                  |
-| T15  | Fix Cross-Task Consistency       | ✅ done        | T1–T14 authored    | 2026-04-15 | 2026-04-15 | —       | Prompt-file edits only; no src commit            |
-| T16  | Unit Tests                       | ⚠️ blocked     | T1                 | 2026-04-17 | —          | 38fbc76 | Tests pass at runtime; 56 TS errors in test code |
-| T17  | E2E Smoke Validation (on-demand) | ⬜ pending     | Any of T9–T14 ✅   | —          | —          | —       | Runs on demand; never auto-triggered             |
-| T18  | Component Cleanup (T3–T7 fixes)  | ✅ done        | T3–T7              | 2026-04-16 | 2026-04-16 | 26fd474 | Split across 4 commits (Fixes 1+6, 2, 3+4+5, 7)  |
+| Task | Title                                        | Status     | Depends on         | Started    | Completed  | Commit  | Notes                                            |
+| ---- | -------------------------------------------- | ---------- | ------------------ | ---------- | ---------- | ------- | ------------------------------------------------ |
+| T1   | Data Layer                                   | ✅ done    | —                  | 2026-04-15 | 2026-04-15 | 88a152e |                                                  |
+| T2   | Auth, Router, Layout Shell                   | ✅ done    | T1                 | 2026-04-16 | 2026-04-16 | 5c697ed |                                                  |
+| T3   | DataTable                                    | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T4   | Modal, EmptyState                            | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T5   | Wizard                                       | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T6   | Tabs                                         | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T7   | Forms, StatusBadge, Display                  | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T8   | Entity Hooks (useStore + domain)             | ✅ done    | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
+| T9   | Dashboard                                    | ✅ done    | T2, T7, T8         | 2026-04-17 | 2026-04-17 | 2f8440f |                                                  |
+| T10  | Projects Module                              | ✅ done    | T2–T8              | 2026-04-17 | 2026-04-17 | 950af1b |                                                  |
+| T11  | Defects Module                               | ✅ done    | T2–T8              | 2026-04-17 | 2026-04-17 | e9beb0a |                                                  |
+| T12  | Test Plans & Runs                            | ✅ done    | T2–T8              | 2026-04-17 | 2026-04-17 | b9a684d |                                                  |
+| T13  | Team Module                                  | ✅ done    | T2, T3, T4, T7, T8 | 2026-04-17 | 2026-04-17 | 77caa22 |                                                  |
+| T14  | Reports, Settings, Profile                   | ✅ done    | T2–T8              | 2026-04-17 | 2026-04-17 | a9c5d2f |                                                  |
+| T15  | Fix Cross-Task Consistency                   | ✅ done    | T1–T14 authored    | 2026-04-15 | 2026-04-15 | —       | Prompt-file edits only; no src commit            |
+| T16  | Unit Tests                                   | ⚠️ blocked | T1                 | 2026-04-17 | —          | 38fbc76 | Tests pass at runtime; 56 TS errors in test code |
+| T17  | E2E Smoke Validation (on-demand)             | ⬜ pending | Any of T9–T14 ✅   | —          | —          | —       | Runs on demand; never auto-triggered             |
+| T18  | Component Cleanup (T3–T7 fixes)              | ✅ done    | T3–T7              | 2026-04-16 | 2026-04-16 | 26fd474 | Split across 4 commits (Fixes 1+6, 2, 3+4+5, 7)  |
+| T19  | Dashboard Refactor: Split to functions       | ⬜ pending | T9                 | —          | —          | —       |                                                  |
+| T20  | Component Structure Review                   | ⬜ pending | T9–T14             | —          | —          | —       | Analysis + optional extraction                   |
+| T21  | i18n: Centralise All UI Text                 | ⬜ pending | T2                 | —          | —          | —       |                                                  |
+| T22  | Discussion: Defect Colors — Component vs CSS | ⬜ pending | T7, T11            | —          | —          | —       | Decision only; implementation optional           |
+| T23  | DefectDetail & DefectForm Refactor           | ⬜ pending | T11                | —          | —          | —       |                                                  |
 
 ## Conventions
 

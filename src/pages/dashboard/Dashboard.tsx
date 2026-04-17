@@ -1,6 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { Bug, AlertTriangle, ClipboardList, CheckCircle, Users, Folder, Activity } from "lucide-react";
-import { TEST_IDS, dataTableRow, dataTableCell, timelineEntry } from "../../shared/testIds";
+import {
+  Bug,
+  AlertTriangle,
+  ClipboardList,
+  CheckCircle,
+  Users,
+  Folder,
+  Activity,
+} from "lucide-react";
+import {
+  TEST_IDS,
+  dataTableRow,
+  dataTableCell,
+  timelineEntry,
+} from "../../shared/testIds";
 import PageHeader from "../../components/layout/PageHeader";
 import StatCard from "../../components/display/StatCard";
 import DataTable from "../../components/data/DataTable";
@@ -49,16 +62,24 @@ export default function Dashboard() {
     // Tester: My reported defects
     totalDefectsCount = defects.filter((d) => d.reporterId === user.id).length;
     openDefectsCount = defects.filter(
-      (d) => d.reporterId === user.id && d.status !== "closed" && d.status !== "verified",
+      (d) =>
+        d.reporterId === user.id &&
+        d.status !== "closed" &&
+        d.status !== "verified",
     ).length;
     myDefectsForTable = defects
       .filter((d) => d.assigneeId === user.id)
       .slice(0, 5);
   } else if (user.role === "qa_lead") {
     // QA Lead: In my projects
-    totalDefectsCount = defects.filter((d) => myProjectIds.includes(d.projectId)).length;
+    totalDefectsCount = defects.filter((d) =>
+      myProjectIds.includes(d.projectId),
+    ).length;
     openDefectsCount = defects.filter(
-      (d) => myProjectIds.includes(d.projectId) && d.status !== "closed" && d.status !== "verified",
+      (d) =>
+        myProjectIds.includes(d.projectId) &&
+        d.status !== "closed" &&
+        d.status !== "verified",
     ).length;
     myDefectsForTable = defects
       .filter((d) => d.assigneeId === user.id)
@@ -87,7 +108,9 @@ export default function Dashboard() {
   if (user.role === "tester") {
     testPlansCount = testPlans.filter((tp) => tp.assigneeId === user.id).length;
   } else if (user.role === "qa_lead") {
-    testPlansCount = testPlans.filter((tp) => myProjectIds.includes(tp.projectId)).length;
+    testPlansCount = testPlans.filter((tp) =>
+      myProjectIds.includes(tp.projectId),
+    ).length;
   } else {
     testPlansCount = testPlans.length;
   }
@@ -109,12 +132,16 @@ export default function Dashboard() {
   const passedCases = passRateRuns
     .flatMap((r) => r.results)
     .filter((r) => r.status === "passed").length;
-  const passRate = totalCases > 0 ? Math.round((passedCases / totalCases) * 100) : 0;
+  const passRate =
+    totalCases > 0 ? Math.round((passedCases / totalCases) * 100) : 0;
 
   // My Recent Test Runs
   const myTestRuns = testRuns
     .filter((r) => r.executorId === user.id)
-    .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime(),
+    )
     .slice(0, 5);
 
   // Activity Timeline (last 10 history entries, merged from all defects)
@@ -141,11 +168,18 @@ export default function Dashboard() {
   }
 
   const recentActivityEntries = timelineHistoryEntries
-    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+    )
     .slice(0, 10)
     .map((h) => ({
       id: h.id,
-      type: (h.action === "created" ? "created" : h.action === "commented" ? "comment" : "transition") as "created" | "comment" | "transition",
+      type: (h.action === "created"
+        ? "created"
+        : h.action === "commented"
+          ? "comment"
+          : "transition") as "created" | "comment" | "transition",
       user: users.find((u) => u.id === h.userId)?.fullName || "Unknown",
       text: `${h.details}`,
       timestamp: h.timestamp,
@@ -345,7 +379,9 @@ export default function Dashboard() {
       {/* Tester Sections */}
       <div className="flex flex-col gap-6">
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">My Assigned Defects</h2>
+          <h2 className="text-lg font-semibold text-white mb-3">
+            My Assigned Defects
+          </h2>
           <DataTable<Defect>
             columns={defectColumns}
             data={myDefectsForTable}
@@ -358,7 +394,9 @@ export default function Dashboard() {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">My Recent Test Runs</h2>
+          <h2 className="text-lg font-semibold text-white mb-3">
+            My Recent Test Runs
+          </h2>
           <DataTable<TestRun>
             columns={testRunColumns}
             data={myTestRuns}
@@ -378,7 +416,9 @@ export default function Dashboard() {
       {(user.role === "qa_lead" || user.role === "admin") && (
         <div className="flex flex-col gap-6">
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Unassigned Defects</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">
+              Unassigned Defects
+            </h2>
             <DataTable<Defect>
               columns={unassignedColumns}
               data={unassignedDefects}
@@ -391,7 +431,9 @@ export default function Dashboard() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Awaiting Verification</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">
+              Awaiting Verification
+            </h2>
             <DataTable<Defect>
               columns={verificationColumns}
               data={awaitingVerification}
@@ -408,7 +450,9 @@ export default function Dashboard() {
       {/* Admin Sections */}
       {user.role === "admin" && (
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">System Overview</h2>
+          <h2 className="text-lg font-semibold text-white mb-3">
+            System Overview
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <StatCard
               data-testid={TEST_IDS.dashboard.cardTotalUsers}
@@ -434,7 +478,9 @@ export default function Dashboard() {
 
       {/* Recent Activity */}
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3">Recent Activity</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">
+          Recent Activity
+        </h2>
         <div className="glass p-6">
           <ActivityTimeline
             data-testid={TEST_IDS.dashboard.activityTimeline}

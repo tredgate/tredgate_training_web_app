@@ -7,13 +7,21 @@ import TextInput from "../../components/forms/TextInput";
 import TextArea from "../../components/forms/TextArea";
 import Select from "../../components/forms/Select";
 import EmptyState from "../../components/feedback/EmptyState";
-import { TEST_IDS, testplanFormCaseRow, testplanFormStepRow } from "../../shared/testIds";
+import {
+  TEST_IDS,
+  testplanFormCaseRow,
+  testplanFormStepRow,
+} from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
 import { TEST_CASE_PRIORITIES } from "../../data/entities";
-import type { TestPlan, TestCase, TestCaseStep, TestCasePriority } from "../../data/entities";
+import type {
+  TestPlan,
+  TestCaseStep,
+  TestCasePriority,
+} from "../../data/entities";
 
 interface FormValues extends Record<string, unknown> {
   name: string;
@@ -22,7 +30,11 @@ interface FormValues extends Record<string, unknown> {
   assigneeId: string;
 }
 
-interface FormTestCase extends Omit<TestCase, "id"> {
+interface FormTestCase {
+  name: string;
+  description: string;
+  preconditions: string;
+  priority: TestCasePriority;
   steps: Array<Omit<TestCaseStep, "stepNumber">>;
 }
 
@@ -126,15 +138,19 @@ export default function TestPlanForm() {
 
   const handleAddStep = (caseIndex: number) => {
     const updated = [...testCases];
-    updated[caseIndex].steps.push({ action: "", expectedResult: "" });
+    const tc = updated[caseIndex];
+    if (tc) {
+      tc.steps.push({ action: "", expectedResult: "" });
+    }
     setTestCases(updated);
   };
 
   const handleRemoveStep = (caseIndex: number, stepIndex: number) => {
     const updated = [...testCases];
-    updated[caseIndex].steps = updated[caseIndex].steps.filter(
-      (_, i) => i !== stepIndex,
-    );
+    const tc = updated[caseIndex];
+    if (tc) {
+      tc.steps = tc.steps.filter((_, i) => i !== stepIndex);
+    }
     setTestCases(updated);
   };
 
@@ -145,7 +161,8 @@ export default function TestPlanForm() {
     value: string,
   ) => {
     const updated = [...testCases];
-    const step = updated[caseIndex].steps[stepIndex];
+    const tc = updated[caseIndex];
+    const step = tc?.steps[stepIndex];
     if (step) {
       (step as any)[field] = value;
     }
@@ -231,7 +248,9 @@ export default function TestPlanForm() {
               value: p.id.toString(),
               label: p.name,
             }))}
-            error={form.touched.projectId ? (form.errors.projectId ?? null) : null}
+            error={
+              form.touched.projectId ? (form.errors.projectId ?? null) : null
+            }
             required
           />
 
@@ -241,7 +260,11 @@ export default function TestPlanForm() {
             name="description"
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
-            error={form.touched.description ? (form.errors.description ?? null) : null}
+            error={
+              form.touched.description
+                ? (form.errors.description ?? null)
+                : null
+            }
             required
           />
 
@@ -313,8 +336,7 @@ export default function TestPlanForm() {
                       }
                       options={TEST_CASE_PRIORITIES.map((p) => ({
                         value: p,
-                        label:
-                          p.charAt(0).toUpperCase() + p.slice(1),
+                        label: p.charAt(0).toUpperCase() + p.slice(1),
                       }))}
                     />
 
@@ -324,7 +346,11 @@ export default function TestPlanForm() {
                       name={`case-description-${caseIdx}`}
                       value={testCase.description}
                       onChange={(e) =>
-                        handleUpdateTestCase(caseIdx, "description", e.target.value)
+                        handleUpdateTestCase(
+                          caseIdx,
+                          "description",
+                          e.target.value,
+                        )
                       }
                     />
 
@@ -448,20 +474,24 @@ export default function TestPlanForm() {
               <div>
                 <span className="text-gray-400">Project:</span>
                 <span className="text-white ml-2">
-                  {projects.find((p) => p.id.toString() === form.values.projectId)
-                    ?.name || "—"}
+                  {projects.find(
+                    (p) => p.id.toString() === form.values.projectId,
+                  )?.name || "—"}
                 </span>
               </div>
               <div>
                 <span className="text-gray-400">Description:</span>
-                <span className="text-white ml-2">{form.values.description}</span>
+                <span className="text-white ml-2">
+                  {form.values.description}
+                </span>
               </div>
               <div>
                 <span className="text-gray-400">Assignee:</span>
                 <span className="text-white ml-2">
                   {form.values.assigneeId
-                    ? users.find((u) => u.id.toString() === form.values.assigneeId)
-                        ?.fullName
+                    ? users.find(
+                        (u) => u.id.toString() === form.values.assigneeId,
+                      )?.fullName
                     : "— None —"}
                 </span>
               </div>
@@ -498,9 +528,8 @@ export default function TestPlanForm() {
       <div className="mt-6">
         <Wizard
           steps={steps}
-          onSubmit={handleSubmit}
+          onComplete={handleSubmit}
           onCancel={handleCancel}
-          submitLabel={isEditMode ? "Update" : "Create"}
           testIdPrefix="testplan-form"
         />
       </div>

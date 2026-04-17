@@ -56,9 +56,7 @@ export default function ProjectDetail() {
   const userMap = new Map(users.map((u) => [u.id, u]));
   const projectDefects = defects.filter((d) => d.projectId === project.id);
   const projectPlans = testPlans.filter((tp) => tp.projectId === project.id);
-  const projectMembers = [
-    ...new Set([project.leadId, ...project.memberIds]),
-  ]
+  const projectMembers = [...new Set([project.leadId, ...project.memberIds])]
     .map((uid) => userMap.get(uid))
     .filter((u) => u !== undefined) as typeof users;
 
@@ -163,11 +161,15 @@ export default function ProjectDetail() {
               </div>
               <div>
                 <p className="text-sm text-gray-400">Created</p>
-                <p className="text-white mt-1">{formatDate(project.createdAt)}</p>
+                <p className="text-white mt-1">
+                  {formatDate(project.createdAt)}
+                </p>
               </div>
               <div>
                 <p className="text-sm text-gray-400">Updated</p>
-                <p className="text-white mt-1">{formatDate(project.updatedAt)}</p>
+                <p className="text-white mt-1">
+                  {formatDate(project.updatedAt)}
+                </p>
               </div>
             </div>
           </div>
@@ -302,10 +304,7 @@ interface DefectsTabContentProps {
   users: User[];
 }
 
-function DefectsTabContent({
-  defects,
-  users,
-}: DefectsTabContentProps) {
+function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
   const userMap = new Map(users.map((u) => [u.id, u]));
 
   const columns = [
@@ -376,9 +375,7 @@ interface TestPlansTabContentProps {
   testPlans: TestPlan[];
 }
 
-function TestPlansTabContent({
-  testPlans,
-}: TestPlansTabContentProps) {
+function TestPlansTabContent({ testPlans }: TestPlansTabContentProps) {
   const columns = [
     {
       key: "name",
@@ -442,10 +439,7 @@ interface TeamTabContentProps {
 
 function TeamTabContent({ members }: TeamTabContentProps) {
   return (
-    <div
-      data-testid={TEST_IDS.projectDetail.teamList}
-      className="space-y-3"
-    >
+    <div data-testid={TEST_IDS.projectDetail.teamList} className="space-y-3">
       {members.length === 0 ? (
         <p className="text-gray-400">No team members assigned</p>
       ) : (

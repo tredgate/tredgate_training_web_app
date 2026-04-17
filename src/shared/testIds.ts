@@ -66,9 +66,6 @@ export const TEST_IDS = {
     verificationTable: "dashboard-verification-table",
     activityTimeline: "dashboard-activity-timeline",
   },
-  profile: {
-    page: "profile-page",
-  },
   projectList: {
     page: "project-list-page",
     btnNew: "project-list-btn-new",
@@ -279,8 +276,10 @@ export const projectFormEnvRemove = (index: number): string =>
   `project-form-btn-remove-env-${index}`;
 
 // ─── Defect-related builders ───────────────────────────────────────────
-export const defectBadge = (type: "severity" | "status" | "priority", id: number): string =>
-  `defect-badge-${type}-${id}`;
+export const defectBadge = (
+  type: "severity" | "status" | "priority",
+  id: number,
+): string => `defect-badge-${type}-${id}`;
 export const defectDetailBtn = (action: string): string =>
   `defect-detail-btn-${action}`;
 export const defectCommentEntry = (commentId: number): string =>
@@ -293,9 +292,14 @@ export const testplanCaseToggle = (caseIndex: number): string =>
   `testplan-case-${caseIndex}-toggle`;
 export const testplanFormCaseRow = (caseIndex: number): string =>
   `testplan-form-case-${caseIndex}`;
-export const testplanFormStepRow = (caseIndex: number, stepIndex: number): string =>
-  `testplan-form-case-${caseIndex}-step-${stepIndex}`;
+export const testplanFormStepRow = (
+  caseIndex: number,
+  stepIndex: number,
+): string => `testplan-form-case-${caseIndex}-step-${stepIndex}`;
 
 // ─── TestRun Execution builders ───────────────────────────────────────
-export const testrunStepBtn = (caseIdx: number, stepIdx: number, verdict: "pass" | "fail" | "skip"): string =>
-  `testrun-step-${caseIdx}-${stepIdx}-${verdict}`;
+export const testrunStepBtn = (
+  caseIdx: number,
+  stepIdx: number,
+  verdict: "pass" | "fail" | "skip",
+): string => `testrun-step-${caseIdx}-${stepIdx}-${verdict}`;

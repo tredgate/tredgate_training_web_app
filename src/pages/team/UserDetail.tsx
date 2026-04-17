@@ -62,19 +62,31 @@ export default function UserDetail() {
   // Activity: recent defects reported by this user
   const recentDefects = defects
     .filter((d) => d.reporterId === user.id)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
     .slice(0, 5);
 
   // Activity: recent test runs executed by this user
   const recentRuns = testRuns
     .filter((tr) => tr.executorId === user.id)
-    .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime(),
+    )
     .slice(0, 5);
 
   // Stats
-  const defectsReported = defects.filter((d) => d.reporterId === user.id).length;
-  const defectsAssigned = defects.filter((d) => d.assigneeId === user.id).length;
-  const runsExecuted = testRuns.filter((tr) => tr.executorId === user.id).length;
+  const defectsReported = defects.filter(
+    (d) => d.reporterId === user.id,
+  ).length;
+  const defectsAssigned = defects.filter(
+    (d) => d.assigneeId === user.id,
+  ).length;
+  const runsExecuted = testRuns.filter(
+    (tr) => tr.executorId === user.id,
+  ).length;
 
   // Edit mode handlers
   const canEditRole =
@@ -118,17 +130,17 @@ export default function UserDetail() {
         title={user.fullName}
         backTo="/team"
         actions={
-          canEditRole ? (
-            !isEditing && (
-              <button
-                data-testid={TEST_IDS.userDetail.btnEdit}
-                onClick={handleEditClick}
-                className="px-4 py-2 bg-neon-purple hover:bg-neon-purple/80 text-white rounded-lg text-sm font-medium transition-colors"
-              >
-                Edit Role
-              </button>
-            )
-          ) : null
+          canEditRole
+            ? !isEditing && (
+                <button
+                  data-testid={TEST_IDS.userDetail.btnEdit}
+                  onClick={handleEditClick}
+                  className="px-4 py-2 bg-neon-purple hover:bg-neon-purple/80 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Edit Role
+                </button>
+              )
+            : null
         }
       />
 

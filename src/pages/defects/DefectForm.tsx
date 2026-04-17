@@ -16,13 +16,10 @@ import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useUsers } from "../../hooks/useUsers";
-import type { Defect } from "../../data/entities";
-import {
-  DEFECT_SEVERITIES,
-  DEFECT_PRIORITIES,
-} from "../../data/entities";
+import type { Defect, Severity, Priority } from "../../data/entities";
+import { DEFECT_SEVERITIES, DEFECT_PRIORITIES } from "../../data/entities";
 
-interface DefectFormData {
+interface DefectFormData extends Record<string, unknown> {
   title: string;
   projectId: number;
   severity: string;
@@ -45,7 +42,8 @@ function validateStep1(values: DefectFormData): Record<string, string> {
 
 function validateStep2(values: DefectFormData): Record<string, string> {
   const errors: Record<string, string> = {};
-  if (!values.description.trim()) errors.description = "Description is required";
+  if (!values.description.trim())
+    errors.description = "Description is required";
   if (!values.stepsToReproduce.trim())
     errors.stepsToReproduce = "Steps to reproduce is required";
   return errors;
@@ -104,7 +102,7 @@ export default function DefectForm() {
         relatedTestCaseIds: [],
       };
 
-  const form = useForm(initialValues, (values) => {
+  const form = useForm<DefectFormData>(initialValues, (values) => {
     const step1Errors = validateStep1(values);
     if (Object.keys(step1Errors).length > 0) return step1Errors;
     const step2Errors = validateStep2(values);
@@ -153,8 +151,9 @@ export default function DefectForm() {
           title: form.values.title,
           description: form.values.description,
           stepsToReproduce: form.values.stepsToReproduce,
-          severity: form.values.severity as any,
-          priority: form.values.priority as any,
+          severity: form.values.severity as Severity,
+          priority: form.values.priority as Priority,
+          status: "new",
           reporterId: user.id,
           assigneeId: form.values.assigneeId,
           environmentId: form.values.environmentId,
@@ -177,8 +176,7 @@ export default function DefectForm() {
             name="title"
             value={form.values.title}
             onChange={(e) => form.setField("title", e.target.value)}
-            onBlur={() => form.setFieldTouched("title")}
-            error={form.touched.title ? form.errors.title : null}
+            error={form.touched.title ? form.errors.title || null : null}
             placeholder="Brief description of the issue"
             required
             data-testid={TEST_IDS.defectForm.inputTitle}
@@ -187,15 +185,18 @@ export default function DefectForm() {
           <Select
             label="Project"
             name="projectId"
-            value={form.values.projectId ? form.values.projectId.toString() : ""}
+            value={
+              form.values.projectId ? form.values.projectId.toString() : ""
+            }
             onChange={(e) => {
               const projectId = parseInt(e.target.value, 10);
               form.setField("projectId", projectId);
               // Reset environment when project changes
               form.setField("environmentId", null);
             }}
-            onBlur={() => form.setFieldTouched("projectId")}
-            error={form.touched.projectId ? form.errors.projectId : null}
+            error={
+              form.touched.projectId ? form.errors.projectId || null : null
+            }
             options={projects.map((p) => ({
               value: p.id.toString(),
               label: p.name,
@@ -209,8 +210,7 @@ export default function DefectForm() {
             name="severity"
             value={form.values.severity}
             onChange={(e) => form.setField("severity", e.target.value)}
-            onBlur={() => form.setFieldTouched("severity")}
-            error={form.touched.severity ? form.errors.severity : null}
+            error={form.touched.severity ? form.errors.severity || null : null}
             options={DEFECT_SEVERITIES.map((s) => ({
               value: s,
               label: s,
@@ -224,8 +224,7 @@ export default function DefectForm() {
             name="priority"
             value={form.values.priority}
             onChange={(e) => form.setField("priority", e.target.value)}
-            onBlur={() => form.setFieldTouched("priority")}
-            error={form.touched.priority ? form.errors.priority : null}
+            error={form.touched.priority ? form.errors.priority || null : null}
             options={DEFECT_PRIORITIES.map((p) => ({
               value: p,
               label: p,
@@ -253,8 +252,9 @@ export default function DefectForm() {
             name="description"
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
-            onBlur={() => form.setFieldTouched("description")}
-            error={form.touched.description ? form.errors.description : null}
+            error={
+              form.touched.description ? form.errors.description || null : null
+            }
             placeholder="Detailed description of the defect"
             required
             data-testid={TEST_IDS.defectForm.inputDescription}
@@ -265,10 +265,9 @@ export default function DefectForm() {
             name="stepsToReproduce"
             value={form.values.stepsToReproduce}
             onChange={(e) => form.setField("stepsToReproduce", e.target.value)}
-            onBlur={() => form.setFieldTouched("stepsToReproduce")}
             error={
               form.touched.stepsToReproduce
-                ? form.errors.stepsToReproduce
+                ? form.errors.stepsToReproduce || null
                 : null
             }
             placeholder="Step-by-step instructions to reproduce"
@@ -282,7 +281,9 @@ export default function DefectForm() {
               name="environmentId"
               value={form.values.environmentId?.toString() || ""}
               onChange={(e) => {
-                const envId = e.target.value ? parseInt(e.target.value, 10) : null;
+                const envId = e.target.value
+                  ? parseInt(e.target.value, 10)
+                  : null;
                 form.setField("environmentId", envId);
               }}
               options={selectedProject.environments.map((e) => ({
@@ -318,7 +319,9 @@ export default function DefectForm() {
               name="assigneeId"
               value={form.values.assigneeId?.toString() || ""}
               onChange={(e) => {
-                const userId = e.target.value ? parseInt(e.target.value, 10) : null;
+                const userId = e.target.value
+                  ? parseInt(e.target.value, 10)
+                  : null;
                 form.setField("assigneeId", userId);
               }}
               options={projectMembers.map((u) => ({
@@ -337,13 +340,11 @@ export default function DefectForm() {
             <MultiSelect
               label="Related Test Cases (optional)"
               name="relatedTestCaseIds"
-              value={form.values.relatedTestCaseIds.map((id) =>
-                id.toString()
-              )}
+              value={form.values.relatedTestCaseIds.map((id) => id.toString())}
               onChange={(selected) => {
                 form.setField(
                   "relatedTestCaseIds",
-                  selected.map((id) => parseInt(id, 10))
+                  selected.map((id) => parseInt(id, 10)),
                 );
               }}
               options={projectTestCases.map((tc) => ({
@@ -381,6 +382,7 @@ export default function DefectForm() {
               <div>
                 <p className="text-xs text-gray-400 mb-2">Severity</p>
                 <StatusBadge
+                  data-testid="defect-form-review-severity"
                   type="severity"
                   value={form.values.severity as any}
                 />
@@ -388,6 +390,7 @@ export default function DefectForm() {
               <div>
                 <p className="text-xs text-gray-400 mb-2">Priority</p>
                 <StatusBadge
+                  data-testid="defect-form-review-priority"
                   type="priority"
                   value={form.values.priority as any}
                 />
@@ -411,7 +414,7 @@ export default function DefectForm() {
                 <p className="text-xs text-gray-400 mb-1">Environment</p>
                 <p className="text-white font-medium">
                   {selectedProject?.environments.find(
-                    (e) => e.id === form.values.environmentId
+                    (e) => e.id === form.values.environmentId,
                   )?.name || "Unknown"}
                 </p>
               </div>
@@ -422,14 +425,25 @@ export default function DefectForm() {
                 <p className="text-xs text-gray-400 mb-2">Assigned to</p>
                 {users.find((u) => u.id === form.values.assigneeId) && (
                   <div className="flex items-center gap-2">
-                    <UserAvatar
-                      userId={form.values.assigneeId}
-                      user={users.find((u) => u.id === form.values.assigneeId)}
-                    />
-                    <span className="text-white font-medium">
-                      {users.find((u) => u.id === form.values.assigneeId)
-                        ?.fullName}
-                    </span>
+                    {(() => {
+                      const assignee = users.find(
+                        (u) => u.id === form.values.assigneeId,
+                      );
+                      return assignee ? (
+                        <>
+                          <UserAvatar
+                            data-testid="defect-form-review-assignee"
+                            fullName={assignee.fullName}
+                            avatarColor={`#${(assignee.id * 9999).toString(16).padStart(6, "0")}`}
+                            role={assignee.role}
+                            size="sm"
+                          />
+                          <span className="text-white font-medium">
+                            {assignee.fullName}
+                          </span>
+                        </>
+                      ) : null;
+                    })()}
                   </div>
                 )}
               </div>

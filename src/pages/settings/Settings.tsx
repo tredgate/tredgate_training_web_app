@@ -162,16 +162,21 @@ export default function Settings() {
   });
 
   // Entity counts
-  const userCount =
-    JSON.parse(localStorage.getItem("tqh_users") || "[]").length;
-  const projectCount =
-    JSON.parse(localStorage.getItem("tqh_projects") || "[]").length;
-  const defectCount =
-    JSON.parse(localStorage.getItem("tqh_defects") || "[]").length;
-  const testPlanCount =
-    JSON.parse(localStorage.getItem("tqh_test_plans") || "[]").length;
-  const testRunCount =
-    JSON.parse(localStorage.getItem("tqh_test_runs") || "[]").length;
+  const userCount = JSON.parse(
+    localStorage.getItem("tqh_users") || "[]",
+  ).length;
+  const projectCount = JSON.parse(
+    localStorage.getItem("tqh_projects") || "[]",
+  ).length;
+  const defectCount = JSON.parse(
+    localStorage.getItem("tqh_defects") || "[]",
+  ).length;
+  const testPlanCount = JSON.parse(
+    localStorage.getItem("tqh_test_plans") || "[]",
+  ).length;
+  const testRunCount = JSON.parse(
+    localStorage.getItem("tqh_test_runs") || "[]",
+  ).length;
 
   return (
     <div data-testid={TEST_IDS.settings.page}>
@@ -180,7 +185,9 @@ export default function Settings() {
       <div className="space-y-6">
         {/* Data Management Card */}
         <div className="glass rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Data Management</h2>
+          <h2 className="text-2xl font-bold text-white mb-6">
+            Data Management
+          </h2>
 
           <div className="space-y-4">
             <button
@@ -280,23 +287,28 @@ export default function Settings() {
       {/* Reset Confirmation Modal */}
       <Modal
         isOpen={resetModal}
+        data-testid="settings-reset-modal"
         title="Reset to Seed Data?"
         onClose={() => setResetModal(false)}
-        actions={[
-          {
-            label: "Cancel",
-            onClick: () => setResetModal(false),
-            variant: "secondary",
-          },
-          {
-            label: "Reset",
-            onClick: () => {
-              handleResetToSeed();
-              setResetModal(false);
-            },
-            variant: "destructive",
-          },
-        ]}
+        footer={
+          <div className="flex gap-2 justify-end">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setResetModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                handleResetToSeed();
+                setResetModal(false);
+              }}
+            >
+              Reset
+            </button>
+          </div>
+        }
       >
         <p className="text-gray-300">
           This will reset all data to the initial seed state. This cannot be
@@ -307,23 +319,28 @@ export default function Settings() {
       {/* Clear Confirmation Modal */}
       <Modal
         isOpen={clearModal}
+        data-testid="settings-clear-modal"
         title="Clear All Data?"
         onClose={() => setClearModal(false)}
-        actions={[
-          {
-            label: "Cancel",
-            onClick: () => setClearModal(false),
-            variant: "secondary",
-          },
-          {
-            label: "Clear",
-            onClick: () => {
-              handleClearAllData();
-              setClearModal(false);
-            },
-            variant: "destructive",
-          },
-        ]}
+        footer={
+          <div className="flex gap-2 justify-end">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setClearModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                handleClearAllData();
+                setClearModal(false);
+              }}
+            >
+              Clear
+            </button>
+          </div>
+        }
       >
         <p className="text-gray-300">
           This will delete all data from localStorage. This cannot be undone.
@@ -333,43 +350,43 @@ export default function Settings() {
       {/* Import Modal */}
       <Modal
         isOpen={importModal}
+        data-testid="settings-import-modal"
         title="Import Data"
         onClose={() => {
           setImportModal(false);
           setImportedFile("");
         }}
-        actions={[
-          {
-            label: "Cancel",
-            onClick: () => {
-              setImportModal(false);
-              setImportedFile("");
-            },
-            variant: "secondary",
-          },
-          {
-            label: "Import",
-            onClick: handleImportData,
-            variant: "primary",
-            disabled: !importedFile,
-          },
-        ]}
+        footer={
+          <div className="flex gap-2 justify-end">
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                setImportModal(false);
+                setImportedFile("");
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleImportData}
+              disabled={!importedFile}
+            >
+              Import
+            </button>
+          </div>
+        }
       >
         <div className="space-y-4">
           <p className="text-gray-300">
             Select a JSON file exported from a previous backup.
           </p>
           <FileUpload
-            onChange={(file) => {
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                  const content = e.target?.result as string;
-                  setImportedFile(content);
-                };
-                reader.readAsText(file);
-              }
-            }}
+            data-testid="settings-import-file"
+            label="Import File"
+            name="importFile"
+            value={importedFile ? "data.json" : ""}
+            onChange={(filename) => setImportedFile(filename)}
             accept=".json"
           />
           {importedFile && (

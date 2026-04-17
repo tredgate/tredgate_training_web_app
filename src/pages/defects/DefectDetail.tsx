@@ -9,15 +9,36 @@ import UserAvatar from "../../components/display/UserAvatar";
 import ActivityTimeline from "../../components/display/ActivityTimeline";
 import TextArea from "../../components/forms/TextArea";
 import Select from "../../components/forms/Select";
-import { TEST_IDS, defectDetailBtn, defectCommentEntry } from "../../shared/testIds";
+import {
+  TEST_IDS,
+  defectDetailBtn,
+  defectCommentEntry,
+  defectBadge,
+} from "../../shared/testIds";
 import { useAuth } from "../../hooks/useAuth";
 import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
-import type { Defect, ActivityEntry } from "../../data/entities";
+import type { Defect } from "../../data/entities";
+import type { ActivityEntry } from "../../components/display/ActivityTimeline";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString();
+}
+
+function getUserAvatarColor(userId: number): string {
+  // Generate a consistent color based on user ID
+  const colors = [
+    "#FF6B6B", // Red
+    "#4ECDC4", // Teal
+    "#45B7D1", // Blue
+    "#FFA07A", // Light Salmon
+    "#98D8C8", // Mint
+    "#F7DC6F", // Yellow
+    "#BB8FCE", // Purple
+    "#85C1E2", // Light Blue
+  ];
+  return colors[userId % colors.length] ?? "#BB8FCE";
 }
 
 export default function DefectDetail() {
@@ -70,7 +91,7 @@ export default function DefectDetail() {
         text: entry.details,
         timestamp: entry.timestamp,
       })),
-    [defect.history, userMap]
+    [defect.history, userMap],
   );
 
   // Build comment entries
@@ -83,18 +104,17 @@ export default function DefectDetail() {
         text: comment.text,
         timestamp: comment.createdAt,
       })),
-    [defect.comments, userMap]
+    [defect.comments, userMap],
   );
 
   // Combine and sort by timestamp descending
   const allActivities = [...timelineEntries, ...commentEntries].sort(
-    (a, b) =>
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
   );
 
   const handleTransition = (action: string) => {
     if (!user) return;
-    
+
     // Check if this is an assign action - show modal
     if (action === "assign") {
       setShowAssignModal(true);
@@ -141,7 +161,8 @@ export default function DefectDetail() {
 
   const getTransitionButtonColor = (action: string): string => {
     if (["assign", "start"].includes(action)) return "btn-neon-blue";
-    if (["resolve", "verify", "close"].includes(action)) return "btn-neon-green";
+    if (["resolve", "verify", "close"].includes(action))
+      return "btn-neon-green";
     if (action === "reject") return "btn-neon-red";
     if (action === "reopen") return "btn-neon-purple";
     return "btn-neon";
@@ -219,7 +240,13 @@ export default function DefectDetail() {
                     >
                       <div className="flex items-center gap-2 mb-2">
                         {commentUser && (
-                          <UserAvatar userId={comment.userId} user={commentUser} />
+                          <UserAvatar
+                            data-testid={`defect-comment-avatar-${comment.id}`}
+                            fullName={commentUser.fullName}
+                            avatarColor={getUserAvatarColor(commentUser.id)}
+                            role={commentUser.role}
+                            size="sm"
+                          />
                         )}
                         <div>
                           <p className="text-sm font-medium text-gray-200">
@@ -272,15 +299,27 @@ export default function DefectDetail() {
             <div className="space-y-3">
               <div>
                 <p className="text-xs text-gray-400 mb-1">Current Status</p>
-                <StatusBadge type="status" value={defect.status as any} />
+                <StatusBadge
+                  data-testid={defectBadge("status", defect.id)}
+                  type="status"
+                  value={defect.status}
+                />
               </div>
               <div>
                 <p className="text-xs text-gray-400 mb-1">Severity</p>
-                <StatusBadge type="severity" value={defect.severity as any} />
+                <StatusBadge
+                  data-testid={defectBadge("severity", defect.id)}
+                  type="severity"
+                  value={defect.severity}
+                />
               </div>
               <div>
                 <p className="text-xs text-gray-400 mb-1">Priority</p>
-                <StatusBadge type="priority" value={defect.priority as any} />
+                <StatusBadge
+                  data-testid={defectBadge("priority", defect.id)}
+                  type="priority"
+                  value={defect.priority}
+                />
               </div>
             </div>
           </div>
@@ -290,13 +329,21 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.cardAssignment}
           >
-            <h3 className="text-lg font-semibold text-white mb-4">Assignment</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Assignment
+            </h3>
             <div className="space-y-4">
               <div>
                 <p className="text-xs text-gray-400 mb-2">Reporter</p>
                 {reporter ? (
                   <div className="flex items-center gap-2">
-                    <UserAvatar userId={reporter.id} user={reporter} />
+                    <UserAvatar
+                      data-testid="defect-reporter-avatar"
+                      fullName={reporter.fullName}
+                      avatarColor={getUserAvatarColor(reporter.id)}
+                      role={reporter.role}
+                      size="sm"
+                    />
                     <span className="text-sm text-gray-300">
                       {reporter.fullName}
                     </span>
@@ -309,7 +356,13 @@ export default function DefectDetail() {
                 <p className="text-xs text-gray-400 mb-2">Assignee</p>
                 {assignee ? (
                   <div className="flex items-center gap-2">
-                    <UserAvatar userId={assignee.id} user={assignee} />
+                    <UserAvatar
+                      data-testid="defect-assignee-avatar"
+                      fullName={assignee.fullName}
+                      avatarColor={getUserAvatarColor(assignee.id)}
+                      role={assignee.role}
+                      size="sm"
+                    />
                     <span className="text-sm text-gray-300">
                       {assignee.fullName}
                     </span>
@@ -345,8 +398,9 @@ export default function DefectDetail() {
                 <p className="text-xs text-gray-400 mb-1">Environment</p>
                 {defect.environmentId ? (
                   <span className="text-gray-300">
-                    {project?.environments.find((e) => e.id === defect.environmentId)
-                      ?.name || "Unknown"}
+                    {project?.environments.find(
+                      (e) => e.id === defect.environmentId,
+                    )?.name || "Unknown"}
                   </span>
                 ) : (
                   <span className="text-gray-500">Not specified</span>
@@ -354,11 +408,15 @@ export default function DefectDetail() {
               </div>
               <div>
                 <p className="text-xs text-gray-400 mb-1">Created</p>
-                <span className="text-gray-300">{formatDate(defect.createdAt)}</span>
+                <span className="text-gray-300">
+                  {formatDate(defect.createdAt)}
+                </span>
               </div>
               <div>
                 <p className="text-xs text-gray-400 mb-1">Updated</p>
-                <span className="text-gray-300">{formatDate(defect.updatedAt)}</span>
+                <span className="text-gray-300">
+                  {formatDate(defect.updatedAt)}
+                </span>
               </div>
             </div>
           </div>

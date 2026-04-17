@@ -1,12 +1,25 @@
 import type { JSX } from "react";
 import type {
+  Role,
   Severity,
   DefectStatus,
   Priority,
   ProjectStatus,
+  TestPlanStatus,
+  TestCasePriority,
+  TestCaseResultStatus,
 } from "../../data/entities";
 
-export type BadgeType = "severity" | "status" | "priority" | "project_status";
+export type BadgeType =
+  | "severity"
+  | "status"
+  | "priority"
+  | "project_status"
+  | "role"
+  | "testplan_status"
+  | "testcase_priority"
+  | "testrun_status"
+  | "testcase_result";
 
 export type StatusBadgeProps =
   | {
@@ -31,6 +44,36 @@ export type StatusBadgeProps =
       "data-testid": string;
       type: "project_status";
       value: ProjectStatus;
+      className?: string;
+    }
+  | {
+      "data-testid": string;
+      type: "role";
+      value: Role;
+      className?: string;
+    }
+  | {
+      "data-testid": string;
+      type: "testplan_status";
+      value: TestPlanStatus;
+      className?: string;
+    }
+  | {
+      "data-testid": string;
+      type: "testcase_priority";
+      value: TestCasePriority;
+      className?: string;
+    }
+  | {
+      "data-testid": string;
+      type: "testrun_status";
+      value: "in_progress" | "completed";
+      className?: string;
+    }
+  | {
+      "data-testid": string;
+      type: "testcase_result";
+      value: TestCaseResultStatus;
       className?: string;
     };
 
@@ -61,6 +104,33 @@ const COLORS: Record<BadgeType, Record<string, string>> = {
     planning: "bg-blue-500/20 text-blue-400 border-blue-500/30",
     active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
     archived: "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  },
+  role: {
+    tester: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    qa_lead: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    admin: "bg-red-500/20 text-red-400 border-red-500/30",
+  },
+  testplan_status: {
+    draft: "bg-gray-500/20 text-gray-400 border-gray-500/30",
+    active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    completed: "bg-teal-500/20 text-teal-400 border-teal-500/30",
+    archived: "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  },
+  testcase_priority: {
+    high: "bg-red-500/20 text-red-400 border-red-500/30",
+    medium: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    low: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  },
+  testrun_status: {
+    in_progress: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    completed: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  },
+  testcase_result: {
+    not_run: "bg-gray-500/20 text-gray-400 border-gray-500/30",
+    passed: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    failed: "bg-red-500/20 text-red-400 border-red-500/30",
+    blocked: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    skipped: "bg-blue-500/20 text-blue-400 border-blue-500/30",
   },
 };
 

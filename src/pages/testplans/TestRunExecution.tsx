@@ -1,6 +1,12 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, CheckCircle, XCircle, SkipForward } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle,
+  XCircle,
+  SkipForward,
+} from "lucide-react";
 import { TEST_IDS, testrunStepBtn } from "../../shared/testIds";
 import PageHeader from "../../components/layout/PageHeader";
 import Modal from "../../components/feedback/Modal";
@@ -9,7 +15,11 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useToast } from "../../hooks/useToast";
-import type { TestRun, TestRunResult, TestCaseResultStatus } from "../../data/entities";
+import type {
+  TestRun,
+  TestRunResult,
+  TestCaseResultStatus,
+} from "../../data/entities";
 
 interface FailNoteModalData {
   caseIndex: number;
@@ -20,7 +30,12 @@ export default function TestRunExecution() {
   const { runId } = useParams<{ runId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { testRuns, getById: getRunById, updateResult, completeRun } = useTestRuns();
+  const {
+    testRuns,
+    getById: getRunById,
+    updateResult,
+    completeRun,
+  } = useTestRuns();
   const { getById: getPlanById } = useTestPlans();
   const { addToast } = useToast();
 
@@ -82,7 +97,8 @@ export default function TestRunExecution() {
   const completedSteps = testRun.results.filter(
     (r) => r.status !== "not_run",
   ).length;
-  const progressPercent = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+  const progressPercent =
+    totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 
   // Get results for current case
   const currentCaseResults = testRun.results.filter(
@@ -140,11 +156,7 @@ export default function TestRunExecution() {
     if (!caseId) return;
 
     const status: TestCaseResultStatus =
-      verdict === "pass"
-        ? "passed"
-        : verdict === "skip"
-          ? "skipped"
-          : "failed";
+      verdict === "pass" ? "passed" : verdict === "skip" ? "skipped" : "failed";
 
     const resultData: Partial<TestRunResult> = {
       status,
@@ -231,7 +243,9 @@ export default function TestRunExecution() {
             {currentCase.name}
           </h2>
           {currentCase.description && (
-            <p className="text-gray-400 text-sm mb-4">{currentCase.description}</p>
+            <p className="text-gray-400 text-sm mb-4">
+              {currentCase.description}
+            </p>
           )}
 
           {/* Case status if completed */}
@@ -240,7 +254,8 @@ export default function TestRunExecution() {
               <p className="text-gray-300">
                 <span className="text-green-400">✓</span> Passed: {casePassed} ·{" "}
                 <span className="text-red-400">✗</span> Failed: {caseFailed} ·{" "}
-                <span className="text-yellow-400">⊘</span> Skipped: {caseSkipped}
+                <span className="text-yellow-400">⊘</span> Skipped:{" "}
+                {caseSkipped}
               </p>
             </div>
           )}
@@ -282,7 +297,9 @@ export default function TestRunExecution() {
                         )}
                       </div>
                       <p className="text-white font-medium">Action:</p>
-                      <p className="text-gray-300 text-sm ml-2">{step.action}</p>
+                      <p className="text-gray-300 text-sm ml-2">
+                        {step.action}
+                      </p>
                       <p className="text-white font-medium mt-2">Expected:</p>
                       <p className="text-gray-300 text-sm ml-2">
                         {step.expectedResult}
@@ -302,11 +319,7 @@ export default function TestRunExecution() {
                       <div className="flex gap-2">
                         <button
                           onClick={() =>
-                            handleStepVerdict(
-                              currentCaseIndex,
-                              stepIdx,
-                              "pass",
-                            )
+                            handleStepVerdict(currentCaseIndex, stepIdx, "pass")
                           }
                           className="btn btn-ghost bg-green-500/20 text-green-400 hover:bg-green-500/30"
                           data-testid={testrunStepBtn(
@@ -320,11 +333,7 @@ export default function TestRunExecution() {
                         </button>
                         <button
                           onClick={() =>
-                            handleStepVerdict(
-                              currentCaseIndex,
-                              stepIdx,
-                              "fail",
-                            )
+                            handleStepVerdict(currentCaseIndex, stepIdx, "fail")
                           }
                           className="btn btn-ghost bg-red-500/20 text-red-400 hover:bg-red-500/30"
                           data-testid={testrunStepBtn(
@@ -338,11 +347,7 @@ export default function TestRunExecution() {
                         </button>
                         <button
                           onClick={() =>
-                            handleStepVerdict(
-                              currentCaseIndex,
-                              stepIdx,
-                              "skip",
-                            )
+                            handleStepVerdict(currentCaseIndex, stepIdx, "skip")
                           }
                           className="btn btn-ghost bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30"
                           data-testid={testrunStepBtn(
@@ -399,6 +404,8 @@ export default function TestRunExecution() {
       {/* Fail note modal */}
       {failNoteModal && (
         <Modal
+          isOpen={!!failNoteModal}
+          data-testid="testrun-fail-note-modal"
           title="Record Failure"
           onClose={() => setFailNoteModal(null)}
         >

@@ -10,7 +10,6 @@ import { useUsers } from "../../hooks/useUsers";
 import { useDefects } from "../../hooks/useDefects";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useProjects } from "../../hooks/useProjects";
-import type { Role } from "../../data/entities";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -44,7 +43,8 @@ export default function Profile() {
       });
       addToast("success", "Profile updated successfully");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to save profile";
+      const message =
+        err instanceof Error ? err.message : "Failed to save profile";
       addToast("error", message);
     } finally {
       setIsSaving(false);
@@ -62,7 +62,7 @@ export default function Profile() {
   const assignedToMe = defects.filter((d) => d.assigneeId === user.id);
 
   // My test runs
-  const myTestRuns = testRuns.filter((tr) => tr.executedBy === user.id);
+  const myTestRuns = testRuns.filter((tr) => tr.executorId === user.id);
 
   // My projects
   const myProjects = projects.filter(
@@ -79,8 +79,11 @@ export default function Profile() {
           <div className="glass rounded-lg p-8">
             <div className="flex flex-col items-center mb-8">
               <UserAvatar
+                data-testid="profile-avatar"
                 fullName={user.fullName}
-                avatarColor={user.avatarColor}
+                avatarColor={
+                  users.find((u) => u.id === user.id)?.avatarColor ?? "#BB8FCE"
+                }
                 role={user.role}
                 size="lg"
               />
@@ -95,6 +98,7 @@ export default function Profile() {
                 <TextInput
                   data-testid={TEST_IDS.profile.inputName}
                   label="Full Name"
+                  name="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Enter your full name"
@@ -103,6 +107,7 @@ export default function Profile() {
                 <TextInput
                   data-testid={TEST_IDS.profile.inputEmail}
                   label="Email"
+                  name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -117,8 +122,9 @@ export default function Profile() {
                     Role
                   </label>
                   <StatusBadge
+                    data-testid="profile-role-badge"
                     type="role"
-                    value={user.role as Role}
+                    value={user.role}
                   />
                 </div>
 

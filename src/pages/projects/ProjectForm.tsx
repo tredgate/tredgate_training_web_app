@@ -8,12 +8,20 @@ import TextArea from "../../components/forms/TextArea";
 import Select from "../../components/forms/Select";
 import MultiSelect from "../../components/forms/MultiSelect";
 import EmptyState from "../../components/feedback/EmptyState";
-import { TEST_IDS, projectFormEnvRow, projectFormEnvRemove } from "../../shared/testIds";
+import {
+  TEST_IDS,
+  projectFormEnvRow,
+  projectFormEnvRemove,
+} from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
 import { PROJECT_STATUSES, ENVIRONMENT_TYPES } from "../../data/entities";
-import type { Project, Environment, EnvironmentType } from "../../data/entities";
+import type {
+  Project,
+  Environment,
+  EnvironmentType,
+} from "../../data/entities";
 
 interface FormValues extends Record<string, unknown> {
   name: string;
@@ -81,7 +89,9 @@ export default function ProjectForm() {
     return environments.every((env) => env.name.trim() && env.type);
   };
 
-  const qaLeadUsers = users.filter((u) => u.role === "qa_lead" || u.role === "admin");
+  const qaLeadUsers = users.filter(
+    (u) => u.role === "qa_lead" || u.role === "admin",
+  );
 
   const handleAddEnvironment = () => {
     setEnvironments([...environments, { name: "", type: "dev", url: "" }]);
@@ -155,7 +165,7 @@ export default function ProjectForm() {
         return !basicErrors;
       },
       content: (
-      <div data-testid={`project-form-step-1`} className="space-y-4 py-4">
+        <div data-testid={`project-form-step-1`} className="space-y-4 py-4">
           <TextInput
             data-testid={TEST_IDS.projectForm.inputName}
             label="Project Name"
@@ -171,7 +181,9 @@ export default function ProjectForm() {
             label="Project Code"
             name="code"
             value={form.values.code}
-            onChange={(e) => form.setField("code", e.target.value.toUpperCase())}
+            onChange={(e) =>
+              form.setField("code", e.target.value.toUpperCase())
+            }
             error={form.touched.code ? (form.errors.code ?? null) : null}
             placeholder="e.g., PROJ001"
             required
@@ -183,7 +195,11 @@ export default function ProjectForm() {
             name="description"
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
-            error={form.touched.description ? (form.errors.description ?? null) : null}
+            error={
+              form.touched.description
+                ? (form.errors.description ?? null)
+                : null
+            }
             required
           />
 
@@ -209,7 +225,7 @@ export default function ProjectForm() {
         return !errors.leadId;
       },
       content: (
-      <div data-testid={`project-form-step-2`} className="space-y-4 py-4">
+        <div data-testid={`project-form-step-2`} className="space-y-4 py-4">
           <Select
             data-testid={TEST_IDS.projectForm.selectLead}
             label="QA Lead"
@@ -270,7 +286,11 @@ export default function ProjectForm() {
                     name={`env-type-${idx}`}
                     value={env.type}
                     onChange={(e) =>
-                      handleEnvironmentChange(idx, "type", e.target.value as EnvironmentType)
+                      handleEnvironmentChange(
+                        idx,
+                        "type",
+                        e.target.value as EnvironmentType,
+                      )
                     }
                     options={ENVIRONMENT_TYPES.map((t) => ({
                       value: t,
@@ -330,7 +350,9 @@ export default function ProjectForm() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Code:</span>
-                <span className="text-white">{form.values.code.toUpperCase()}</span>
+                <span className="text-white">
+                  {form.values.code.toUpperCase()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Status:</span>
@@ -372,7 +394,9 @@ export default function ProjectForm() {
               Environments
             </h3>
             {environments.length === 0 ? (
-              <p className="text-gray-400 text-sm">No environments configured</p>
+              <p className="text-gray-400 text-sm">
+                No environments configured
+              </p>
             ) : (
               <div className="space-y-2">
                 {environments.map((env, idx) => (

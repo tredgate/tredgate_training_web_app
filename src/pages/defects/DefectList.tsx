@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import PageHeader from "../../components/layout/PageHeader";
 import DataTable from "../../components/data/DataTable";
+import type { Column } from "../../components/data/DataTable";
 import StatusBadge from "../../components/feedback/StatusBadge";
 import UserAvatar from "../../components/display/UserAvatar";
 import { TEST_IDS, defectBadge } from "../../shared/testIds";
@@ -33,25 +34,25 @@ export default function DefectList() {
     label: p.name,
   }));
 
-  const columns = [
+  const columns: Column<Defect>[] = [
     {
       key: "id",
       label: "ID",
       sortable: true,
-      render: (val: number) => `#${val}`,
+      render: (val) => `#${val as number}`,
     },
     {
       key: "title",
       label: "Title",
       sortable: true,
-      render: (val: string) => val,
+      render: (val) => val as string,
     },
     {
       key: "projectId",
       label: "Project",
       sortable: true,
-      render: (val: number) => {
-        const project = projectMap.get(val);
+      render: (val) => {
+        const project = projectMap.get(val as number);
         return project ? project.name : "Unknown";
       },
     },
@@ -59,7 +60,7 @@ export default function DefectList() {
       key: "severity",
       label: "Severity",
       sortable: true,
-      render: (val: string, row: Defect) => (
+      render: (val, row: Defect) => (
         <StatusBadge
           type="severity"
           value={val as any}
@@ -71,7 +72,7 @@ export default function DefectList() {
       key: "priority",
       label: "Priority",
       sortable: true,
-      render: (val: string, row: Defect) => (
+      render: (val, row: Defect) => (
         <StatusBadge
           type="priority"
           value={val as any}
@@ -83,7 +84,7 @@ export default function DefectList() {
       key: "status",
       label: "Status",
       sortable: true,
-      render: (val: string, row: Defect) => (
+      render: (val, row: Defect) => (
         <StatusBadge
           type="status"
           value={val as any}
@@ -95,18 +96,26 @@ export default function DefectList() {
       key: "assigneeId",
       label: "Assignee",
       sortable: false,
-      render: (val: number | null) =>
-        val ? (
-          <UserAvatar userId={val} user={userMap.get(val)} />
-        ) : (
-          <span className="text-gray-500">Unassigned</span>
-        ),
+      render: (val) => {
+        if (!val) return <span className="text-gray-500">Unassigned</span>;
+        const assignee = userMap.get(val as number);
+        if (!assignee) return <span className="text-gray-500">Unknown</span>;
+        return (
+          <UserAvatar
+            data-testid={`defect-list-assignee-avatar-${val}`}
+            fullName={assignee.fullName}
+            avatarColor={`#${(assignee.id * 9999).toString(16).padStart(6, "0")}`}
+            role={assignee.role}
+            size="sm"
+          />
+        );
+      },
     },
     {
       key: "updatedAt",
       label: "Updated",
       sortable: true,
-      render: (val: string) => formatDate(val),
+      render: (val) => formatDate(val as string),
     },
   ];
 
@@ -138,26 +147,17 @@ export default function DefectList() {
             {
               key: "severity",
               label: "Severity",
-              options: DEFECT_SEVERITIES.map((s) => ({
-                value: s,
-                label: s,
-              })),
+              options: DEFECT_SEVERITIES as any,
             },
             {
               key: "status",
               label: "Status",
-              options: DEFECT_STATUSES.map((s) => ({
-                value: s,
-                label: s,
-              })),
+              options: DEFECT_STATUSES as any,
             },
             {
               key: "priority",
               label: "Priority",
-              options: DEFECT_PRIORITIES.map((p) => ({
-                value: p,
-                label: p,
-              })),
+              options: DEFECT_PRIORITIES as any,
             },
             {
               key: "projectId",

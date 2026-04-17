@@ -10,7 +10,7 @@ import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
 import { hasPermission } from "../../utils/permissions";
 import type { Column } from "../../components/data/DataTable";
-import type { TestPlan } from "../../data/entities";
+import type { TestPlan, TestPlanStatus } from "../../data/entities";
 
 function formatDate(date: string): string {
   return new Date(date).toLocaleDateString("en-US", {
@@ -57,7 +57,13 @@ export default function TestPlanList() {
       key: "status",
       label: "Status",
       sortable: true,
-      render: (val) => <StatusBadge type="testplan_status" value={val as string} />,
+      render: (val) => (
+        <StatusBadge
+          data-testid="testplan-list-status"
+          type="testplan_status"
+          value={val as TestPlanStatus}
+        />
+      ),
     },
     {
       key: "testCases",
@@ -75,10 +81,14 @@ export default function TestPlanList() {
       render: (val) => {
         const userId = val as number | null;
         if (!userId) return "—";
+        const assignee = users.find((u) => u.id === userId);
+        if (!assignee) return "Unknown";
         return (
           <UserAvatar
-            userId={userId}
-            users={users}
+            data-testid={`testplan-list-assignee-${userId}`}
+            fullName={assignee.fullName}
+            avatarColor={assignee.avatarColor}
+            role={assignee.role}
             size="sm"
           />
         );
@@ -91,12 +101,6 @@ export default function TestPlanList() {
       render: (val) => formatDate(val as string),
     },
   ];
-
-  // Project filter options
-  const projectOptions = projects.map((p) => ({
-    value: p.id.toString(),
-    label: p.name,
-  }));
 
   return (
     <div data-testid={TEST_IDS.testplanList.page}>
@@ -125,17 +129,12 @@ export default function TestPlanList() {
             {
               key: "status",
               label: "Status",
-              options: [
-                { value: "draft", label: "Draft" },
-                { value: "active", label: "Active" },
-                { value: "completed", label: "Completed" },
-                { value: "archived", label: "Archived" },
-              ],
+              options: ["draft", "active", "completed", "archived"],
             },
             {
               key: "projectId",
               label: "Project",
-              options: projectOptions,
+              options: projects.map((p) => p.name),
             },
           ]}
           pagination

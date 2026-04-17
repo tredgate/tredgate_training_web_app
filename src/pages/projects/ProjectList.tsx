@@ -8,7 +8,11 @@ import { TEST_IDS } from "../../shared/testIds";
 import { useAuth } from "../../hooks/useAuth";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
-import { PROJECT_STATUSES, type Project, type ProjectStatus } from "../../data/entities";
+import {
+  PROJECT_STATUSES,
+  type Project,
+  type ProjectStatus,
+} from "../../data/entities";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString();
