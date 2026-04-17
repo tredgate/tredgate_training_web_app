@@ -17,6 +17,7 @@ export const SEED_USERS: User[] = [
     email: "tom@tredgate.com",
     avatarColor: "#3b82f6",
     projectIds: [1, 2],
+    isActive: true,
     createdAt: "2025-01-15T09:00:00.000Z",
   },
   {
@@ -28,6 +29,7 @@ export const SEED_USERS: User[] = [
     email: "laura@tredgate.com",
     avatarColor: "#a855f7",
     projectIds: [1, 2, 3],
+    isActive: true,
     createdAt: "2025-01-10T09:00:00.000Z",
   },
   {
@@ -39,6 +41,7 @@ export const SEED_USERS: User[] = [
     email: "alex@tredgate.com",
     avatarColor: "#ef4444",
     projectIds: [1, 2, 3],
+    isActive: true,
     createdAt: "2025-01-01T09:00:00.000Z",
   },
 ];

@@ -29,7 +29,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T10  | Projects Module                  | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | 950af1b |                                                  |
 | T11  | Defects Module                   | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | e9beb0a |                                                  |
 | T12  | Test Plans & Runs                | ✅ done        | T2–T8              | 2026-04-17 | 2026-04-17 | b9a684d |                                                  |
-| T13  | Team Module                      | ⬜ pending     | T2, T3, T4, T7, T8 | —          | —          | —       |                                                  |
+| T13  | Team Module                      | ✅ done        | T2, T3, T4, T7, T8 | 2026-04-17 | 2026-04-17 | 77caa22 |                                                  |
 | T14  | Reports, Settings, Profile       | ⬜ pending     | T2–T8              | —          | —          | —       |                                                  |
 | T15  | Fix Cross-Task Consistency       | ✅ done        | T1–T14 authored    | 2026-04-15 | 2026-04-15 | —       | Prompt-file edits only; no src commit            |
 | T16  | Unit Tests                       | ⚠️ blocked     | T1                 | 2026-04-17 | —          | 38fbc76 | Tests pass at runtime; 56 TS errors in test code |

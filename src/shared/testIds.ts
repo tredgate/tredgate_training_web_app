@@ -157,9 +157,22 @@ export const TEST_IDS = {
   },
   teamList: {
     page: "team-list-page",
+    table: "team-list-table",
+    inputSearch: "team-list-input-search",
+    selectRoleFilter: "team-list-select-role-filter",
+    selectStatusFilter: "team-list-select-status-filter",
   },
   userDetail: {
     page: "user-detail-page",
+    profile: "user-detail-profile",
+    activity: "user-detail-activity",
+    projects: "user-detail-projects",
+    stats: "user-detail-stats",
+    btnEdit: "user-detail-btn-edit",
+    selectRole: "user-detail-select-role",
+    selectProjects: "user-detail-select-projects",
+    btnSave: "user-detail-btn-save",
+    btnCancel: "user-detail-btn-cancel",
   },
   reports: {
     page: "reports-page",

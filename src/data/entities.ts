@@ -99,6 +99,7 @@ export interface User {
   email: string;
   avatarColor: string;
   projectIds: number[];
+  isActive: boolean;
   createdAt: string;
 }
 
