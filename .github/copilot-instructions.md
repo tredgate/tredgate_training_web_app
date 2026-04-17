@@ -21,6 +21,8 @@ When you start or finish a task:
 3. **Blocked** — set `⚠️ blocked` with a short note.
 4. **Partial** — stay on `🟡 in-progress`; do not move the file.
 
+**Commit rule:** Every completed task must end with a `git commit`. No task is considered done until its changes are committed. The commit must include the implementation, the STATUS.md update, and the `git mv` of the prompt file — all in one atomic commit. Use the short SHA from that commit to fill in the _Commit_ column in STATUS.md.
+
 ## Scope
 
 This is a **frontend-only Playwright test-automation training app** written in **TypeScript (strict)**. Do not add backend code, real authentication, or runtime schema validation (Zod/Yup). Unit tests (Vitest) exist only for pure logic modules — not components or pages. See architecture doc §16 ("Things NOT To Do"), §16b (TypeScript), and §17 (Testing).
