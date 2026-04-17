@@ -221,7 +221,10 @@ export default function TestRunExecution() {
         <div className="space-y-2">
           <div className="flex justify-between items-center text-sm">
             <span className="text-gray-400">
-              {t.testRunExecution.progressLabel(currentCaseIndex + 1, testPlan.testCases.length)}
+              {t.testRunExecution.progressLabel(
+                currentCaseIndex + 1,
+                testPlan.testCases.length,
+              )}
             </span>
             <span className="text-gray-400">
               {t.testRunExecution.progressComplete(Math.round(progressPercent))}
@@ -297,17 +300,23 @@ export default function TestRunExecution() {
                           </span>
                         )}
                       </div>
-                      <p className="text-white font-medium">{t.testRunExecution.labelAction}</p>
+                      <p className="text-white font-medium">
+                        {t.testRunExecution.labelAction}
+                      </p>
                       <p className="text-gray-300 text-sm ml-2">
                         {step.action}
                       </p>
-                      <p className="text-white font-medium mt-2">{t.testRunExecution.labelExpected}</p>
+                      <p className="text-white font-medium mt-2">
+                        {t.testRunExecution.labelExpected}
+                      </p>
                       <p className="text-gray-300 text-sm ml-2">
                         {step.expectedResult}
                       </p>
                       {result?.notes && (
                         <>
-                          <p className="text-white font-medium mt-2">{t.testRunExecution.labelNote}</p>
+                          <p className="text-white font-medium mt-2">
+                            {t.testRunExecution.labelNote}
+                          </p>
                           <p className="text-gray-300 text-sm ml-2">
                             {result.notes}
                           </p>
@@ -328,7 +337,9 @@ export default function TestRunExecution() {
                             stepIdx,
                             "pass",
                           )}
-                          title={t.testRunExecution.statusPassed(1).replace(" 1", "")}
+                          title={t.testRunExecution
+                            .statusPassed(1)
+                            .replace(" 1", "")}
                         >
                           <CheckCircle size={20} />
                         </button>
@@ -342,7 +353,9 @@ export default function TestRunExecution() {
                             stepIdx,
                             "fail",
                           )}
-                          title={t.testRunExecution.statusFailed(1).replace(" 1", "")}
+                          title={t.testRunExecution
+                            .statusFailed(1)
+                            .replace(" 1", "")}
                         >
                           <XCircle size={20} />
                         </button>
@@ -356,7 +369,9 @@ export default function TestRunExecution() {
                             stepIdx,
                             "skip",
                           )}
-                          title={t.testRunExecution.statusSkipped(1).replace(" 1", "")}
+                          title={t.testRunExecution
+                            .statusSkipped(1)
+                            .replace(" 1", "")}
                         >
                           <SkipForward size={20} />
                         </button>

@@ -254,7 +254,9 @@ export default function Reports() {
       {activeTab === "defect-trends" && (
         <div className="space-y-6 mt-6">
           <div className="glass rounded-lg p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white">{t.reports.filterLabel}</h3>
+            <h3 className="text-lg font-semibold text-white">
+              {t.reports.filterLabel}
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Select
                 data-testid={TEST_IDS.reports.filterProject}
@@ -314,7 +316,7 @@ export default function Reports() {
           <div className="space-y-6">
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.reports.tableSeverityTitle}
+                {t.reports.tableSeverityTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.severityTable}
@@ -325,7 +327,9 @@ export default function Reports() {
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colSeverity}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCount}</th>
+                    <th className="text-left py-3 px-4 text-gray-300">
+                      {t.reports.colCount}
+                    </th>
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colPctOfTotal}
                     </th>
@@ -351,7 +355,7 @@ export default function Reports() {
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.reports.tableStatusTitle}
+                {t.reports.tableStatusTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.statusTable}
@@ -362,7 +366,9 @@ export default function Reports() {
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colStatus}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCount}</th>
+                    <th className="text-left py-3 px-4 text-gray-300">
+                      {t.reports.colCount}
+                    </th>
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colPctOfTotal}
                     </th>
@@ -388,7 +394,7 @@ export default function Reports() {
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.reports.tableProjectTitle}
+                {t.reports.tableProjectTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.projectTable}
@@ -399,8 +405,12 @@ export default function Reports() {
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colProject}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colTotal}</th>
-                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colOpen}</th>
+                    <th className="text-left py-3 px-4 text-gray-300">
+                      {t.reports.colTotal}
+                    </th>
+                    <th className="text-left py-3 px-4 text-gray-300">
+                      {t.reports.colOpen}
+                    </th>
                     <th className="text-left py-3 px-4 text-gray-300">
                       {t.reports.colResolved}
                     </th>
@@ -467,9 +477,15 @@ export default function Reports() {
                   <th className="text-left py-3 px-4 text-gray-300">
                     {t.reports.colPlanName}
                   </th>
-                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colProject}</th>
-                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCases}</th>
-                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colRuns}</th>
+                  <th className="text-left py-3 px-4 text-gray-300">
+                    {t.reports.colProject}
+                  </th>
+                  <th className="text-left py-3 px-4 text-gray-300">
+                    {t.reports.colCases}
+                  </th>
+                  <th className="text-left py-3 px-4 text-gray-300">
+                    {t.reports.colRuns}
+                  </th>
                   <th className="text-left py-3 px-4 text-gray-300">
                     {t.reports.colLastRun}
                   </th>
@@ -509,8 +525,12 @@ export default function Reports() {
             >
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colName}</th>
-                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colRole}</th>
+                  <th className="text-left py-3 px-4 text-gray-300">
+                    {t.reports.colName}
+                  </th>
+                  <th className="text-left py-3 px-4 text-gray-300">
+                    {t.reports.colRole}
+                  </th>
                   <th className="text-left py-3 px-4 text-gray-300">
                     {t.reports.colAssigned}
                   </th>
@@ -545,7 +565,7 @@ export default function Reports() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.reports.topReportersTitle}
+                {t.reports.topReportersTitle}
               </h3>
               <div
                 data-testid={TEST_IDS.reports.topReporters}
@@ -571,7 +591,7 @@ export default function Reports() {
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.reports.topExecutorsTitle}
+                {t.reports.topExecutorsTitle}
               </h3>
               <div
                 data-testid={TEST_IDS.reports.topExecutors}

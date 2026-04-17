@@ -108,7 +108,11 @@ export default function ProjectList() {
         searchable
         searchPlaceholder={t.projects.searchPlaceholder}
         filters={[
-          { key: "status", label: t.projects.filterStatus, options: PROJECT_STATUSES },
+          {
+            key: "status",
+            label: t.projects.filterStatus,
+            options: PROJECT_STATUSES,
+          },
         ]}
         pagination
         pageSize={10}

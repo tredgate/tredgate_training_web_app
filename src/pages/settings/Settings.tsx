@@ -142,7 +142,8 @@ export default function Settings() {
         window.location.reload();
       }, 500);
     } catch (err) {
-      const message = err instanceof Error ? err.message : t.settings.toastImportInvalidJson;
+      const message =
+        err instanceof Error ? err.message : t.settings.toastImportInvalidJson;
       addToast("error", t.settings.toastImportFailed(message));
     }
   };
@@ -205,7 +206,9 @@ export default function Settings() {
               onClick={() => setClearModal(true)}
               className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center justify-between transition-colors"
             >
-              <span className="font-semibold">{t.settings.btnClearAllData}</span>
+              <span className="font-semibold">
+                {t.settings.btnClearAllData}
+              </span>
               <Trash2 className="w-5 h-5" />
             </button>
 
@@ -238,12 +241,16 @@ export default function Settings() {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">{t.settings.labelAppVersion}</span>
+              <span className="text-gray-300">
+                {t.settings.labelAppVersion}
+              </span>
               <span className="text-white font-semibold">1.0.0</span>
             </div>
 
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">{t.settings.labelLocalStorageUsage}</span>
+              <span className="text-gray-300">
+                {t.settings.labelLocalStorageUsage}
+              </span>
               <span className="text-white font-semibold">
                 {(totalBytes / 1024).toFixed(2)} KB
               </span>
@@ -262,22 +269,30 @@ export default function Settings() {
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">{t.settings.labelProjects}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.settings.labelProjects}
+                </p>
                 <p className="text-white text-2xl font-bold">{projectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">{t.settings.labelDefects}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.settings.labelDefects}
+                </p>
                 <p className="text-white text-2xl font-bold">{defectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">{t.settings.labelTestPlans}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.settings.labelTestPlans}
+                </p>
                 <p className="text-white text-2xl font-bold">{testPlanCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">{t.settings.labelTestRuns}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.settings.labelTestRuns}
+                </p>
                 <p className="text-white text-2xl font-bold">{testRunCount}</p>
               </div>
             </div>
@@ -384,7 +399,9 @@ export default function Settings() {
             accept=".json"
           />
           {importedFile && (
-            <p className="text-green-400 text-sm">{t.settings.fileLoadedSuccess}</p>
+            <p className="text-green-400 text-sm">
+              {t.settings.fileLoadedSuccess}
+            </p>
           )}
         </div>
       </Modal>

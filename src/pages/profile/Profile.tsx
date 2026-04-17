@@ -160,39 +160,55 @@ export default function Profile() {
             data-testid={TEST_IDS.profile.activity}
             className="glass rounded-lg p-8"
           >
-            <h2 className="text-2xl font-bold text-white mb-6">{t.profile.sectionMyActivity}</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">
+              {t.profile.sectionMyActivity}
+            </h2>
 
             <div className="space-y-4">
               {/* My Defects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyDefects}</p>
+                <p className="text-gray-300 text-sm mb-1">
+                  {t.profile.statMyDefects}
+                </p>
                 <p className="text-white text-3xl font-bold">
                   {myReportedDefects.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">{t.profile.statReported}</p>
+                <p className="text-gray-400 text-xs mt-1">
+                  {t.profile.statReported}
+                </p>
               </div>
 
               {/* Assigned to Me */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">{t.profile.statAssignedToMe}</p>
+                <p className="text-gray-300 text-sm mb-1">
+                  {t.profile.statAssignedToMe}
+                </p>
                 <p className="text-white text-3xl font-bold">
                   {assignedToMe.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">{t.profile.statDefects}</p>
+                <p className="text-gray-400 text-xs mt-1">
+                  {t.profile.statDefects}
+                </p>
               </div>
 
               {/* My Test Runs */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyTestRuns}</p>
+                <p className="text-gray-300 text-sm mb-1">
+                  {t.profile.statMyTestRuns}
+                </p>
                 <p className="text-white text-3xl font-bold">
                   {myTestRuns.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">{t.profile.statExecuted}</p>
+                <p className="text-gray-400 text-xs mt-1">
+                  {t.profile.statExecuted}
+                </p>
               </div>
 
               {/* My Projects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyProjects}</p>
+                <p className="text-gray-300 text-sm mb-1">
+                  {t.profile.statMyProjects}
+                </p>
                 {myProjects.length > 0 ? (
                   <ul className="mt-3 space-y-2">
                     {myProjects.map((p) => (
@@ -202,7 +218,9 @@ export default function Profile() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 text-sm mt-2">{t.profile.noProjects}</p>
+                  <p className="text-gray-400 text-sm mt-2">
+                    {t.profile.noProjects}
+                  </p>
                 )}
               </div>
             </div>

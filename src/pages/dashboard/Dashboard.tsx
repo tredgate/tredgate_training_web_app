@@ -188,17 +188,24 @@ export default function Dashboard() {
 
   // Helper: Get project name by ID
   const getProjectName = (projectId: number): string => {
-    return projects.find((p) => p.id === projectId)?.name || t.dashboard.unknownProject;
+    return (
+      projects.find((p) => p.id === projectId)?.name ||
+      t.dashboard.unknownProject
+    );
   };
 
   // Helper: Get user name by ID
   const getUserName = (userId: number): string => {
-    return users.find((u) => u.id === userId)?.fullName || t.dashboard.unknownUser;
+    return (
+      users.find((u) => u.id === userId)?.fullName || t.dashboard.unknownUser
+    );
   };
 
   // Helper: Get test plan name by ID
   const getTestPlanName = (planId: number): string => {
-    return testPlans.find((tp) => tp.id === planId)?.name || t.dashboard.unknownPlan;
+    return (
+      testPlans.find((tp) => tp.id === planId)?.name || t.dashboard.unknownPlan
+    );
   };
 
   // ────────────────────────────────────────────────────────────────────────

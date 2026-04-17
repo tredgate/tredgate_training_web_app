@@ -137,7 +137,11 @@ export default function TestPlanDetail() {
   const tabs = [
     { key: "overview", label: t.testPlanDetail.tabOverview },
     { key: "cases", label: t.testPlanDetail.tabCases, badge: totalCases },
-    { key: "history", label: t.testPlanDetail.tabHistory, badge: planRuns.length },
+    {
+      key: "history",
+      label: t.testPlanDetail.tabHistory,
+      badge: planRuns.length,
+    },
   ];
 
   return (
@@ -183,11 +187,13 @@ export default function TestPlanDetail() {
             {/* Plan Info Card */}
             <div className="glass p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.testPlanDetail.sectionPlanInfo}
+                {t.testPlanDetail.sectionPlanInfo}
               </h3>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelStatus}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelStatus}
+                  </p>
                   <StatusBadge
                     data-testid="testplan-detail-status"
                     type="testplan_status"
@@ -195,17 +201,23 @@ export default function TestPlanDetail() {
                   />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelProject}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelProject}
+                  </p>
                   <p className="text-white font-medium">
                     {project?.name || t.testPlanDetail.unknownProject}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelDescription}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelDescription}
+                  </p>
                   <p className="text-gray-300">{testPlan.description}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelAssignee}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelAssignee}
+                  </p>
                   {assignee ? (
                     <UserAvatar
                       data-testid="testplan-detail-assignee-avatar"
@@ -215,17 +227,23 @@ export default function TestPlanDetail() {
                       size="sm"
                     />
                   ) : (
-                    <p className="text-gray-300">{t.testPlanDetail.unassignedLabel}</p>
+                    <p className="text-gray-300">
+                      {t.testPlanDetail.unassignedLabel}
+                    </p>
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelCreated}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelCreated}
+                  </p>
                   <p className="text-gray-300">
                     {formatDate(testPlan.createdAt)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelUpdated}</p>
+                  <p className="text-sm text-gray-400 mb-1">
+                    {t.testPlanDetail.labelUpdated}
+                  </p>
                   <p className="text-gray-300">
                     {formatDate(testPlan.updatedAt)}
                   </p>
@@ -237,18 +255,24 @@ export default function TestPlanDetail() {
             <div className="grid grid-cols-3 gap-4">
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">{totalCases}</p>
-                <p className="text-sm text-gray-400">{t.testPlanDetail.statTestCases}</p>
+                <p className="text-sm text-gray-400">
+                  {t.testPlanDetail.statTestCases}
+                </p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">{totalSteps}</p>
-                <p className="text-sm text-gray-400">{t.testPlanDetail.statTotalSteps}</p>
+                <p className="text-sm text-gray-400">
+                  {t.testPlanDetail.statTotalSteps}
+                </p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">
                   {lastRunPassRate}%
                 </p>
                 <p className="text-sm text-gray-400">
-                  {lastRun ? t.testPlanDetail.statLastRunPassRate : t.testPlanDetail.statNoRunsYet}
+                  {lastRun
+                    ? t.testPlanDetail.statLastRunPassRate
+                    : t.testPlanDetail.statNoRunsYet}
                 </p>
               </div>
             </div>
@@ -262,7 +286,7 @@ export default function TestPlanDetail() {
             className="mt-6 space-y-3"
           >
             {testPlan.testCases.length === 0 ? (
-                <p className="text-gray-400">{t.testPlanDetail.noTestCasesYet}</p>
+              <p className="text-gray-400">{t.testPlanDetail.noTestCasesYet}</p>
             ) : (
               testPlan.testCases.map((testCase, caseIdx) => {
                 const isExpanded = expandedCases.has(testCase.id);

@@ -35,7 +35,8 @@ interface DefectFormData extends Record<string, unknown> {
 function validateStep1(values: DefectFormData): Record<string, string> {
   const errors: Record<string, string> = {};
   if (!values.title.trim()) errors.title = t.defectForm.validateTitleRequired;
-  if (!values.projectId) errors.projectId = t.defectForm.validateProjectRequired;
+  if (!values.projectId)
+    errors.projectId = t.defectForm.validateProjectRequired;
   if (!values.severity) errors.severity = t.defectForm.validateSeverityRequired;
   if (!values.priority) errors.priority = t.defectForm.validatePriorityRequired;
   return errors;
@@ -368,12 +369,16 @@ export default function DefectForm() {
         <div className="space-y-6 p-6">
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelTitle}</p>
+              <p className="text-xs text-gray-400 mb-1">
+                {t.defectForm.reviewLabelTitle}
+              </p>
               <p className="text-white font-medium">{form.values.title}</p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelProject}</p>
+              <p className="text-xs text-gray-400 mb-1">
+                {t.defectForm.reviewLabelProject}
+              </p>
               <p className="text-white font-medium">
                 {selectedProject?.name || t.defectForm.reviewNotSelected}
               </p>
@@ -381,7 +386,9 @@ export default function DefectForm() {
 
             <div className="flex gap-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelSeverity}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {t.defectForm.reviewLabelSeverity}
+                </p>
                 <StatusBadge
                   data-testid="defect-form-review-severity"
                   type="severity"
@@ -389,7 +396,9 @@ export default function DefectForm() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelPriority}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {t.defectForm.reviewLabelPriority}
+                </p>
                 <StatusBadge
                   data-testid="defect-form-review-priority"
                   type="priority"
@@ -399,12 +408,16 @@ export default function DefectForm() {
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelDescription}</p>
+              <p className="text-xs text-gray-400 mb-2">
+                {t.defectForm.reviewLabelDescription}
+              </p>
               <p className="text-gray-300 text-sm">{form.values.description}</p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelSteps}</p>
+              <p className="text-xs text-gray-400 mb-2">
+                {t.defectForm.reviewLabelSteps}
+              </p>
               <pre className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto">
                 {form.values.stepsToReproduce}
               </pre>
@@ -412,7 +425,9 @@ export default function DefectForm() {
 
             {form.values.environmentId && (
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelEnvironment}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectForm.reviewLabelEnvironment}
+                </p>
                 <p className="text-white font-medium">
                   {selectedProject?.environments.find(
                     (e) => e.id === form.values.environmentId,
@@ -423,7 +438,9 @@ export default function DefectForm() {
 
             {form.values.assigneeId && (
               <div>
-                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelAssignedTo}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {t.defectForm.reviewLabelAssignedTo}
+                </p>
                 {users.find((u) => u.id === form.values.assigneeId) && (
                   <div className="flex items-center gap-2">
                     {(() => {

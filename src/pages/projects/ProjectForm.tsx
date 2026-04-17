@@ -421,7 +421,11 @@ export default function ProjectForm() {
   return (
     <div data-testid={TEST_IDS.projectForm.page}>
       <PageHeader
-        title={isEditMode ? `${t.projectForm.editTitle} ${existingProject?.name}` : t.projectForm.createTitle}
+        title={
+          isEditMode
+            ? `${t.projectForm.editTitle} ${existingProject?.name}`
+            : t.projectForm.createTitle
+        }
         backTo="/projects"
       />
 

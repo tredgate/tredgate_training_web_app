@@ -32,13 +32,19 @@ export default function TestPlanList() {
 
   // Get project name by ID
   const getProjectName = (projectId: number): string => {
-    return projects.find((p) => p.id === projectId)?.name || t.testPlans.unknownAssignee;
+    return (
+      projects.find((p) => p.id === projectId)?.name ||
+      t.testPlans.unknownAssignee
+    );
   };
 
   // Get user full name by ID
   const getUserName = (userId: number | null): string => {
     if (!userId) return "";
-    return users.find((u) => u.id === userId)?.fullName || t.testPlans.unknownAssignee;
+    return (
+      users.find((u) => u.id === userId)?.fullName ||
+      t.testPlans.unknownAssignee
+    );
   };
 
   // DataTable columns
@@ -127,8 +133,16 @@ export default function TestPlanList() {
           searchable
           searchPlaceholder={t.testPlans.searchPlaceholder}
           filters={[
-            { key: "status", label: t.testPlans.filterStatus, options: ["draft", "active", "completed", "archived"] },
-            { key: "projectId", label: t.testPlans.filterProject, options: projects.map((p) => p.name) },
+            {
+              key: "status",
+              label: t.testPlans.filterStatus,
+              options: ["draft", "active", "completed", "archived"],
+            },
+            {
+              key: "projectId",
+              label: t.testPlans.filterProject,
+              options: projects.map((p) => p.name),
+            },
           ]}
           pagination
           pageSize={10}

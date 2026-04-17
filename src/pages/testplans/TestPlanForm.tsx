@@ -257,6 +257,7 @@ export default function TestPlanForm() {
 
           <TextArea
             data-testid={TEST_IDS.testplanForm.inputDescription}
+            name="description"
             label={t.testPlanForm.labelDescription}
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
@@ -342,6 +343,7 @@ export default function TestPlanForm() {
 
                     <TextArea
                       data-testid={`testplan-form-case-${caseIdx}-description`}
+                      name={`case-${caseIdx}-description`}
                       label={t.testPlanForm.labelCaseDescription}
                       value={testCase.description}
                       onChange={(e) =>
@@ -405,7 +407,9 @@ export default function TestPlanForm() {
                               <input
                                 type="text"
                                 data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-expected`}
-                                placeholder={t.testPlanForm.placeholderExpectedResult}
+                                placeholder={
+                                  t.testPlanForm.placeholderExpectedResult
+                                }
                                 value={step.expectedResult}
                                 onChange={(e) =>
                                   handleUpdateStep(
@@ -467,11 +471,15 @@ export default function TestPlanForm() {
             </h3>
             <div className="space-y-2 text-sm">
               <div>
-                <span className="text-gray-400">{t.testPlanForm.reviewLabelName}</span>
+                <span className="text-gray-400">
+                  {t.testPlanForm.reviewLabelName}
+                </span>
                 <span className="text-white ml-2">{form.values.name}</span>
               </div>
               <div>
-                <span className="text-gray-400">{t.testPlanForm.reviewLabelProject}</span>
+                <span className="text-gray-400">
+                  {t.testPlanForm.reviewLabelProject}
+                </span>
                 <span className="text-white ml-2">
                   {projects.find(
                     (p) => p.id.toString() === form.values.projectId,
@@ -479,13 +487,17 @@ export default function TestPlanForm() {
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">{t.testPlanForm.reviewLabelDescription}</span>
+                <span className="text-gray-400">
+                  {t.testPlanForm.reviewLabelDescription}
+                </span>
                 <span className="text-white ml-2">
                   {form.values.description}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">{t.testPlanForm.reviewLabelAssignee}</span>
+                <span className="text-gray-400">
+                  {t.testPlanForm.reviewLabelAssignee}
+                </span>
                 <span className="text-white ml-2">
                   {form.values.assigneeId
                     ? users.find(
@@ -520,7 +532,9 @@ export default function TestPlanForm() {
   return (
     <div data-testid={TEST_IDS.testplanForm.page}>
       <PageHeader
-        title={isEditMode ? t.testPlanForm.editTitle : t.testPlanForm.createTitle}
+        title={
+          isEditMode ? t.testPlanForm.editTitle : t.testPlanForm.createTitle
+        }
         backTo="/test-plans"
       />
 

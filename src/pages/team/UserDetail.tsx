@@ -255,7 +255,9 @@ export default function UserDetail() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm">{t.team.noDefectsReported}</p>
+                <p className="text-gray-400 text-sm">
+                  {t.team.noDefectsReported}
+                </p>
               )}
             </div>
 
@@ -328,14 +330,18 @@ export default function UserDetail() {
                         {proj?.name}
                       </a>
                       <span className="text-xs text-gray-400">
-                        {projRole === "lead" ? t.team.roleLead : t.team.roleMember}
+                        {projRole === "lead"
+                          ? t.team.roleLead
+                          : t.team.roleMember}
                       </span>
                     </li>
                   );
                 })}
               </ul>
             ) : (
-              <p className="text-gray-400 text-sm">{t.team.noProjectsAssigned}</p>
+              <p className="text-gray-400 text-sm">
+                {t.team.noProjectsAssigned}
+              </p>
             )}
           </div>
 

@@ -107,7 +107,7 @@ export default function Login() {
               htmlFor="username"
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
-            {t.login.usernameLabel}
+              {t.login.usernameLabel}
             </label>
             <input
               id="username"
@@ -129,7 +129,7 @@ export default function Login() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
-            {t.login.passwordLabel}
+              {t.login.passwordLabel}
             </label>
             <input
               id="password"

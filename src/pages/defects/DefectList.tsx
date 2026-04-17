@@ -98,9 +98,13 @@ export default function DefectList() {
       label: t.defects.colAssignee,
       sortable: false,
       render: (val) => {
-        if (!val) return <span className="text-gray-500">{t.common.unassigned}</span>;
+        if (!val)
+          return <span className="text-gray-500">{t.common.unassigned}</span>;
         const assignee = userMap.get(val as number);
-        if (!assignee) return <span className="text-gray-500">{t.defects.unknownAssignee}</span>;
+        if (!assignee)
+          return (
+            <span className="text-gray-500">{t.defects.unknownAssignee}</span>
+          );
         return (
           <UserAvatar
             data-testid={`defect-list-assignee-avatar-${val}`}
@@ -145,10 +149,26 @@ export default function DefectList() {
           searchable
           searchPlaceholder={t.defects.searchPlaceholder}
           filters={[
-            { key: "severity", label: t.defects.filterSeverity, options: DEFECT_SEVERITIES as any },
-            { key: "status", label: t.defects.filterStatus, options: DEFECT_STATUSES as any },
-            { key: "priority", label: t.defects.filterPriority, options: DEFECT_PRIORITIES as any },
-            { key: "projectId", label: t.defects.filterProject, options: projectOptions },
+            {
+              key: "severity",
+              label: t.defects.filterSeverity,
+              options: DEFECT_SEVERITIES as any,
+            },
+            {
+              key: "status",
+              label: t.defects.filterStatus,
+              options: DEFECT_STATUSES as any,
+            },
+            {
+              key: "priority",
+              label: t.defects.filterPriority,
+              options: DEFECT_PRIORITIES as any,
+            },
+            {
+              key: "projectId",
+              label: t.defects.filterProject,
+              options: projectOptions as any,
+            },
           ]}
           pagination
           pageSize={10}

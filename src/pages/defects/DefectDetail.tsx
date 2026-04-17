@@ -228,7 +228,9 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Comments</h3>
 
             {defect.comments.length === 0 ? (
-              <p className="text-gray-500 mb-6">{t.defectDetail.noCommentsYet}</p>
+              <p className="text-gray-500 mb-6">
+                {t.defectDetail.noCommentsYet}
+              </p>
             ) : (
               <div className="space-y-4 mb-6">
                 {defect.comments.map((comment) => {
@@ -299,7 +301,9 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Status</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelCurrentStatus}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelCurrentStatus}
+                </p>
                 <StatusBadge
                   data-testid={defectBadge("status", defect.id)}
                   type="status"
@@ -307,7 +311,9 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelSeverity}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelSeverity}
+                </p>
                 <StatusBadge
                   data-testid={defectBadge("severity", defect.id)}
                   type="severity"
@@ -315,7 +321,9 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelPriority}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelPriority}
+                </p>
                 <StatusBadge
                   data-testid={defectBadge("priority", defect.id)}
                   type="priority"
@@ -335,7 +343,9 @@ export default function DefectDetail() {
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2">{t.defectDetail.labelReporter}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {t.defectDetail.labelReporter}
+                </p>
                 {reporter ? (
                   <div className="flex items-center gap-2">
                     <UserAvatar
@@ -350,11 +360,15 @@ export default function DefectDetail() {
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500">{t.common.unknown}</span>
+                  <span className="text-sm text-gray-500">
+                    {t.common.unknown}
+                  </span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2">{t.defectDetail.labelAssignee}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {t.defectDetail.labelAssignee}
+                </p>
                 {assignee ? (
                   <div className="flex items-center gap-2">
                     <UserAvatar
@@ -369,7 +383,9 @@ export default function DefectDetail() {
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500">{t.common.unassigned}</span>
+                  <span className="text-sm text-gray-500">
+                    {t.common.unassigned}
+                  </span>
                 )}
               </div>
             </div>
@@ -383,7 +399,9 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Details</h3>
             <div className="space-y-3 text-sm">
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelProject}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelProject}
+                </p>
                 {project ? (
                   <Link
                     to={`/projects/${project.id}`}
@@ -396,7 +414,9 @@ export default function DefectDetail() {
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelEnvironment}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelEnvironment}
+                </p>
                 {defect.environmentId ? (
                   <span className="text-gray-300">
                     {project?.environments.find(
@@ -408,13 +428,17 @@ export default function DefectDetail() {
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelCreated}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelCreated}
+                </p>
                 <span className="text-gray-300">
                   {formatDate(defect.createdAt)}
                 </span>
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelUpdated}</p>
+                <p className="text-xs text-gray-400 mb-1">
+                  {t.defectDetail.labelUpdated}
+                </p>
                 <span className="text-gray-300">
                   {formatDate(defect.updatedAt)}
                 </span>

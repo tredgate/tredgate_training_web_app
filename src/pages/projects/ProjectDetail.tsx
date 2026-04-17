@@ -131,7 +131,7 @@ export default function ProjectDetail() {
           {/* Project Info Card */}
           <div className="glass p-6 rounded-lg">
             <h3 className="text-lg font-semibold text-white mb-4">
-            {t.projectDetail.sectionProjectInfo}
+              {t.projectDetail.sectionProjectInfo}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -144,7 +144,9 @@ export default function ProjectDetail() {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-400">{t.projectDetail.labelQALead}</p>
+                <p className="text-sm text-gray-400">
+                  {t.projectDetail.labelQALead}
+                </p>
                 <div className="mt-2">
                   {userMap.get(project.leadId) && (
                     <UserAvatar
@@ -179,7 +181,7 @@ export default function ProjectDetail() {
           {project.environments.length > 0 && (
             <div className="glass p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-4">
-              {t.projectDetail.sectionEnvironments}
+                {t.projectDetail.sectionEnvironments}
               </h3>
               <table
                 data-testid={TEST_IDS.projectDetail.envTable}

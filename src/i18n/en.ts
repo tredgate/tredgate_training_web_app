@@ -1,6 +1,6 @@
 export const en = {
   app: {
-    name: "TredGate QA Hub",
+    name: "Tredgate QA Hub",
   },
 
   common: {
@@ -39,7 +39,7 @@ export const en = {
   },
 
   login: {
-    appTitle: "TredGate QA Hub",
+    appTitle: "Tredgate QA Hub",
     tagline: "Sign in to continue",
     usernameLabel: "Username",
     usernamePlaceholder: "Enter username",
@@ -174,7 +174,8 @@ export const en = {
     labelSteps: "Steps to Reproduce",
     placeholderSteps: "Step-by-step instructions to reproduce",
     labelEnvironment: "Environment",
-    noEnvironmentHint: "Select a project on the previous step to see environment options",
+    noEnvironmentHint:
+      "Select a project on the previous step to see environment options",
     labelAssignTo: "Assign to (optional)",
     noAssigneeHint: "Select a project to assign team members",
     labelRelatedTestCases: "Related Test Cases (optional)",
@@ -222,6 +223,7 @@ export const en = {
     sectionProjectInfo: "Project Information",
     labelStatus: "Status",
     labelQaLead: "QA Lead",
+    labelQALead: "QA Lead",
     labelDescription: "Description",
     labelCreated: "Created",
     labelUpdated: "Updated",
