@@ -155,10 +155,7 @@ export default function DataTable<T extends { id: number }>(
     }
   };
 
-  const handleSelectRow = (
-    id: number | string,
-    checked: boolean,
-  ) => {
+  const handleSelectRow = (id: number | string, checked: boolean) => {
     const newSelected = new Set(selectedIds);
     if (checked) {
       newSelected.add(id);
@@ -256,9 +253,7 @@ export default function DataTable<T extends { id: number }>(
             {pageData.length === 0 ? (
               <tr>
                 <td
-                  colSpan={
-                    columns.length + (selectable ? 1 : 0)
-                  }
+                  colSpan={columns.length + (selectable ? 1 : 0)}
                   className="px-4 py-8 text-center text-gray-400"
                 >
                   {emptyMessage}

@@ -71,12 +71,26 @@ export const TEST_IDS = {
   },
   projectList: {
     page: "project-list-page",
+    btnNew: "project-list-btn-new",
   },
   projectDetail: {
     page: "project-detail-page",
+    btnEdit: "project-detail-btn-edit",
+    btnDelete: "project-detail-btn-delete",
+    envTable: "project-detail-env-table",
+    defectsTable: "project-detail-defects-table",
+    plansTable: "project-detail-plans-table",
+    teamList: "project-detail-team-list",
   },
   projectForm: {
     page: "project-form-page",
+    inputName: "project-form-input-name",
+    inputCode: "project-form-input-code",
+    inputDescription: "project-form-input-description",
+    selectStatus: "project-form-select-status",
+    selectLead: "project-form-select-lead",
+    selectMembers: "project-form-select-members",
+    btnAddEnv: "project-form-btn-add-env",
   },
   defectList: {
     page: "defect-list-page",
@@ -178,3 +192,9 @@ export const modalBtnClose = (testId: string): string => `${testId}-btn-close`;
 // ─── EmptyState builder ───────────────────────────────────────────────
 export const emptyState = (variant: EmptyStateVariant): string =>
   `empty-state-${variant}`;
+
+// ─── ProjectForm environment row builders ──────────────────────────────
+export const projectFormEnvRow = (index: number): string =>
+  `project-form-env-row-${index}`;
+export const projectFormEnvRemove = (index: number): string =>
+  `project-form-btn-remove-env-${index}`;

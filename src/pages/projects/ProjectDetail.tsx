@@ -1,10 +1,479 @@
+import { useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Edit2, Trash2, Bug, CheckSquare, Users } from "lucide-react";
+import PageHeader from "../../components/layout/PageHeader";
+import Tabs from "../../components/navigation/Tabs";
+import DataTable from "../../components/data/DataTable";
+import Modal from "../../components/feedback/Modal";
+import EmptyState from "../../components/feedback/EmptyState";
+import StatusBadge from "../../components/feedback/StatusBadge";
+import UserAvatar from "../../components/display/UserAvatar";
+import StatCard from "../../components/display/StatCard";
 import { TEST_IDS } from "../../shared/testIds";
+import { useAuth } from "../../hooks/useAuth";
+import { useProjects } from "../../hooks/useProjects";
+import { useDefects } from "../../hooks/useDefects";
+import { useTestPlans } from "../../hooks/useTestPlans";
+import { useUsers } from "../../hooks/useUsers";
+import type {
+  Project,
+  Defect,
+  TestPlan,
+  Environment,
+  User,
+} from "../../data/entities";
+
+function formatDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString();
+}
 
 export default function ProjectDetail() {
+  const { projectId } = useParams<{ projectId: string }>();
+  const navigate = useNavigate();
+  const { hasPermission } = useAuth();
+  const { projects, getById, remove } = useProjects();
+  const { defects } = useDefects();
+  const { testPlans } = useTestPlans();
+  const { users } = useUsers();
+  const [activeTab, setActiveTab] = useState("overview");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const id = projectId ? parseInt(projectId, 10) : null;
+  const project = id ? getById(id) : null;
+
+  if (!project) {
+    return (
+      <div data-testid={TEST_IDS.projectDetail.page}>
+        <EmptyState
+          variant="not-found"
+          title="Project not found"
+          message="The project you're looking for doesn't exist."
+        />
+      </div>
+    );
+  }
+
+  const userMap = new Map(users.map((u) => [u.id, u]));
+  const projectDefects = defects.filter((d) => d.projectId === project.id);
+  const projectPlans = testPlans.filter((tp) => tp.projectId === project.id);
+  const projectMembers = [
+    ...new Set([project.leadId, ...project.memberIds]),
+  ]
+    .map((uid) => userMap.get(uid))
+    .filter((u) => u !== undefined) as typeof users;
+
+  const handleDelete = () => {
+    remove(project.id);
+    navigate("/projects");
+  };
+
+  const tabs = [
+    {
+      key: "overview",
+      label: "Overview",
+    },
+    {
+      key: "defects",
+      label: "Defects",
+      badge: projectDefects.length,
+    },
+    {
+      key: "plans",
+      label: "Test Plans",
+      badge: projectPlans.length,
+    },
+    {
+      key: "team",
+      label: "Team",
+      badge: projectMembers.length,
+    },
+  ];
+
   return (
     <div data-testid={TEST_IDS.projectDetail.page}>
-      <h1 className="text-2xl font-bold text-white">Project Detail</h1>
-      <p className="text-gray-400 mt-2">Coming soon...</p>
+      <PageHeader
+        title={project.name}
+        subtitle={project.code}
+        backTo="/projects"
+        actions={
+          <div className="flex items-center gap-2">
+            {hasPermission("project:edit") && (
+              <Link
+                to={`/projects/${project.id}/edit`}
+                data-testid={TEST_IDS.projectDetail.btnEdit}
+                className="btn btn-secondary flex items-center gap-2"
+              >
+                <Edit2 size={18} />
+                Edit
+              </Link>
+            )}
+            {hasPermission("project:delete") && (
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                data-testid={TEST_IDS.projectDetail.btnDelete}
+                className="btn btn-secondary text-red-400 hover:bg-red-500/20"
+              >
+                <Trash2 size={18} />
+              </button>
+            )}
+          </div>
+        }
+      />
+
+      <Tabs
+        tabs={tabs}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        testIdPrefix="project-detail"
+      />
+
+      {activeTab === "overview" && (
+        <div className="mt-6 space-y-6">
+          {/* Project Info Card */}
+          <div className="glass p-6 rounded-lg">
+            <h3 className="text-lg font-semibold text-white mb-4">
+              Project Information
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-400">Status</p>
+                <StatusBadge
+                  data-testid="project-detail-badge-status"
+                  type="project_status"
+                  value={project.status}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <p className="text-sm text-gray-400">QA Lead</p>
+                <div className="mt-2">
+                  {userMap.get(project.leadId) && (
+                    <UserAvatar
+                      data-testid="project-detail-lead-avatar"
+                      fullName={userMap.get(project.leadId)!.fullName}
+                      avatarColor={userMap.get(project.leadId)!.avatarColor}
+                      role={userMap.get(project.leadId)!.role}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="col-span-2">
+                <p className="text-sm text-gray-400">Description</p>
+                <p className="text-white mt-1">{project.description}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-400">Created</p>
+                <p className="text-white mt-1">{formatDate(project.createdAt)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-400">Updated</p>
+                <p className="text-white mt-1">{formatDate(project.updatedAt)}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Environments Table */}
+          {project.environments.length > 0 && (
+            <div className="glass p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Environments
+              </h3>
+              <table
+                data-testid={TEST_IDS.projectDetail.envTable}
+                className="w-full"
+              >
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
+                      Name
+                    </th>
+                    <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
+                      Type
+                    </th>
+                    <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
+                      URL
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.environments.map((env: Environment) => (
+                    <tr
+                      key={env.id}
+                      className="border-b border-white/5 hover:bg-white/5"
+                    >
+                      <td className="py-3 px-4 text-white">{env.name}</td>
+                      <td className="py-3 px-4 text-gray-400">{env.type}</td>
+                      <td className="py-3 px-4 text-blue-400 truncate">
+                        {env.url}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-3 gap-4">
+            <StatCard
+              data-testid="project-detail-stat-defects"
+              icon={Bug}
+              label="Defects"
+              value={projectDefects.length.toString()}
+            />
+            <StatCard
+              data-testid="project-detail-stat-plans"
+              icon={CheckSquare}
+              label="Test Plans"
+              value={projectPlans.length.toString()}
+            />
+            <StatCard
+              data-testid="project-detail-stat-members"
+              icon={Users}
+              label="Team Members"
+              value={projectMembers.length.toString()}
+            />
+          </div>
+        </div>
+      )}
+
+      {activeTab === "defects" && (
+        <div className="mt-6">
+          <DefectsTabContent
+            projectId={project.id}
+            defects={projectDefects}
+            users={users}
+          />
+        </div>
+      )}
+
+      {activeTab === "plans" && (
+        <div className="mt-6">
+          <TestPlansTabContent
+            projectId={project.id}
+            testPlans={projectPlans}
+          />
+        </div>
+      )}
+
+      {activeTab === "team" && (
+        <div className="mt-6">
+          <TeamTabContent members={projectMembers} />
+        </div>
+      )}
+
+      {/* Delete Modal */}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        title="Delete Project"
+        size="sm"
+        data-testid="modal-confirm-delete-project"
+        footer={
+          <>
+            <button
+              className="btn btn-ghost"
+              onClick={() => setShowDeleteModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-neon-red"
+              onClick={handleDelete}
+              data-testid="modal-btn-confirm-delete"
+            >
+              Delete
+            </button>
+          </>
+        }
+      >
+        <p className="text-gray-300">
+          Are you sure you want to delete "{project.name}"? This action cannot
+          be undone.
+        </p>
+      </Modal>
+    </div>
+  );
+}
+
+interface DefectsTabContentProps {
+  projectId: number;
+  defects: Defect[];
+  users: User[];
+}
+
+function DefectsTabContent({
+  defects,
+  users,
+}: DefectsTabContentProps) {
+  const userMap = new Map(users.map((u) => [u.id, u]));
+
+  const columns = [
+    {
+      key: "title",
+      label: "Title",
+      sortable: true,
+    },
+    {
+      key: "severity",
+      label: "Severity",
+      sortable: true,
+      render: (value: unknown) => (
+        <StatusBadge
+          data-testid="defect-severity-badge"
+          type="severity"
+          value={value as any}
+        />
+      ),
+    },
+    {
+      key: "status",
+      label: "Status",
+      sortable: true,
+      render: (value: unknown) => (
+        <StatusBadge
+          data-testid="defect-status-badge"
+          type="status"
+          value={value as any}
+        />
+      ),
+    },
+    {
+      key: "assigneeId",
+      label: "Assignee",
+      sortable: false,
+      render: (value: unknown) => {
+        const assignee = userMap.get(value as number);
+        return assignee ? (
+          <UserAvatar
+            data-testid="defect-assignee-avatar"
+            fullName={assignee.fullName}
+            avatarColor={assignee.avatarColor}
+            size="sm"
+          />
+        ) : (
+          <span className="text-gray-500">Unassigned</span>
+        );
+      },
+    },
+  ];
+
+  return (
+    <DataTable<Defect>
+      columns={columns}
+      data={defects}
+      pagination
+      pageSize={10}
+      emptyMessage="No defects found for this project"
+      testIdPrefix="project-detail-defects"
+      data-testid={TEST_IDS.projectDetail.defectsTable}
+    />
+  );
+}
+
+interface TestPlansTabContentProps {
+  projectId: number;
+  testPlans: TestPlan[];
+}
+
+function TestPlansTabContent({
+  testPlans,
+}: TestPlansTabContentProps) {
+  const columns = [
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+    },
+    {
+      key: "status",
+      label: "Status",
+      sortable: true,
+      render: (value: unknown) => {
+        const status = value as string;
+        const statusColors: Record<string, string> = {
+          draft: "bg-blue-500/20 text-blue-400",
+          active: "bg-emerald-500/20 text-emerald-400",
+          completed: "bg-purple-500/20 text-purple-400",
+          archived: "bg-gray-500/20 text-gray-400",
+        };
+        return (
+          <span
+            className={`px-2 py-1 rounded text-sm font-medium ${statusColors[status] || "bg-gray-500/20 text-gray-400"}`}
+          >
+            {status.replace(/_/g, " ")}
+          </span>
+        );
+      },
+    },
+    {
+      key: "testCases",
+      label: "Test Cases",
+      sortable: false,
+      render: (value: unknown) => {
+        const testCases = value as any[];
+        return `${testCases.length} cases`;
+      },
+    },
+    {
+      key: "updatedAt",
+      label: "Last Updated",
+      sortable: true,
+      render: (value: unknown) => formatDate(value as string),
+    },
+  ];
+
+  return (
+    <DataTable<TestPlan>
+      columns={columns}
+      data={testPlans}
+      pagination
+      pageSize={10}
+      emptyMessage="No test plans found for this project"
+      testIdPrefix="project-detail-plans"
+      data-testid={TEST_IDS.projectDetail.plansTable}
+    />
+  );
+}
+
+interface TeamTabContentProps {
+  members: User[];
+}
+
+function TeamTabContent({ members }: TeamTabContentProps) {
+  return (
+    <div
+      data-testid={TEST_IDS.projectDetail.teamList}
+      className="space-y-3"
+    >
+      {members.length === 0 ? (
+        <p className="text-gray-400">No team members assigned</p>
+      ) : (
+        members.map((member) => (
+          <div
+            key={member.id}
+            className="glass p-4 rounded-lg flex items-center justify-between"
+          >
+            <div className="flex items-center gap-3">
+              <UserAvatar
+                data-testid={`team-member-avatar-${member.id}`}
+                fullName={member.fullName}
+                avatarColor={member.avatarColor}
+                role={member.role}
+              />
+              <div>
+                <p className="text-white font-medium">{member.fullName}</p>
+                <p className="text-sm text-gray-400">{member.email}</p>
+              </div>
+            </div>
+            <StatusBadge
+              data-testid="role-badge"
+              type="status"
+              value={member.role as any}
+            />
+          </div>
+        ))
+      )}
     </div>
   );
 }

@@ -26,7 +26,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T7   | Forms, StatusBadge, Display      | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
 | T8   | Entity Hooks (useStore + domain) | ✅ done        | T1                 | 2026-04-17 | 2026-04-17 | 38fbc76 |                                                  |
 | T9   | Dashboard                        | ✅ done        | T2, T7, T8         | 2026-04-17 | 2026-04-17 | 2f8440f |                                                  |
-| T10  | Projects Module                  | ⬜ pending     | T2–T8              | —          | —          | —       |                                                  |
+| T10  | Projects Module                  | 🟡 in-progress | T2–T8              | 2026-04-17 | —          | —       |                                                  |
 | T11  | Defects Module                   | ⬜ pending     | T2–T8              | —          | —          | —       |                                                  |
 | T12  | Test Plans & Runs                | ⬜ pending     | T2–T8              | —          | —          | —       |                                                  |
 | T13  | Team Module                      | ⬜ pending     | T2, T3, T4, T7, T8 | —          | —          | —       |                                                  |
