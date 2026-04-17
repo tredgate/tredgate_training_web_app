@@ -16,6 +16,7 @@ import { useForm } from "../../hooks/useForm";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import { TEST_CASE_PRIORITIES } from "../../data/entities";
 import type {
   TestPlan,
@@ -74,15 +75,15 @@ export default function TestPlanForm() {
     const errors: Partial<Record<keyof FormValues, string>> = {};
 
     if (!values.name.trim()) {
-      errors.name = "Test plan name is required";
+      errors.name = t.testPlanForm.validateNameRequired;
     }
 
     if (!values.projectId) {
-      errors.projectId = "Project is required";
+      errors.projectId = t.testPlanForm.validateProjectRequired;
     }
 
     if (!values.description.trim()) {
-      errors.description = "Description is required";
+      errors.description = t.testPlanForm.validateDescriptionRequired;
     }
 
     return errors;
@@ -215,8 +216,8 @@ export default function TestPlanForm() {
       <div data-testid={TEST_IDS.testplanForm.page}>
         <EmptyState
           variant="not-found"
-          title="Test Plan not found"
-          message="The test plan you're trying to edit doesn't exist."
+          title={t.testPlanForm.notFoundTitle}
+          message={t.testPlanForm.notFoundMessage}
         />
       </div>
     );
@@ -224,13 +225,13 @@ export default function TestPlanForm() {
 
   const steps = [
     {
-      label: "Plan Details",
+      label: t.testPlanForm.stepPlanDetails,
       validate: validateStep1,
       content: (
         <div data-testid="testplan-form-step-1" className="space-y-4 py-4">
           <TextInput
             data-testid={TEST_IDS.testplanForm.inputName}
-            label="Test Plan Name"
+            label={t.testPlanForm.labelName}
             name="name"
             value={form.values.name}
             onChange={(e) => form.setField("name", e.target.value)}
@@ -240,7 +241,7 @@ export default function TestPlanForm() {
 
           <Select
             data-testid={TEST_IDS.testplanForm.selectProject}
-            label="Project"
+            label={t.testPlanForm.labelProject}
             name="projectId"
             value={form.values.projectId}
             onChange={(e) => form.setField("projectId", e.target.value)}
@@ -256,8 +257,7 @@ export default function TestPlanForm() {
 
           <TextArea
             data-testid={TEST_IDS.testplanForm.inputDescription}
-            label="Description"
-            name="description"
+            label={t.testPlanForm.labelDescription}
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
             error={
@@ -270,7 +270,7 @@ export default function TestPlanForm() {
 
           <Select
             data-testid={TEST_IDS.testplanForm.selectAssignee}
-            label="Assignee (optional)"
+            label={t.testPlanForm.labelAssignee}
             name="assigneeId"
             value={form.values.assigneeId}
             onChange={(e) => form.setField("assigneeId", e.target.value)}
@@ -286,7 +286,7 @@ export default function TestPlanForm() {
       ),
     },
     {
-      label: "Test Cases",
+      label: t.testPlanForm.stepTestCases,
       validate: validateStep2,
       content: (
         <div data-testid="testplan-form-step-2" className="space-y-4 py-4">
@@ -297,11 +297,11 @@ export default function TestPlanForm() {
             data-testid={TEST_IDS.testplanForm.btnAddCase}
           >
             <Plus size={18} />
-            Add Test Case
+            {t.testPlanForm.btnAddTestCase}
           </button>
 
           {testCases.length === 0 ? (
-            <p className="text-gray-400">No test cases added yet.</p>
+            <p className="text-gray-400">{t.testPlanForm.noTestCasesYet}</p>
           ) : (
             testCases.map((testCase, caseIdx) => (
               <div
@@ -313,7 +313,7 @@ export default function TestPlanForm() {
                   <div className="flex-1 space-y-3">
                     <TextInput
                       data-testid={`testplan-form-case-${caseIdx}-name`}
-                      label="Case Name"
+                      label={t.testPlanForm.labelCaseName}
                       name={`case-name-${caseIdx}`}
                       value={testCase.name}
                       onChange={(e) =>
@@ -324,7 +324,7 @@ export default function TestPlanForm() {
 
                     <Select
                       data-testid={`testplan-form-case-${caseIdx}-priority`}
-                      label="Priority"
+                      label={t.testPlanForm.labelCasePriority}
                       name={`case-priority-${caseIdx}`}
                       value={testCase.priority}
                       onChange={(e) =>
@@ -342,8 +342,7 @@ export default function TestPlanForm() {
 
                     <TextArea
                       data-testid={`testplan-form-case-${caseIdx}-description`}
-                      label="Description"
-                      name={`case-description-${caseIdx}`}
+                      label={t.testPlanForm.labelCaseDescription}
                       value={testCase.description}
                       onChange={(e) =>
                         handleUpdateTestCase(
@@ -356,7 +355,7 @@ export default function TestPlanForm() {
 
                     <div>
                       <label className="block text-sm font-medium text-white mb-2">
-                        Preconditions
+                        {t.common.preconditions}
                       </label>
                       <textarea
                         data-testid={`testplan-form-case-${caseIdx}-preconditions`}
@@ -376,7 +375,7 @@ export default function TestPlanForm() {
                     {/* Steps */}
                     <div>
                       <label className="block text-sm font-medium text-white mb-2">
-                        Steps
+                        {t.common.steps}
                       </label>
                       <div className="space-y-2">
                         {testCase.steps.map((step, stepIdx) => (
@@ -389,7 +388,7 @@ export default function TestPlanForm() {
                               <input
                                 type="text"
                                 data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-action`}
-                                placeholder="Action"
+                                placeholder={t.testPlanForm.placeholderAction}
                                 value={step.action}
                                 onChange={(e) =>
                                   handleUpdateStep(
@@ -406,7 +405,7 @@ export default function TestPlanForm() {
                               <input
                                 type="text"
                                 data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-expected`}
-                                placeholder="Expected Result"
+                                placeholder={t.testPlanForm.placeholderExpectedResult}
                                 value={step.expectedResult}
                                 onChange={(e) =>
                                   handleUpdateStep(
@@ -437,7 +436,7 @@ export default function TestPlanForm() {
                         data-testid={`testplan-form-case-${caseIdx}-btn-add-step`}
                       >
                         <Plus size={16} />
-                        Add Step
+                        {t.testPlanForm.btnAddStep}
                       </button>
                     </div>
                   </div>
@@ -458,21 +457,21 @@ export default function TestPlanForm() {
       ),
     },
     {
-      label: "Review",
+      label: t.testPlanForm.stepReview,
       validate: () => true,
       content: (
         <div data-testid="testplan-form-step-3" className="space-y-6 py-4">
           <div className="glass p-6 rounded-lg">
             <h3 className="text-lg font-semibold text-white mb-4">
-              Plan Summary
+              {t.testPlanForm.sectionPlanSummary}
             </h3>
             <div className="space-y-2 text-sm">
               <div>
-                <span className="text-gray-400">Name:</span>
+                <span className="text-gray-400">{t.testPlanForm.reviewLabelName}</span>
                 <span className="text-white ml-2">{form.values.name}</span>
               </div>
               <div>
-                <span className="text-gray-400">Project:</span>
+                <span className="text-gray-400">{t.testPlanForm.reviewLabelProject}</span>
                 <span className="text-white ml-2">
                   {projects.find(
                     (p) => p.id.toString() === form.values.projectId,
@@ -480,13 +479,13 @@ export default function TestPlanForm() {
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">Description:</span>
+                <span className="text-gray-400">{t.testPlanForm.reviewLabelDescription}</span>
                 <span className="text-white ml-2">
                   {form.values.description}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">Assignee:</span>
+                <span className="text-gray-400">{t.testPlanForm.reviewLabelAssignee}</span>
                 <span className="text-white ml-2">
                   {form.values.assigneeId
                     ? users.find(
@@ -521,7 +520,7 @@ export default function TestPlanForm() {
   return (
     <div data-testid={TEST_IDS.testplanForm.page}>
       <PageHeader
-        title={isEditMode ? "Edit Test Plan" : "Create Test Plan"}
+        title={isEditMode ? t.testPlanForm.editTitle : t.testPlanForm.createTitle}
         backTo="/test-plans"
       />
 

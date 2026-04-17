@@ -16,6 +16,7 @@ import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type { Defect, Severity, Priority } from "../../data/entities";
 import { DEFECT_SEVERITIES, DEFECT_PRIORITIES } from "../../data/entities";
 
@@ -33,19 +34,19 @@ interface DefectFormData extends Record<string, unknown> {
 
 function validateStep1(values: DefectFormData): Record<string, string> {
   const errors: Record<string, string> = {};
-  if (!values.title.trim()) errors.title = "Title is required";
-  if (!values.projectId) errors.projectId = "Project is required";
-  if (!values.severity) errors.severity = "Severity is required";
-  if (!values.priority) errors.priority = "Priority is required";
+  if (!values.title.trim()) errors.title = t.defectForm.validateTitleRequired;
+  if (!values.projectId) errors.projectId = t.defectForm.validateProjectRequired;
+  if (!values.severity) errors.severity = t.defectForm.validateSeverityRequired;
+  if (!values.priority) errors.priority = t.defectForm.validatePriorityRequired;
   return errors;
 }
 
 function validateStep2(values: DefectFormData): Record<string, string> {
   const errors: Record<string, string> = {};
   if (!values.description.trim())
-    errors.description = "Description is required";
+    errors.description = t.defectForm.validateDescriptionRequired;
   if (!values.stepsToReproduce.trim())
-    errors.stepsToReproduce = "Steps to reproduce is required";
+    errors.stepsToReproduce = t.defectForm.validateStepsRequired;
   return errors;
 }
 
@@ -70,8 +71,8 @@ export default function DefectForm() {
       <div data-testid={TEST_IDS.defectForm.page}>
         <EmptyState
           variant="not-found"
-          title="Defect not found"
-          message="The defect you're trying to edit doesn't exist."
+          title={t.defectForm.notFoundTitle}
+          message={t.defectForm.notFoundMessage}
         />
       </div>
     );
@@ -168,22 +169,22 @@ export default function DefectForm() {
 
   const wizardSteps = [
     {
-      label: "Basic Info",
+      label: t.defectForm.stepBasicInfo,
       content: (
         <div className="space-y-6 p-6">
           <TextInput
-            label="Defect Title"
+            label={t.defectForm.labelTitle}
             name="title"
             value={form.values.title}
             onChange={(e) => form.setField("title", e.target.value)}
             error={form.touched.title ? form.errors.title || null : null}
-            placeholder="Brief description of the issue"
+            placeholder={t.defectForm.placeholderTitle}
             required
             data-testid={TEST_IDS.defectForm.inputTitle}
           />
 
           <Select
-            label="Project"
+            label={t.defectForm.labelProject}
             name="projectId"
             value={
               form.values.projectId ? form.values.projectId.toString() : ""
@@ -206,7 +207,7 @@ export default function DefectForm() {
           />
 
           <Select
-            label="Severity"
+            label={t.defectForm.labelSeverity}
             name="severity"
             value={form.values.severity}
             onChange={(e) => form.setField("severity", e.target.value)}
@@ -220,7 +221,7 @@ export default function DefectForm() {
           />
 
           <Select
-            label="Priority"
+            label={t.defectForm.labelPriority}
             name="priority"
             value={form.values.priority}
             onChange={(e) => form.setField("priority", e.target.value)}
@@ -244,24 +245,24 @@ export default function DefectForm() {
       },
     },
     {
-      label: "Details",
+      label: t.defectForm.stepDetails,
       content: (
         <div className="space-y-6 p-6">
           <TextArea
-            label="Description"
+            label={t.defectForm.labelDescription}
             name="description"
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
             error={
               form.touched.description ? form.errors.description || null : null
             }
-            placeholder="Detailed description of the defect"
+            placeholder={t.defectForm.placeholderDescription}
             required
             data-testid={TEST_IDS.defectForm.inputDescription}
           />
 
           <TextArea
-            label="Steps to Reproduce"
+            label={t.defectForm.labelSteps}
             name="stepsToReproduce"
             value={form.values.stepsToReproduce}
             onChange={(e) => form.setField("stepsToReproduce", e.target.value)}
@@ -270,14 +271,14 @@ export default function DefectForm() {
                 ? form.errors.stepsToReproduce || null
                 : null
             }
-            placeholder="Step-by-step instructions to reproduce"
+            placeholder={t.defectForm.placeholderSteps}
             required
             data-testid={TEST_IDS.defectForm.inputSteps}
           />
 
           {selectedProject && (
             <Select
-              label="Environment"
+              label={t.defectForm.labelEnvironment}
               name="environmentId"
               value={form.values.environmentId?.toString() || ""}
               onChange={(e) => {
@@ -310,12 +311,12 @@ export default function DefectForm() {
       },
     },
     {
-      label: "Assignment & Links",
+      label: t.defectForm.stepAssignment,
       content: (
         <div className="space-y-6 p-6">
           {selectedProject ? (
             <Select
-              label="Assign to (optional)"
+              label={t.defectForm.labelAssignTo}
               name="assigneeId"
               value={form.values.assigneeId?.toString() || ""}
               onChange={(e) => {
@@ -338,7 +339,7 @@ export default function DefectForm() {
 
           {selectedProject && projectTestCases.length > 0 ? (
             <MultiSelect
-              label="Related Test Cases (optional)"
+              label={t.defectForm.labelRelatedTestCases}
               name="relatedTestCaseIds"
               value={form.values.relatedTestCaseIds.map((id) => id.toString())}
               onChange={(selected) => {
@@ -362,25 +363,25 @@ export default function DefectForm() {
       ),
     },
     {
-      label: "Review",
+      label: t.defectForm.stepReview,
       content: (
         <div className="space-y-6 p-6">
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-gray-400 mb-1">Title</p>
+              <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelTitle}</p>
               <p className="text-white font-medium">{form.values.title}</p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-1">Project</p>
+              <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelProject}</p>
               <p className="text-white font-medium">
-                {selectedProject?.name || "Not selected"}
+                {selectedProject?.name || t.defectForm.reviewNotSelected}
               </p>
             </div>
 
             <div className="flex gap-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2">Severity</p>
+                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelSeverity}</p>
                 <StatusBadge
                   data-testid="defect-form-review-severity"
                   type="severity"
@@ -388,7 +389,7 @@ export default function DefectForm() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2">Priority</p>
+                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelPriority}</p>
                 <StatusBadge
                   data-testid="defect-form-review-priority"
                   type="priority"
@@ -398,12 +399,12 @@ export default function DefectForm() {
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2">Description</p>
+              <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelDescription}</p>
               <p className="text-gray-300 text-sm">{form.values.description}</p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2">Steps to Reproduce</p>
+              <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelSteps}</p>
               <pre className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto">
                 {form.values.stepsToReproduce}
               </pre>
@@ -411,18 +412,18 @@ export default function DefectForm() {
 
             {form.values.environmentId && (
               <div>
-                <p className="text-xs text-gray-400 mb-1">Environment</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectForm.reviewLabelEnvironment}</p>
                 <p className="text-white font-medium">
                   {selectedProject?.environments.find(
                     (e) => e.id === form.values.environmentId,
-                  )?.name || "Unknown"}
+                  )?.name || t.common.unknown}
                 </p>
               </div>
             )}
 
             {form.values.assigneeId && (
               <div>
-                <p className="text-xs text-gray-400 mb-2">Assigned to</p>
+                <p className="text-xs text-gray-400 mb-2">{t.defectForm.reviewLabelAssignedTo}</p>
                 {users.find((u) => u.id === form.values.assigneeId) && (
                   <div className="flex items-center gap-2">
                     {(() => {
@@ -457,7 +458,7 @@ export default function DefectForm() {
   return (
     <div data-testid={TEST_IDS.defectForm.page}>
       <PageHeader
-        title={isEdit ? "Edit Defect" : "Report Defect"}
+        title={isEdit ? t.defectForm.titleEdit : t.defectForm.titleCreate}
         backTo="/defects"
       />
 

@@ -15,6 +15,7 @@ import { useProjects } from "../../hooks/useProjects";
 import { useDefects } from "../../hooks/useDefects";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type {
   Project,
   Defect,
@@ -46,8 +47,8 @@ export default function ProjectDetail() {
       <div data-testid={TEST_IDS.projectDetail.page}>
         <EmptyState
           variant="not-found"
-          title="Project not found"
-          message="The project you're looking for doesn't exist."
+          title={t.projectDetail.notFoundTitle}
+          message={t.projectDetail.notFoundMessage}
         />
       </div>
     );
@@ -68,21 +69,21 @@ export default function ProjectDetail() {
   const tabs = [
     {
       key: "overview",
-      label: "Overview",
+      label: t.projectDetail.tabOverview,
     },
     {
       key: "defects",
-      label: "Defects",
+      label: t.projectDetail.tabDefects,
       badge: projectDefects.length,
     },
     {
       key: "plans",
-      label: "Test Plans",
+      label: t.projectDetail.tabTestPlans,
       badge: projectPlans.length,
     },
     {
       key: "team",
-      label: "Team",
+      label: t.projectDetail.tabTeam,
       badge: projectMembers.length,
     },
   ];
@@ -130,11 +131,11 @@ export default function ProjectDetail() {
           {/* Project Info Card */}
           <div className="glass p-6 rounded-lg">
             <h3 className="text-lg font-semibold text-white mb-4">
-              Project Information
+            {t.projectDetail.sectionProjectInfo}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-gray-400">Status</p>
+                <p className="text-sm text-gray-400">{t.common.status}</p>
                 <StatusBadge
                   data-testid="project-detail-badge-status"
                   type="project_status"
@@ -143,7 +144,7 @@ export default function ProjectDetail() {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-400">QA Lead</p>
+                <p className="text-sm text-gray-400">{t.projectDetail.labelQALead}</p>
                 <div className="mt-2">
                   {userMap.get(project.leadId) && (
                     <UserAvatar
@@ -156,17 +157,17 @@ export default function ProjectDetail() {
                 </div>
               </div>
               <div className="col-span-2">
-                <p className="text-sm text-gray-400">Description</p>
+                <p className="text-sm text-gray-400">{t.common.description}</p>
                 <p className="text-white mt-1">{project.description}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">Created</p>
+                <p className="text-sm text-gray-400">{t.common.createdAt}</p>
                 <p className="text-white mt-1">
                   {formatDate(project.createdAt)}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">Updated</p>
+                <p className="text-sm text-gray-400">{t.common.updatedAt}</p>
                 <p className="text-white mt-1">
                   {formatDate(project.updatedAt)}
                 </p>
@@ -178,7 +179,7 @@ export default function ProjectDetail() {
           {project.environments.length > 0 && (
             <div className="glass p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Environments
+              {t.projectDetail.sectionEnvironments}
               </h3>
               <table
                 data-testid={TEST_IDS.projectDetail.envTable}
@@ -187,10 +188,7 @@ export default function ProjectDetail() {
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
-                      Name
-                    </th>
-                    <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
-                      Type
+                      {t.common.name}
                     </th>
                     <th className="text-left py-2 px-4 text-sm font-medium text-gray-400">
                       URL
@@ -220,19 +218,19 @@ export default function ProjectDetail() {
             <StatCard
               data-testid="project-detail-stat-defects"
               icon={Bug}
-              label="Defects"
+              label={t.projectDetail.statDefects}
               value={projectDefects.length.toString()}
             />
             <StatCard
               data-testid="project-detail-stat-plans"
               icon={CheckSquare}
-              label="Test Plans"
+              label={t.projectDetail.statTestPlans}
               value={projectPlans.length.toString()}
             />
             <StatCard
               data-testid="project-detail-stat-members"
               icon={Users}
-              label="Team Members"
+              label={t.projectDetail.statTeamMembers}
               value={projectMembers.length.toString()}
             />
           </div>
@@ -268,7 +266,7 @@ export default function ProjectDetail() {
       <Modal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
-        title="Delete Project"
+        title={t.projectDetail.modalDeleteTitle}
         size="sm"
         data-testid="modal-confirm-delete-project"
         footer={
@@ -277,21 +275,20 @@ export default function ProjectDetail() {
               className="btn btn-ghost"
               onClick={() => setShowDeleteModal(false)}
             >
-              Cancel
+              {t.common.cancel}
             </button>
             <button
               className="btn btn-neon-red"
               onClick={handleDelete}
               data-testid="modal-btn-confirm-delete"
             >
-              Delete
+              {t.common.delete}
             </button>
           </>
         }
       >
         <p className="text-gray-300">
-          Are you sure you want to delete "{project.name}"? This action cannot
-          be undone.
+          {t.projectDetail.modalDeleteConfirm(project.name)}
         </p>
       </Modal>
     </div>
@@ -310,12 +307,12 @@ function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
   const columns = [
     {
       key: "title",
-      label: "Title",
+      label: t.projectDetail.colTitle,
       sortable: true,
     },
     {
       key: "severity",
-      label: "Severity",
+      label: t.common.severity,
       sortable: true,
       render: (value: unknown) => (
         <StatusBadge
@@ -327,7 +324,7 @@ function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
     },
     {
       key: "status",
-      label: "Status",
+      label: t.common.status,
       sortable: true,
       render: (value: unknown) => (
         <StatusBadge
@@ -339,7 +336,7 @@ function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
     },
     {
       key: "assigneeId",
-      label: "Assignee",
+      label: t.common.assignee,
       sortable: false,
       render: (value: unknown) => {
         const assignee = userMap.get(value as number);
@@ -351,7 +348,7 @@ function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
             size="sm"
           />
         ) : (
-          <span className="text-gray-500">Unassigned</span>
+          <span className="text-gray-500">{t.common.unassigned}</span>
         );
       },
     },
@@ -363,7 +360,7 @@ function DefectsTabContent({ defects, users }: DefectsTabContentProps) {
       data={defects}
       pagination
       pageSize={10}
-      emptyMessage="No defects found for this project"
+      emptyMessage={t.projectDetail.emptyDefects}
       testIdPrefix="project-detail-defects"
       data-testid={TEST_IDS.projectDetail.defectsTable}
     />
@@ -379,12 +376,12 @@ function TestPlansTabContent({ testPlans }: TestPlansTabContentProps) {
   const columns = [
     {
       key: "name",
-      label: "Name",
+      label: t.projectDetail.planColName,
       sortable: true,
     },
     {
       key: "status",
-      label: "Status",
+      label: t.common.status,
       sortable: true,
       render: (value: unknown) => {
         const status = value as string;
@@ -405,16 +402,16 @@ function TestPlansTabContent({ testPlans }: TestPlansTabContentProps) {
     },
     {
       key: "testCases",
-      label: "Test Cases",
+      label: t.projectDetail.planColTestCases,
       sortable: false,
       render: (value: unknown) => {
         const testCases = value as any[];
-        return `${testCases.length} cases`;
+        return t.projectDetail.casesCount(testCases.length);
       },
     },
     {
       key: "updatedAt",
-      label: "Last Updated",
+      label: t.projectDetail.planColLastUpdated,
       sortable: true,
       render: (value: unknown) => formatDate(value as string),
     },
@@ -426,7 +423,7 @@ function TestPlansTabContent({ testPlans }: TestPlansTabContentProps) {
       data={testPlans}
       pagination
       pageSize={10}
-      emptyMessage="No test plans found for this project"
+      emptyMessage={t.projectDetail.emptyTestPlans}
       testIdPrefix="project-detail-plans"
       data-testid={TEST_IDS.projectDetail.plansTable}
     />
@@ -441,7 +438,7 @@ function TeamTabContent({ members }: TeamTabContentProps) {
   return (
     <div data-testid={TEST_IDS.projectDetail.teamList} className="space-y-3">
       {members.length === 0 ? (
-        <p className="text-gray-400">No team members assigned</p>
+        <p className="text-gray-400">{t.projectDetail.emptyTeam}</p>
       ) : (
         members.map((member) => (
           <div

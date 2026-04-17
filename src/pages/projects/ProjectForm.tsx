@@ -16,6 +16,7 @@ import {
 import { useForm } from "../../hooks/useForm";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import { PROJECT_STATUSES, ENVIRONMENT_TYPES } from "../../data/entities";
 import type {
   Project,
@@ -60,21 +61,21 @@ export default function ProjectForm() {
     const errors: Partial<Record<keyof FormValues, string>> = {};
 
     if (!values.name.trim()) {
-      errors.name = "Project name is required";
+      errors.name = t.projectForm.validateNameRequired;
     }
 
     if (!values.code.trim()) {
-      errors.code = "Project code is required";
+      errors.code = t.projectForm.validateCodeRequired;
     } else if (!/^[A-Z0-9]{1,10}$/.test(values.code)) {
-      errors.code = "Code must be 1-10 uppercase letters/numbers";
+      errors.code = t.projectForm.validateCodeFormat;
     }
 
     if (!values.description.trim()) {
-      errors.description = "Description is required";
+      errors.description = t.projectForm.validateDescriptionRequired;
     }
 
     if (!values.leadId) {
-      errors.leadId = "QA Lead is required";
+      errors.leadId = t.projectForm.validateLeadRequired;
     }
 
     return errors;
@@ -147,8 +148,8 @@ export default function ProjectForm() {
       <div data-testid={TEST_IDS.projectForm.page}>
         <EmptyState
           variant="not-found"
-          title="Project not found"
-          message="The project you're trying to edit doesn't exist."
+          title={t.projectForm.notFoundTitle}
+          message={t.projectForm.notFoundMessage}
         />
       </div>
     );
@@ -156,7 +157,7 @@ export default function ProjectForm() {
 
   const steps = [
     {
-      label: "Basic Info",
+      label: t.projectForm.stepBasicInfo,
       validate: () => {
         const errors = validateForm(form.values);
         const basicErrors = ["name", "code", "description"].some(
@@ -168,7 +169,7 @@ export default function ProjectForm() {
         <div data-testid={`project-form-step-1`} className="space-y-4 py-4">
           <TextInput
             data-testid={TEST_IDS.projectForm.inputName}
-            label="Project Name"
+            label={t.projectForm.labelProjectName}
             name="name"
             value={form.values.name}
             onChange={(e) => form.setField("name", e.target.value)}
@@ -178,7 +179,7 @@ export default function ProjectForm() {
 
           <TextInput
             data-testid={TEST_IDS.projectForm.inputCode}
-            label="Project Code"
+            label={t.projectForm.labelProjectCode}
             name="code"
             value={form.values.code}
             onChange={(e) =>
@@ -191,7 +192,7 @@ export default function ProjectForm() {
 
           <TextArea
             data-testid={TEST_IDS.projectForm.inputDescription}
-            label="Description"
+            label={t.projectForm.labelDescription}
             name="description"
             value={form.values.description}
             onChange={(e) => form.setField("description", e.target.value)}
@@ -205,7 +206,7 @@ export default function ProjectForm() {
 
           <Select
             data-testid={TEST_IDS.projectForm.selectStatus}
-            label="Status"
+            label={t.projectForm.labelStatus}
             name="status"
             value={form.values.status}
             onChange={(e) => form.setField("status", e.target.value)}
@@ -219,7 +220,7 @@ export default function ProjectForm() {
       ),
     },
     {
-      label: "Team Assignment",
+      label: t.projectForm.stepTeamAssignment,
       validate: () => {
         const errors = validateForm(form.values);
         return !errors.leadId;
@@ -228,7 +229,7 @@ export default function ProjectForm() {
         <div data-testid={`project-form-step-2`} className="space-y-4 py-4">
           <Select
             data-testid={TEST_IDS.projectForm.selectLead}
-            label="QA Lead"
+            label={t.projectForm.labelQaLead}
             name="leadId"
             value={form.values.leadId}
             onChange={(e) => form.setField("leadId", e.target.value)}
@@ -242,7 +243,7 @@ export default function ProjectForm() {
 
           <MultiSelect
             data-testid={TEST_IDS.projectForm.selectMembers}
-            label="Team Members"
+            label={t.projectForm.labelTeamMembers}
             name="memberIds"
             value={selectedMembers}
             onChange={setSelectedMembers}
@@ -255,7 +256,7 @@ export default function ProjectForm() {
       ),
     },
     {
-      label: "Environments",
+      label: t.projectForm.stepEnvironments,
       validate: validateStep3,
       content: (
         <div data-testid={`project-form-step-3`} className="space-y-4 py-4">
@@ -271,7 +272,7 @@ export default function ProjectForm() {
                 <div className="grid grid-cols-12 gap-3">
                   <TextInput
                     data-testid={`project-form-env-name-${idx}`}
-                    label="Name"
+                    label={t.projectForm.labelEnvName}
                     name={`env-name-${idx}`}
                     value={env.name}
                     onChange={(e) =>
@@ -282,7 +283,7 @@ export default function ProjectForm() {
 
                   <Select
                     data-testid={`project-form-env-type-${idx}`}
-                    label="Type"
+                    label={t.projectForm.labelEnvType}
                     name={`env-type-${idx}`}
                     value={env.type}
                     onChange={(e) =>
@@ -301,7 +302,7 @@ export default function ProjectForm() {
 
                   <TextInput
                     data-testid={`project-form-env-url-${idx}`}
-                    label="URL"
+                    label={t.projectForm.labelEnvUrl}
                     name={`env-url-${idx}`}
                     value={env.url}
                     onChange={(e) =>
@@ -336,7 +337,7 @@ export default function ProjectForm() {
       ),
     },
     {
-      label: "Review",
+      label: t.common.review,
       content: (
         <div data-testid={`project-form-step-4`} className="space-y-4 py-4">
           <div className="glass p-4 rounded-lg">
@@ -420,7 +421,7 @@ export default function ProjectForm() {
   return (
     <div data-testid={TEST_IDS.projectForm.page}>
       <PageHeader
-        title={isEditMode ? `Edit ${existingProject?.name}` : "New Project"}
+        title={isEditMode ? `${t.projectForm.editTitle} ${existingProject?.name}` : t.projectForm.createTitle}
         backTo="/projects"
       />
 

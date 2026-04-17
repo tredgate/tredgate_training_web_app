@@ -15,6 +15,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useToast } from "../../hooks/useToast";
+import { t } from "../../i18n";
 import type {
   TestRun,
   TestRunResult,
@@ -55,8 +56,8 @@ export default function TestRunExecution() {
       <div data-testid={TEST_IDS.testrunExecution.page}>
         <EmptyState
           variant="not-found"
-          title="Test Run not found"
-          message="The test run you're looking for doesn't exist."
+          title={t.testRunExecution.notFoundTitle}
+          message={t.testRunExecution.notFoundMessage}
         />
       </div>
     );
@@ -68,8 +69,8 @@ export default function TestRunExecution() {
       <div data-testid={TEST_IDS.testrunExecution.page}>
         <EmptyState
           variant="not-found"
-          title="Test Plan not found"
-          message="The associated test plan doesn't exist."
+          title={t.testRunExecution.testPlanNotFoundTitle}
+          message={t.testRunExecution.testPlanNotFoundMessage}
         />
       </div>
     );
@@ -82,8 +83,8 @@ export default function TestRunExecution() {
       <div data-testid={TEST_IDS.testrunExecution.page}>
         <EmptyState
           variant="not-found"
-          title="Test case not found"
-          message="The current test case doesn't exist."
+          title={t.testRunExecution.testCaseNotFoundTitle}
+          message={t.testRunExecution.testCaseNotFoundMessage}
         />
       </div>
     );
@@ -220,10 +221,10 @@ export default function TestRunExecution() {
         <div className="space-y-2">
           <div className="flex justify-between items-center text-sm">
             <span className="text-gray-400">
-              Case {currentCaseIndex + 1} of {testPlan.testCases.length}
+              {t.testRunExecution.progressLabel(currentCaseIndex + 1, testPlan.testCases.length)}
             </span>
             <span className="text-gray-400">
-              {Math.round(progressPercent)}% complete
+              {t.testRunExecution.progressComplete(Math.round(progressPercent))}
             </span>
           </div>
           <div
@@ -296,17 +297,17 @@ export default function TestRunExecution() {
                           </span>
                         )}
                       </div>
-                      <p className="text-white font-medium">Action:</p>
+                      <p className="text-white font-medium">{t.testRunExecution.labelAction}</p>
                       <p className="text-gray-300 text-sm ml-2">
                         {step.action}
                       </p>
-                      <p className="text-white font-medium mt-2">Expected:</p>
+                      <p className="text-white font-medium mt-2">{t.testRunExecution.labelExpected}</p>
                       <p className="text-gray-300 text-sm ml-2">
                         {step.expectedResult}
                       </p>
                       {result?.notes && (
                         <>
-                          <p className="text-white font-medium mt-2">Note:</p>
+                          <p className="text-white font-medium mt-2">{t.testRunExecution.labelNote}</p>
                           <p className="text-gray-300 text-sm ml-2">
                             {result.notes}
                           </p>
@@ -327,7 +328,7 @@ export default function TestRunExecution() {
                             stepIdx,
                             "pass",
                           )}
-                          title="Pass"
+                          title={t.testRunExecution.statusPassed(1).replace(" 1", "")}
                         >
                           <CheckCircle size={20} />
                         </button>
@@ -341,7 +342,7 @@ export default function TestRunExecution() {
                             stepIdx,
                             "fail",
                           )}
-                          title="Fail"
+                          title={t.testRunExecution.statusFailed(1).replace(" 1", "")}
                         >
                           <XCircle size={20} />
                         </button>
@@ -355,7 +356,7 @@ export default function TestRunExecution() {
                             stepIdx,
                             "skip",
                           )}
-                          title="Skip"
+                          title={t.testRunExecution.statusSkipped(1).replace(" 1", "")}
                         >
                           <SkipForward size={20} />
                         </button>
@@ -377,7 +378,7 @@ export default function TestRunExecution() {
             data-testid={TEST_IDS.testrunExecution.btnPrevCase}
           >
             <ChevronLeft size={18} />
-            Previous Case
+            {t.testRunExecution.btnPrevCase}
           </button>
 
           <button
@@ -386,7 +387,7 @@ export default function TestRunExecution() {
             className="btn btn-secondary disabled:opacity-50"
             data-testid={TEST_IDS.testrunExecution.btnNextCase}
           >
-            Next Case
+            {t.testRunExecution.btnNextCase}
             <ChevronRight size={18} />
           </button>
 
@@ -396,7 +397,7 @@ export default function TestRunExecution() {
             className="btn btn-primary disabled:opacity-50"
             data-testid={TEST_IDS.testrunExecution.btnComplete}
           >
-            Complete Run
+            {t.testRunExecution.btnCompleteRun}
           </button>
         </div>
       </div>
@@ -406,18 +407,18 @@ export default function TestRunExecution() {
         <Modal
           isOpen={!!failNoteModal}
           data-testid="testrun-fail-note-modal"
-          title="Record Failure"
+          title={t.testRunExecution.modalFailNoteTitle}
           onClose={() => setFailNoteModal(null)}
         >
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-white mb-2">
-                Failure Note (optional)
+                {t.testRunExecution.labelFailureNote}
               </label>
               <textarea
                 value={failNote}
                 onChange={(e) => setFailNote(e.target.value)}
-                placeholder="Why did this step fail?"
+                placeholder={t.testRunExecution.placeholderFailureNote}
                 className="input-field w-full"
                 rows={3}
               />
@@ -427,13 +428,13 @@ export default function TestRunExecution() {
                 onClick={() => setFailNoteModal(null)}
                 className="btn btn-ghost"
               >
-                Cancel
+                {t.common.cancel}
               </button>
               <button
                 onClick={handleFailNoteSubmit}
                 className="btn btn-primary"
               >
-                Record Failure
+                {t.testRunExecution.btnRecordFailure}
               </button>
             </div>
           </div>

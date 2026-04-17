@@ -14,6 +14,7 @@ import { useTestPlans } from "../../hooks/useTestPlans";
 import { useProjects } from "../../hooks/useProjects";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
+import { t } from "../../i18n";
 import { ROLES } from "../../data/entities";
 import { Users, Bug, TestTube } from "lucide-react";
 
@@ -43,8 +44,8 @@ export default function UserDetail() {
       <div data-testid={TEST_IDS.userDetail.page}>
         <EmptyState
           variant="not-found"
-          title="User not found"
-          message="This user does not exist or has been removed."
+          title={t.team.notFoundTitle}
+          message={t.team.notFoundMessage}
         />
       </div>
     );
@@ -137,7 +138,7 @@ export default function UserDetail() {
                   onClick={handleEditClick}
                   className="px-4 py-2 bg-neon-purple hover:bg-neon-purple/80 text-white rounded-lg text-sm font-medium transition-colors"
                 >
-                  Edit Role
+                  {t.team.btnEditRole}
                 </button>
               )
             : null
@@ -191,7 +192,7 @@ export default function UserDetail() {
               <div className="mt-6 pt-6 border-t border-white/10 space-y-4">
                 <MultiSelect
                   data-testid={TEST_IDS.userDetail.selectProjects}
-                  label="Projects"
+                  label={t.team.labelProjects}
                   name="projects"
                   value={editProjects}
                   onChange={setEditProjects}
@@ -207,14 +208,14 @@ export default function UserDetail() {
                     onClick={handleSave}
                     className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors"
                   >
-                    Save
+                    {t.team.btnSave}
                   </button>
                   <button
                     data-testid={TEST_IDS.userDetail.btnCancel}
                     onClick={handleCancel}
                     className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition-colors"
                   >
-                    Cancel
+                    {t.team.btnCancel}
                   </button>
                 </div>
               </div>
@@ -225,7 +226,7 @@ export default function UserDetail() {
           <div data-testid={TEST_IDS.userDetail.activity} className="space-y-6">
             <div>
               <h3 className="text-lg font-bold text-white mb-4">
-                Recent Defects Reported
+                {t.team.sectionRecentDefects}
               </h3>
               {recentDefects.length > 0 ? (
                 <div className="glass rounded-lg overflow-hidden">
@@ -254,13 +255,13 @@ export default function UserDetail() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm">No defects reported</p>
+                <p className="text-gray-400 text-sm">{t.team.noDefectsReported}</p>
               )}
             </div>
 
             <div>
               <h3 className="text-lg font-bold text-white mb-4">
-                Recent Test Runs
+                {t.team.sectionRecentRuns}
               </h3>
               {recentRuns.length > 0 ? (
                 <div className="glass rounded-lg overflow-hidden">
@@ -297,7 +298,7 @@ export default function UserDetail() {
                   })}
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm">No test runs</p>
+                <p className="text-gray-400 text-sm">{t.team.noTestRuns}</p>
               )}
             </div>
           </div>
@@ -312,7 +313,7 @@ export default function UserDetail() {
           >
             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
-              Projects
+              {t.team.sectionProjects}
             </h3>
             {userProjectRoles.length > 0 ? (
               <ul className="space-y-3">
@@ -327,14 +328,14 @@ export default function UserDetail() {
                         {proj?.name}
                       </a>
                       <span className="text-xs text-gray-400">
-                        {projRole === "lead" ? "Lead" : "Member"}
+                        {projRole === "lead" ? t.team.roleLead : t.team.roleMember}
                       </span>
                     </li>
                   );
                 })}
               </ul>
             ) : (
-              <p className="text-gray-400 text-sm">No projects assigned</p>
+              <p className="text-gray-400 text-sm">{t.team.noProjectsAssigned}</p>
             )}
           </div>
 

@@ -9,6 +9,7 @@ import { TEST_IDS, defectBadge } from "../../shared/testIds";
 import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type { Defect } from "../../data/entities";
 import {
   DEFECT_SEVERITIES,
@@ -37,28 +38,28 @@ export default function DefectList() {
   const columns: Column<Defect>[] = [
     {
       key: "id",
-      label: "ID",
+      label: t.defects.colId,
       sortable: true,
       render: (val) => `#${val as number}`,
     },
     {
       key: "title",
-      label: "Title",
+      label: t.defects.colTitle,
       sortable: true,
       render: (val) => val as string,
     },
     {
       key: "projectId",
-      label: "Project",
+      label: t.defects.colProject,
       sortable: true,
       render: (val) => {
         const project = projectMap.get(val as number);
-        return project ? project.name : "Unknown";
+        return project ? project.name : t.defects.unknownProject;
       },
     },
     {
       key: "severity",
-      label: "Severity",
+      label: t.defects.colSeverity,
       sortable: true,
       render: (val, row: Defect) => (
         <StatusBadge
@@ -70,7 +71,7 @@ export default function DefectList() {
     },
     {
       key: "priority",
-      label: "Priority",
+      label: t.defects.colPriority,
       sortable: true,
       render: (val, row: Defect) => (
         <StatusBadge
@@ -82,7 +83,7 @@ export default function DefectList() {
     },
     {
       key: "status",
-      label: "Status",
+      label: t.defects.colStatus,
       sortable: true,
       render: (val, row: Defect) => (
         <StatusBadge
@@ -94,12 +95,12 @@ export default function DefectList() {
     },
     {
       key: "assigneeId",
-      label: "Assignee",
+      label: t.defects.colAssignee,
       sortable: false,
       render: (val) => {
-        if (!val) return <span className="text-gray-500">Unassigned</span>;
+        if (!val) return <span className="text-gray-500">{t.common.unassigned}</span>;
         const assignee = userMap.get(val as number);
-        if (!assignee) return <span className="text-gray-500">Unknown</span>;
+        if (!assignee) return <span className="text-gray-500">{t.defects.unknownAssignee}</span>;
         return (
           <UserAvatar
             data-testid={`defect-list-assignee-avatar-${val}`}
@@ -113,7 +114,7 @@ export default function DefectList() {
     },
     {
       key: "updatedAt",
-      label: "Updated",
+      label: t.defects.colUpdated,
       sortable: true,
       render: (val) => formatDate(val as string),
     },
@@ -122,7 +123,7 @@ export default function DefectList() {
   return (
     <div data-testid={TEST_IDS.defectList.page}>
       <PageHeader
-        title="Defects"
+        title={t.defects.pageTitle}
         actions={
           <button
             onClick={() => navigate("/defects/new")}
@@ -130,7 +131,7 @@ export default function DefectList() {
             className="btn btn-neon-purple flex items-center gap-2"
           >
             <Plus size={18} />
-            Report Defect
+            {t.defects.btnReportDefect}
           </button>
         }
       />
@@ -142,33 +143,17 @@ export default function DefectList() {
           data={defects}
           keyField="id"
           searchable
-          searchPlaceholder="Search defects..."
+          searchPlaceholder={t.defects.searchPlaceholder}
           filters={[
-            {
-              key: "severity",
-              label: "Severity",
-              options: DEFECT_SEVERITIES as any,
-            },
-            {
-              key: "status",
-              label: "Status",
-              options: DEFECT_STATUSES as any,
-            },
-            {
-              key: "priority",
-              label: "Priority",
-              options: DEFECT_PRIORITIES as any,
-            },
-            {
-              key: "projectId",
-              label: "Project",
-              options: projectOptions,
-            },
+            { key: "severity", label: t.defects.filterSeverity, options: DEFECT_SEVERITIES as any },
+            { key: "status", label: t.defects.filterStatus, options: DEFECT_STATUSES as any },
+            { key: "priority", label: t.defects.filterPriority, options: DEFECT_PRIORITIES as any },
+            { key: "projectId", label: t.defects.filterProject, options: projectOptions },
           ]}
           pagination
           pageSize={10}
           onRowClick={(row: Defect) => navigate(`/defects/${row.id}`)}
-          emptyMessage="No defects found"
+          emptyMessage={t.defects.emptyMessage}
           testIdPrefix="defect-list"
         />
       </div>

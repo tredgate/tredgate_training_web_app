@@ -8,6 +8,7 @@ import { TEST_IDS } from "../../shared/testIds";
 import { useAuth } from "../../hooks/useAuth";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import {
   PROJECT_STATUSES,
   type Project,
@@ -29,17 +30,17 @@ export default function ProjectList() {
   const columns = [
     {
       key: "code",
-      label: "Code",
+      label: t.projects.colCode,
       sortable: true,
     },
     {
       key: "name",
-      label: "Name",
+      label: t.projects.colName,
       sortable: true,
     },
     {
       key: "status",
-      label: "Status",
+      label: t.projects.colStatus,
       sortable: true,
       render: (value: unknown) => (
         <StatusBadge
@@ -51,7 +52,7 @@ export default function ProjectList() {
     },
     {
       key: "leadId",
-      label: "Lead",
+      label: t.projects.colLead,
       sortable: false,
       render: (value: unknown) => {
         const lead = userMap.get(value as number);
@@ -68,16 +69,16 @@ export default function ProjectList() {
     },
     {
       key: "memberIds",
-      label: "Members",
+      label: t.projects.colMembers,
       sortable: false,
       render: (value: unknown) => {
         const memberIds = value as number[];
-        return `${memberIds.length} members`;
+        return t.projects.membersCount(memberIds.length);
       },
     },
     {
       key: "updatedAt",
-      label: "Last Updated",
+      label: t.projects.colLastUpdated,
       sortable: true,
       render: (value: unknown) => formatDate(value as string),
     },
@@ -86,7 +87,7 @@ export default function ProjectList() {
   return (
     <div data-testid={TEST_IDS.projectList.page}>
       <PageHeader
-        title="Projects"
+        title={t.projects.pageTitle}
         actions={
           hasPermission("project:create") && (
             <Link
@@ -95,7 +96,7 @@ export default function ProjectList() {
               className="btn btn-primary flex items-center gap-2"
             >
               <Plus size={18} />
-              New Project
+              {t.projects.btnNewProject}
             </Link>
           )
         }
@@ -105,18 +106,14 @@ export default function ProjectList() {
         columns={columns}
         data={projects}
         searchable
-        searchPlaceholder="Search projects..."
+        searchPlaceholder={t.projects.searchPlaceholder}
         filters={[
-          {
-            key: "status",
-            label: "Status",
-            options: PROJECT_STATUSES,
-          },
+          { key: "status", label: t.projects.filterStatus, options: PROJECT_STATUSES },
         ]}
         pagination
         pageSize={10}
         onRowClick={(project) => navigate(`/projects/${project.id}`)}
-        emptyMessage="No projects found"
+        emptyMessage={t.projects.emptyMessage}
         testIdPrefix="project-list"
       />
     </div>

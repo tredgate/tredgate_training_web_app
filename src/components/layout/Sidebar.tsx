@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { t } from "../../i18n";
 import {
   LayoutDashboard,
   FolderKanban,
@@ -30,7 +31,7 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   {
     key: "dashboard",
-    label: "Dashboard",
+    label: t.sidebar.dashboard,
     icon: LayoutDashboard,
     path: "/dashboard",
     roles: ["tester", "qa_lead", "admin"],
@@ -38,7 +39,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "projects",
-    label: "Projects",
+    label: t.sidebar.projects,
     icon: FolderKanban,
     path: "/projects",
     roles: ["tester", "qa_lead", "admin"],
@@ -46,7 +47,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "defects",
-    label: "Defects",
+    label: t.sidebar.defects,
     icon: Bug,
     path: "/defects",
     roles: ["tester", "qa_lead", "admin"],
@@ -54,7 +55,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "test-plans",
-    label: "Test Plans",
+    label: t.sidebar.testPlans,
     icon: ClipboardList,
     path: "/test-plans",
     roles: ["tester", "qa_lead", "admin"],
@@ -62,7 +63,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "team",
-    label: "Team",
+    label: t.sidebar.team,
     icon: Users,
     path: "/team",
     roles: ["tester", "qa_lead", "admin"],
@@ -70,7 +71,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "reports",
-    label: "Reports",
+    label: t.sidebar.reports,
     icon: BarChart3,
     path: "/reports",
     roles: ["qa_lead", "admin"],
@@ -78,7 +79,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: "settings",
-    label: "Settings",
+    label: t.sidebar.settings,
     icon: Settings,
     path: "/settings",
     roles: ["admin"],
@@ -114,7 +115,7 @@ export default function Sidebar() {
             data-testid={TEST_IDS.sidebar.logo}
             className="text-lg font-bold text-white truncate"
           >
-            TredGate QA Hub
+            {t.app.name}
           </span>
         )}
         {collapsed && (
@@ -153,7 +154,7 @@ export default function Sidebar() {
           }`}
         >
           <LogOut size={20} className="shrink-0" />
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span>{t.sidebar.logout}</span>}
         </button>
 
         <button
@@ -168,7 +169,7 @@ export default function Sidebar() {
           ) : (
             <ChevronLeft size={20} className="shrink-0" />
           )}
-          {!collapsed && <span>Collapse</span>}
+          {!collapsed && <span>{t.sidebar.collapse}</span>}
         </button>
       </div>
     </nav>

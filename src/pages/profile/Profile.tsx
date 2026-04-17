@@ -7,6 +7,7 @@ import StatusBadge from "../../components/feedback/StatusBadge";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import { useDefects } from "../../hooks/useDefects";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useProjects } from "../../hooks/useProjects";
@@ -31,7 +32,7 @@ export default function Profile() {
 
   const handleSaveChanges = async () => {
     if (!fullName.trim() || !email.trim()) {
-      addToast("error", "Name and email are required");
+      addToast("error", t.profile.toastErrorRequired);
       return;
     }
 
@@ -41,10 +42,10 @@ export default function Profile() {
         fullName: fullName.trim(),
         email: email.trim(),
       });
-      addToast("success", "Profile updated successfully");
+      addToast("success", t.profile.toastSuccess);
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Failed to save profile";
+        err instanceof Error ? err.message : t.profile.toastErrorFailed;
       addToast("error", message);
     } finally {
       setIsSaving(false);
@@ -71,7 +72,7 @@ export default function Profile() {
 
   return (
     <div data-testid={TEST_IDS.profile.page}>
-      <PageHeader title="My Profile" />
+      <PageHeader title={t.profile.pageTitle} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Profile Card */}
@@ -97,21 +98,21 @@ export default function Profile() {
               <div className="space-y-4">
                 <TextInput
                   data-testid={TEST_IDS.profile.inputName}
-                  label="Full Name"
+                  label={t.profile.labelFullName}
                   name="fullName"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Enter your full name"
+                  placeholder={t.profile.placeholderFullName}
                 />
 
                 <TextInput
                   data-testid={TEST_IDS.profile.inputEmail}
-                  label="Email"
+                  label={t.profile.labelEmail}
                   name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t.profile.placeholderEmail}
                 />
               </div>
 
@@ -119,7 +120,7 @@ export default function Profile() {
               <div className="space-y-4 pt-4 border-t border-white/10">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Role
+                    {t.profile.labelRole}
                   </label>
                   <StatusBadge
                     data-testid="profile-role-badge"
@@ -130,7 +131,7 @@ export default function Profile() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Username
+                    {t.profile.labelUsername}
                   </label>
                   <div className="px-4 py-2 bg-white/5 rounded-lg text-white">
                     {user.username}
@@ -146,7 +147,7 @@ export default function Profile() {
                   disabled={isSaving}
                   className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
                 >
-                  {isSaving ? "Saving..." : "Save Changes"}
+                  {isSaving ? t.profile.btnSaving : t.profile.btnSave}
                 </button>
               </div>
             </div>
@@ -159,39 +160,39 @@ export default function Profile() {
             data-testid={TEST_IDS.profile.activity}
             className="glass rounded-lg p-8"
           >
-            <h2 className="text-2xl font-bold text-white mb-6">My Activity</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t.profile.sectionMyActivity}</h2>
 
             <div className="space-y-4">
               {/* My Defects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">My Defects</p>
+                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyDefects}</p>
                 <p className="text-white text-3xl font-bold">
                   {myReportedDefects.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">reported</p>
+                <p className="text-gray-400 text-xs mt-1">{t.profile.statReported}</p>
               </div>
 
               {/* Assigned to Me */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">Assigned to Me</p>
+                <p className="text-gray-300 text-sm mb-1">{t.profile.statAssignedToMe}</p>
                 <p className="text-white text-3xl font-bold">
                   {assignedToMe.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">defects</p>
+                <p className="text-gray-400 text-xs mt-1">{t.profile.statDefects}</p>
               </div>
 
               {/* My Test Runs */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">My Test Runs</p>
+                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyTestRuns}</p>
                 <p className="text-white text-3xl font-bold">
                   {myTestRuns.length}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">executed</p>
+                <p className="text-gray-400 text-xs mt-1">{t.profile.statExecuted}</p>
               </div>
 
               {/* My Projects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p className="text-gray-300 text-sm mb-1">My Projects</p>
+                <p className="text-gray-300 text-sm mb-1">{t.profile.statMyProjects}</p>
                 {myProjects.length > 0 ? (
                   <ul className="mt-3 space-y-2">
                     {myProjects.map((p) => (
@@ -201,7 +202,7 @@ export default function Profile() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-400 text-sm mt-2">No projects</p>
+                  <p className="text-gray-400 text-sm mt-2">{t.profile.noProjects}</p>
                 )}
               </div>
             </div>

@@ -25,6 +25,7 @@ import { useProjects } from "../../hooks/useProjects";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type { Column } from "../../components/data/DataTable";
 import type { Defect, TestRun } from "../../data/entities";
 
@@ -187,17 +188,17 @@ export default function Dashboard() {
 
   // Helper: Get project name by ID
   const getProjectName = (projectId: number): string => {
-    return projects.find((p) => p.id === projectId)?.name || "Unknown Project";
+    return projects.find((p) => p.id === projectId)?.name || t.dashboard.unknownProject;
   };
 
   // Helper: Get user name by ID
   const getUserName = (userId: number): string => {
-    return users.find((u) => u.id === userId)?.fullName || "Unknown User";
+    return users.find((u) => u.id === userId)?.fullName || t.dashboard.unknownUser;
   };
 
   // Helper: Get test plan name by ID
   const getTestPlanName = (planId: number): string => {
-    return testPlans.find((tp) => tp.id === planId)?.name || "Unknown Plan";
+    return testPlans.find((tp) => tp.id === planId)?.name || t.dashboard.unknownPlan;
   };
 
   // ────────────────────────────────────────────────────────────────────────
@@ -213,7 +214,7 @@ export default function Dashboard() {
     },
     {
       key: "severity",
-      label: "Severity",
+      label: t.dashboard.colSeverity,
       render: (value) => (
         <StatusBadge
           data-testid={TEST_IDS.dashboard.myDefectsTable}
@@ -224,7 +225,7 @@ export default function Dashboard() {
     },
     {
       key: "status",
-      label: "Status",
+      label: t.dashboard.colStatus,
       render: (value) => (
         <StatusBadge
           data-testid={TEST_IDS.dashboard.myDefectsTable}
@@ -235,7 +236,7 @@ export default function Dashboard() {
     },
     {
       key: "priority",
-      label: "Priority",
+      label: t.dashboard.colPriority,
       render: (value) => (
         <StatusBadge
           data-testid={TEST_IDS.dashboard.myDefectsTable}
@@ -249,12 +250,12 @@ export default function Dashboard() {
   const testRunColumns: Column<TestRun>[] = [
     {
       key: "testPlanId",
-      label: "Test Plan",
+      label: t.dashboard.colTestPlan,
       render: (value) => getTestPlanName(value as number),
     },
     {
       key: "status",
-      label: "Status",
+      label: t.dashboard.colStatus,
       render: (value) => {
         const status = value === "completed" ? "completed" : "in_progress";
         return (
@@ -268,30 +269,30 @@ export default function Dashboard() {
     },
     {
       key: "results",
-      label: "Results",
+      label: t.dashboard.colResults,
       render: (value) => {
         const results = value as any[];
         const passed = results.filter((r) => r.status === "passed").length;
-        return `${passed}/${results.length} passed`;
+        return t.dashboard.resultsPassed(passed, results.length);
       },
     },
     {
       key: "startedAt",
-      label: "Date",
+      label: t.dashboard.colDate,
       render: (value) => new Date(value as string).toLocaleDateString(),
     },
   ];
 
   const unassignedColumns: Column<Defect>[] = [
-    { key: "title", label: "Title", sortable: true },
+    { key: "title", label: t.dashboard.colTitle, sortable: true },
     {
       key: "projectId",
-      label: "Project",
+      label: t.dashboard.colProject,
       render: (value) => getProjectName(value as number),
     },
     {
       key: "severity",
-      label: "Severity",
+      label: t.dashboard.colSeverity,
       render: (value) => (
         <StatusBadge
           data-testid={TEST_IDS.dashboard.unassignedTable}
@@ -302,26 +303,26 @@ export default function Dashboard() {
     },
     {
       key: "reporterId",
-      label: "Reporter",
+      label: t.dashboard.colReporter,
       render: (value) => getUserName(value as number),
     },
     {
       key: "createdAt",
-      label: "Created",
+      label: t.dashboard.colCreated,
       render: (value) => new Date(value as string).toLocaleDateString(),
     },
   ];
 
   const verificationColumns: Column<Defect>[] = [
-    { key: "title", label: "Title", sortable: true },
+    { key: "title", label: t.dashboard.colTitle, sortable: true },
     {
       key: "projectId",
-      label: "Project",
+      label: t.dashboard.colProject,
       render: (value) => getProjectName(value as number),
     },
     {
       key: "severity",
-      label: "Severity",
+      label: t.dashboard.colSeverity,
       render: (value) => (
         <StatusBadge
           data-testid={TEST_IDS.dashboard.verificationTable}
@@ -332,10 +333,10 @@ export default function Dashboard() {
     },
     {
       key: "assigneeId",
-      label: "Assigned To",
+      label: t.dashboard.colAssignedTo,
       render: (value) => {
         const assigneeId = value as number | null;
-        return assigneeId ? getUserName(assigneeId) : "Unassigned";
+        return assigneeId ? getUserName(assigneeId) : t.common.unassigned;
       },
     },
   ];
@@ -346,32 +347,32 @@ export default function Dashboard() {
 
   return (
     <div data-testid={TEST_IDS.dashboard.page} className="flex flex-col gap-6">
-      <PageHeader title="Dashboard" />
+      <PageHeader title={t.dashboard.title} />
 
       {/* Top Row: 4 Main StatCards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           data-testid={TEST_IDS.dashboard.cardTotalDefects}
           icon={Bug}
-          label="Total Defects"
+          label={t.dashboard.statTotalDefects}
           value={totalDefectsCount}
         />
         <StatCard
           data-testid={TEST_IDS.dashboard.cardOpenDefects}
           icon={AlertTriangle}
-          label="Open Defects"
+          label={t.dashboard.statOpenDefects}
           value={openDefectsCount}
         />
         <StatCard
           data-testid={TEST_IDS.dashboard.cardTestPlans}
           icon={ClipboardList}
-          label="Test Plans"
+          label={t.dashboard.statTestPlans}
           value={testPlansCount}
         />
         <StatCard
           data-testid={TEST_IDS.dashboard.cardPassRate}
           icon={CheckCircle}
-          label="Pass Rate"
+          label={t.dashboard.statPassRate}
           value={`${passRate}%`}
         />
       </div>
@@ -380,7 +381,7 @@ export default function Dashboard() {
       <div className="flex flex-col gap-6">
         <div>
           <h2 className="text-lg font-semibold text-white mb-3">
-            My Assigned Defects
+            {t.dashboard.sectionMyAssignedDefects}
           </h2>
           <DataTable<Defect>
             columns={defectColumns}
@@ -388,14 +389,14 @@ export default function Dashboard() {
             testIdPrefix="dashboard-my-defects"
             pagination={false}
             onRowClick={(row) => navigate(`/defects/${row.id}`)}
-            emptyMessage="No assigned defects"
+            emptyMessage={t.dashboard.emptyAssignedDefects}
             className="glass"
           />
         </div>
 
         <div>
           <h2 className="text-lg font-semibold text-white mb-3">
-            My Recent Test Runs
+            {t.dashboard.sectionMyRecentRuns}
           </h2>
           <DataTable<TestRun>
             columns={testRunColumns}
@@ -406,7 +407,7 @@ export default function Dashboard() {
               const plan = testPlans.find((tp) => tp.id === row.testPlanId);
               if (plan) navigate(`/test-plans/${plan.id}`);
             }}
-            emptyMessage="No test runs"
+            emptyMessage={t.dashboard.emptyTestRuns}
             className="glass"
           />
         </div>
@@ -417,7 +418,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-6">
           <div>
             <h2 className="text-lg font-semibold text-white mb-3">
-              Unassigned Defects
+              {t.dashboard.sectionUnassignedDefects}
             </h2>
             <DataTable<Defect>
               columns={unassignedColumns}
@@ -425,14 +426,14 @@ export default function Dashboard() {
               testIdPrefix="dashboard-unassigned"
               pagination={false}
               onRowClick={(row) => navigate(`/defects/${row.id}`)}
-              emptyMessage="No unassigned defects"
+              emptyMessage={t.dashboard.emptyUnassigned}
               className="glass"
             />
           </div>
 
           <div>
             <h2 className="text-lg font-semibold text-white mb-3">
-              Awaiting Verification
+              {t.dashboard.sectionAwaitingVerification}
             </h2>
             <DataTable<Defect>
               columns={verificationColumns}
@@ -440,7 +441,7 @@ export default function Dashboard() {
               testIdPrefix="dashboard-verification"
               pagination={false}
               onRowClick={(row) => navigate(`/defects/${row.id}`)}
-              emptyMessage="No defects awaiting verification"
+              emptyMessage={t.dashboard.emptyVerification}
               className="glass"
             />
           </div>
@@ -457,19 +458,19 @@ export default function Dashboard() {
             <StatCard
               data-testid={TEST_IDS.dashboard.cardTotalUsers}
               icon={Users}
-              label="Total Users"
+              label={t.dashboard.statTotalUsers}
               value={users.length}
             />
             <StatCard
               data-testid={TEST_IDS.dashboard.cardTotalProjects}
               icon={Folder}
-              label="Total Projects"
+              label={t.dashboard.statTotalProjects}
               value={projects.length}
             />
             <StatCard
               data-testid={TEST_IDS.dashboard.cardActiveProjects}
               icon={Activity}
-              label="Active Projects"
+              label={t.dashboard.statActiveProjects}
               value={projects.filter((p) => p.status === "active").length}
             />
           </div>
@@ -479,7 +480,7 @@ export default function Dashboard() {
       {/* Recent Activity */}
       <div>
         <h2 className="text-lg font-semibold text-white mb-3">
-          Recent Activity
+          {t.dashboard.sectionRecentActivity}
         </h2>
         <div className="glass p-6">
           <ActivityTimeline

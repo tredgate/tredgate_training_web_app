@@ -19,6 +19,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type { Defect } from "../../data/entities";
 import type { ActivityEntry } from "../../components/display/ActivityTimeline";
 
@@ -60,8 +61,8 @@ export default function DefectDetail() {
       <div data-testid={TEST_IDS.defectDetail.page}>
         <EmptyState
           variant="not-found"
-          title="Defect not found"
-          message="The defect you're looking for doesn't exist."
+          title={t.defectDetail.notFoundTitle}
+          message={t.defectDetail.notFoundMessage}
         />
       </div>
     );
@@ -87,7 +88,7 @@ export default function DefectDetail() {
       defect.history.map((entry) => ({
         id: entry.id,
         type: "transition" as const,
-        user: userMap.get(entry.userId)?.fullName || "Unknown",
+        user: userMap.get(entry.userId)?.fullName || t.common.unknown,
         text: entry.details,
         timestamp: entry.timestamp,
       })),
@@ -100,7 +101,7 @@ export default function DefectDetail() {
       defect.comments.map((comment) => ({
         id: comment.id,
         type: "comment" as const,
-        user: userMap.get(comment.userId)?.fullName || "Unknown",
+        user: userMap.get(comment.userId)?.fullName || t.common.unknown,
         text: comment.text,
         timestamp: comment.createdAt,
       })),
@@ -192,7 +193,7 @@ export default function DefectDetail() {
                 className="btn btn-neon-blue flex items-center gap-2"
               >
                 <Edit2 size={18} />
-                Edit
+                {t.defectDetail.btnEdit}
               </Link>
             )}
           </div>
@@ -208,11 +209,11 @@ export default function DefectDetail() {
             data-testid={TEST_IDS.defectDetail.description}
           >
             <h3 className="text-lg font-semibold text-white mb-4">
-              Description
+              {t.defectDetail.sectionDescription}
             </h3>
             <p className="text-gray-300 mb-6">{defect.description}</p>
             <h4 className="text-sm font-semibold text-gray-200 mb-2">
-              Steps to Reproduce
+              {t.defectDetail.sectionStepsToReproduce}
             </h4>
             <pre className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto">
               {defect.stepsToReproduce}
@@ -227,7 +228,7 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Comments</h3>
 
             {defect.comments.length === 0 ? (
-              <p className="text-gray-500 mb-6">No comments yet</p>
+              <p className="text-gray-500 mb-6">{t.defectDetail.noCommentsYet}</p>
             ) : (
               <div className="space-y-4 mb-6">
                 {defect.comments.map((comment) => {
@@ -250,7 +251,7 @@ export default function DefectDetail() {
                         )}
                         <div>
                           <p className="text-sm font-medium text-gray-200">
-                            {commentUser?.fullName || "Unknown"}
+                            {commentUser?.fullName || t.common.unknown}
                           </p>
                           <p className="text-xs text-gray-500">
                             {formatDate(comment.createdAt)}
@@ -269,11 +270,11 @@ export default function DefectDetail() {
             {/* Add Comment Form */}
             <div className="border-t border-white/10 pt-4">
               <TextArea
-                label="Add a comment"
+                label={t.defectDetail.labelAddComment}
                 name="comment"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Share your thoughts on this defect..."
+                placeholder={t.defectDetail.commentPlaceholder}
                 data-testid={TEST_IDS.defectDetail.inputComment}
               />
               <button
@@ -282,7 +283,7 @@ export default function DefectDetail() {
                 data-testid={TEST_IDS.defectDetail.btnAddComment}
                 className="mt-3 btn btn-neon-purple disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Add Comment
+                {t.defectDetail.btnAddComment}
               </button>
             </div>
           </div>
@@ -298,7 +299,7 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Status</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-gray-400 mb-1">Current Status</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelCurrentStatus}</p>
                 <StatusBadge
                   data-testid={defectBadge("status", defect.id)}
                   type="status"
@@ -306,7 +307,7 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">Severity</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelSeverity}</p>
                 <StatusBadge
                   data-testid={defectBadge("severity", defect.id)}
                   type="severity"
@@ -314,7 +315,7 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">Priority</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelPriority}</p>
                 <StatusBadge
                   data-testid={defectBadge("priority", defect.id)}
                   type="priority"
@@ -330,11 +331,11 @@ export default function DefectDetail() {
             data-testid={TEST_IDS.defectDetail.cardAssignment}
           >
             <h3 className="text-lg font-semibold text-white mb-4">
-              Assignment
+              {t.defectDetail.sectionAssignment}
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2">Reporter</p>
+                <p className="text-xs text-gray-400 mb-2">{t.defectDetail.labelReporter}</p>
                 {reporter ? (
                   <div className="flex items-center gap-2">
                     <UserAvatar
@@ -349,11 +350,11 @@ export default function DefectDetail() {
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500">Unknown</span>
+                  <span className="text-sm text-gray-500">{t.common.unknown}</span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2">Assignee</p>
+                <p className="text-xs text-gray-400 mb-2">{t.defectDetail.labelAssignee}</p>
                 {assignee ? (
                   <div className="flex items-center gap-2">
                     <UserAvatar
@@ -368,7 +369,7 @@ export default function DefectDetail() {
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500">Unassigned</span>
+                  <span className="text-sm text-gray-500">{t.common.unassigned}</span>
                 )}
               </div>
             </div>
@@ -382,7 +383,7 @@ export default function DefectDetail() {
             <h3 className="text-lg font-semibold text-white mb-4">Details</h3>
             <div className="space-y-3 text-sm">
               <div>
-                <p className="text-xs text-gray-400 mb-1">Project</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelProject}</p>
                 {project ? (
                   <Link
                     to={`/projects/${project.id}`}
@@ -391,29 +392,29 @@ export default function DefectDetail() {
                     {project.name}
                   </Link>
                 ) : (
-                  <span className="text-gray-500">Unknown</span>
+                  <span className="text-gray-500">{t.common.unknown}</span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">Environment</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelEnvironment}</p>
                 {defect.environmentId ? (
                   <span className="text-gray-300">
                     {project?.environments.find(
                       (e) => e.id === defect.environmentId,
-                    )?.name || "Unknown"}
+                    )?.name || t.common.unknown}
                   </span>
                 ) : (
-                  <span className="text-gray-500">Not specified</span>
+                  <span className="text-gray-500">{t.common.notSpecified}</span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">Created</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelCreated}</p>
                 <span className="text-gray-300">
                   {formatDate(defect.createdAt)}
                 </span>
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1">Updated</p>
+                <p className="text-xs text-gray-400 mb-1">{t.defectDetail.labelUpdated}</p>
                 <span className="text-gray-300">
                   {formatDate(defect.updatedAt)}
                 </span>
@@ -440,7 +441,7 @@ export default function DefectDetail() {
         data-testid={TEST_IDS.defectDetail.modalAssign}
         isOpen={showAssignModal}
         onClose={() => setShowAssignModal(false)}
-        title="Assign Defect"
+        title={t.defectDetail.modalAssignTitle}
         size="md"
       >
         <div className="space-y-4">
@@ -463,7 +464,7 @@ export default function DefectDetail() {
             onClick={() => setShowAssignModal(false)}
             className="w-full btn btn-ghost"
           >
-            Cancel
+            {t.defectDetail.btnCancelAssign}
           </button>
         </div>
       </Modal>

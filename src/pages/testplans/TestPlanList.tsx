@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import { hasPermission } from "../../utils/permissions";
 import type { Column } from "../../components/data/DataTable";
 import type { TestPlan, TestPlanStatus } from "../../data/entities";
@@ -31,31 +32,31 @@ export default function TestPlanList() {
 
   // Get project name by ID
   const getProjectName = (projectId: number): string => {
-    return projects.find((p) => p.id === projectId)?.name || "Unknown";
+    return projects.find((p) => p.id === projectId)?.name || t.testPlans.unknownAssignee;
   };
 
   // Get user full name by ID
   const getUserName = (userId: number | null): string => {
     if (!userId) return "";
-    return users.find((u) => u.id === userId)?.fullName || "Unknown";
+    return users.find((u) => u.id === userId)?.fullName || t.testPlans.unknownAssignee;
   };
 
   // DataTable columns
   const columns: Column<TestPlan>[] = [
     {
       key: "name",
-      label: "Name",
+      label: t.testPlans.colName,
       sortable: true,
     },
     {
       key: "projectId",
-      label: "Project",
+      label: t.testPlans.colProject,
       sortable: true,
       render: (val) => getProjectName(val as number),
     },
     {
       key: "status",
-      label: "Status",
+      label: t.testPlans.colStatus,
       sortable: true,
       render: (val) => (
         <StatusBadge
@@ -67,22 +68,22 @@ export default function TestPlanList() {
     },
     {
       key: "testCases",
-      label: "Test Cases",
+      label: t.testPlans.colTestCases,
       sortable: false,
       render: (val) => {
         const cases = val as any[];
-        return `${cases.length} cases`;
+        return t.testPlans.casesCount(cases.length);
       },
     },
     {
       key: "assigneeId",
-      label: "Assignee",
+      label: t.testPlans.colAssignee,
       sortable: false,
       render: (val) => {
         const userId = val as number | null;
         if (!userId) return "—";
         const assignee = users.find((u) => u.id === userId);
-        if (!assignee) return "Unknown";
+        if (!assignee) return t.testPlans.unknownAssignee;
         return (
           <UserAvatar
             data-testid={`testplan-list-assignee-${userId}`}
@@ -96,7 +97,7 @@ export default function TestPlanList() {
     },
     {
       key: "updatedAt",
-      label: "Updated",
+      label: t.testPlans.colUpdated,
       sortable: true,
       render: (val) => formatDate(val as string),
     },
@@ -105,7 +106,7 @@ export default function TestPlanList() {
   return (
     <div data-testid={TEST_IDS.testplanList.page}>
       <PageHeader
-        title="Test Plans"
+        title={t.testPlans.pageTitle}
         actions={
           hasPermission(user.role, "testplan:create") && (
             <Link
@@ -113,7 +114,7 @@ export default function TestPlanList() {
               className="btn btn-primary"
               data-testid={TEST_IDS.testplanList.btnNew}
             >
-              New Test Plan
+              {t.testPlans.btnNewTestPlan}
             </Link>
           )
         }
@@ -124,18 +125,10 @@ export default function TestPlanList() {
           columns={columns}
           data={testPlans}
           searchable
-          searchPlaceholder="Search test plans..."
+          searchPlaceholder={t.testPlans.searchPlaceholder}
           filters={[
-            {
-              key: "status",
-              label: "Status",
-              options: ["draft", "active", "completed", "archived"],
-            },
-            {
-              key: "projectId",
-              label: "Project",
-              options: projects.map((p) => p.name),
-            },
+            { key: "status", label: t.testPlans.filterStatus, options: ["draft", "active", "completed", "archived"] },
+            { key: "projectId", label: t.testPlans.filterProject, options: projects.map((p) => p.name) },
           ]}
           pagination
           pageSize={10}

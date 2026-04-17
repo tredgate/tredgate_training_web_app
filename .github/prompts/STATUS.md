@@ -37,7 +37,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T18  | Component Cleanup (T3–T7 fixes)              | ✅ done    | T3–T7              | 2026-04-16 | 2026-04-16 | 26fd474 | Split across 4 commits (Fixes 1+6, 2, 3+4+5, 7)  |
 | T19  | Dashboard Refactor: Split to functions       | ⬜ pending | T9                 | —          | —          | —       |                                                  |
 | T20  | Component Structure Review                   | ⬜ pending | T9–T14             | —          | —          | —       | Analysis + optional extraction                   |
-| T21  | i18n: Centralise All UI Text                 | ⬜ pending | T2                 | —          | —          | —       |                                                  |
+| T21  | i18n: Centralise All UI Text                 | ✅ done        | T2                 | 2026-04-18 | 2026-04-18 | b862d46 |                                                  |
 | T22  | Discussion: Defect Colors — Component vs CSS | ⬜ pending | T7, T11            | —          | —          | —       | Decision only; implementation optional           |
 | T23  | DefectDetail & DefectForm Refactor           | ⬜ pending | T11                | —          | —          | —       |                                                  |
 

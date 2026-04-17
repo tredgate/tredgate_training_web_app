@@ -12,6 +12,7 @@ import { useProjects } from "../../hooks/useProjects";
 import { useTestPlans } from "../../hooks/useTestPlans";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import type { Defect } from "../../data/entities";
 
 export default function Reports() {
@@ -228,7 +229,7 @@ export default function Reports() {
     .slice(0, 5);
 
   const projectOptions = [
-    { value: "all", label: "All Projects" },
+    { value: "all", label: t.reports.filterAllProjects },
     ...(user.role === "admin"
       ? projects
       : projects.filter((p) => myProjectIds.includes(p.id))
@@ -237,13 +238,13 @@ export default function Reports() {
 
   return (
     <div data-testid={TEST_IDS.reports.page}>
-      <PageHeader title="Reports" />
+      <PageHeader title={t.reports.pageTitle} />
 
       <Tabs
         tabs={[
-          { key: "defect-trends", label: "Defect Trends" },
-          { key: "test-coverage", label: "Test Coverage" },
-          { key: "team-workload", label: "Team Workload" },
+          { key: "defect-trends", label: t.reports.tabDefectTrends },
+          { key: "test-coverage", label: t.reports.tabTestCoverage },
+          { key: "team-workload", label: t.reports.tabTeamWorkload },
         ]}
         activeTab={activeTab}
         onChange={setActiveTab}
@@ -253,11 +254,11 @@ export default function Reports() {
       {activeTab === "defect-trends" && (
         <div className="space-y-6 mt-6">
           <div className="glass rounded-lg p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white">Filters</h3>
+            <h3 className="text-lg font-semibold text-white">{t.reports.filterLabel}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Select
                 data-testid={TEST_IDS.reports.filterProject}
-                label="Project"
+                label={t.reports.filterProject}
                 name="reports-project"
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
@@ -265,14 +266,14 @@ export default function Reports() {
               />
               <DatePicker
                 data-testid={TEST_IDS.reports.filterDateFrom}
-                label="From Date"
+                label={t.reports.filterDateFrom}
                 name="reports-date-from"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
               />
               <DatePicker
                 data-testid={TEST_IDS.reports.filterDateTo}
-                label="To Date"
+                label={t.reports.filterDateTo}
                 name="reports-date-to"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
@@ -286,25 +287,25 @@ export default function Reports() {
           >
             <StatCard
               data-testid="reports-stat-total"
-              label="Total Defects"
+              label={t.reports.statTotalDefects}
               value={filteredDefects.length}
               icon={AlertTriangle}
             />
             <StatCard
               data-testid="reports-stat-open"
-              label="Open Defects"
+              label={t.reports.statOpenDefects}
               value={openDefects.length}
               icon={AlertTriangle}
             />
             <StatCard
               data-testid="reports-stat-critical"
-              label="Critical Defects"
+              label={t.reports.statCriticalDefects}
               value={criticalDefects.length}
               icon={AlertTriangle}
             />
             <StatCard
               data-testid="reports-stat-avg"
-              label="Avg Time to Resolve"
+              label={t.reports.statAvgTimeToResolve}
               value={avgTimeToResolve}
               icon={CheckCircle}
             />
@@ -313,7 +314,7 @@ export default function Reports() {
           <div className="space-y-6">
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Defects by Severity
+              {t.reports.tableSeverityTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.severityTable}
@@ -322,11 +323,11 @@ export default function Reports() {
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left py-3 px-4 text-gray-300">
-                      Severity
+                      {t.reports.colSeverity}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">Count</th>
+                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCount}</th>
                     <th className="text-left py-3 px-4 text-gray-300">
-                      % of Total
+                      {t.reports.colPctOfTotal}
                     </th>
                   </tr>
                 </thead>
@@ -350,7 +351,7 @@ export default function Reports() {
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Defects by Status
+              {t.reports.tableStatusTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.statusTable}
@@ -359,11 +360,11 @@ export default function Reports() {
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left py-3 px-4 text-gray-300">
-                      Status
+                      {t.reports.colStatus}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">Count</th>
+                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCount}</th>
                     <th className="text-left py-3 px-4 text-gray-300">
-                      % of Total
+                      {t.reports.colPctOfTotal}
                     </th>
                   </tr>
                 </thead>
@@ -387,7 +388,7 @@ export default function Reports() {
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Defects by Project
+              {t.reports.tableProjectTitle}
               </h3>
               <table
                 data-testid={TEST_IDS.reports.projectTable}
@@ -396,15 +397,15 @@ export default function Reports() {
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left py-3 px-4 text-gray-300">
-                      Project
+                      {t.reports.colProject}
                     </th>
-                    <th className="text-left py-3 px-4 text-gray-300">Total</th>
-                    <th className="text-left py-3 px-4 text-gray-300">Open</th>
+                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colTotal}</th>
+                    <th className="text-left py-3 px-4 text-gray-300">{t.reports.colOpen}</th>
                     <th className="text-left py-3 px-4 text-gray-300">
-                      Resolved
+                      {t.reports.colResolved}
                     </th>
                     <th className="text-left py-3 px-4 text-gray-300">
-                      Closed
+                      {t.reports.colClosed}
                     </th>
                   </tr>
                 </thead>
@@ -435,19 +436,19 @@ export default function Reports() {
           >
             <StatCard
               data-testid="reports-stat-plans"
-              label="Total Test Plans"
+              label={t.reports.statTotalTestPlans}
               value={testPlansInScope.length}
               icon={ClipboardList}
             />
             <StatCard
               data-testid="reports-stat-cases"
-              label="Total Test Cases"
+              label={t.reports.statTotalTestCases}
               value={totalCases}
               icon={ClipboardList}
             />
             <StatCard
               data-testid="reports-stat-passrate"
-              label="Overall Pass Rate"
+              label={t.reports.statOverallPassRate}
               value={`${overallPassRate}%`}
               icon={CheckCircle}
             />
@@ -455,7 +456,7 @@ export default function Reports() {
 
           <div className="glass rounded-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
-              Test Plans Summary
+              {t.reports.tablePlansSummaryTitle}
             </h3>
             <table
               data-testid={TEST_IDS.reports.plansTable}
@@ -464,16 +465,16 @@ export default function Reports() {
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Plan Name
+                    {t.reports.colPlanName}
                   </th>
-                  <th className="text-left py-3 px-4 text-gray-300">Project</th>
-                  <th className="text-left py-3 px-4 text-gray-300">Cases</th>
-                  <th className="text-left py-3 px-4 text-gray-300">Runs</th>
+                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colProject}</th>
+                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colCases}</th>
+                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colRuns}</th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Last Run
+                    {t.reports.colLastRun}
                   </th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Pass Rate
+                    {t.reports.colPassRate}
                   </th>
                 </tr>
               </thead>
@@ -500,7 +501,7 @@ export default function Reports() {
         <div className="space-y-6 mt-6">
           <div className="glass rounded-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
-              Team Members Summary
+              {t.reports.tableWorkloadTitle}
             </h3>
             <table
               data-testid={TEST_IDS.reports.workloadTable}
@@ -508,19 +509,19 @@ export default function Reports() {
             >
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-3 px-4 text-gray-300">Name</th>
-                  <th className="text-left py-3 px-4 text-gray-300">Role</th>
+                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colName}</th>
+                  <th className="text-left py-3 px-4 text-gray-300">{t.reports.colRole}</th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Assigned
+                    {t.reports.colAssigned}
                   </th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Reported
+                    {t.reports.colReported}
                   </th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Executed
+                    {t.reports.colExecuted}
                   </th>
                   <th className="text-left py-3 px-4 text-gray-300">
-                    Open Items
+                    {t.reports.colOpenItems}
                   </th>
                 </tr>
               </thead>
@@ -544,7 +545,7 @@ export default function Reports() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Top Reporters
+              {t.reports.topReportersTitle}
               </h3>
               <div
                 data-testid={TEST_IDS.reports.topReporters}
@@ -558,19 +559,19 @@ export default function Reports() {
                     >
                       <span className="text-white">{r.name}</span>
                       <span className="text-gray-300 text-sm">
-                        {r.count} defects
+                        {t.reports.defectsCountLabel(r.count)}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-400">No reporters yet</p>
+                  <p className="text-gray-400">{t.reports.noReportersYet}</p>
                 )}
               </div>
             </div>
 
             <div className="glass rounded-lg p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Top Executors
+              {t.reports.topExecutorsTitle}
               </h3>
               <div
                 data-testid={TEST_IDS.reports.topExecutors}
@@ -584,12 +585,12 @@ export default function Reports() {
                     >
                       <span className="text-white">{e.name}</span>
                       <span className="text-gray-300 text-sm">
-                        {e.count} runs
+                        {t.reports.runsCountLabel(e.count)}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-400">No executors yet</p>
+                  <p className="text-gray-400">{t.reports.noExecutorsYet}</p>
                 )}
               </div>
             </div>

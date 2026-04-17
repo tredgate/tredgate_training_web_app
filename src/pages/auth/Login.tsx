@@ -4,6 +4,7 @@ import { Shield } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm, type FormErrors } from "../../hooks/useForm";
 import { TEST_IDS } from "../../shared/testIds";
+import { t } from "../../i18n";
 
 interface LoginFormValues {
   username: string;
@@ -19,10 +20,10 @@ const INITIAL_VALUES: LoginFormValues = {
 function validateLogin(values: LoginFormValues): FormErrors<LoginFormValues> {
   const errors: FormErrors<LoginFormValues> = {};
   if (!values.username.trim()) {
-    errors.username = "Username is required";
+    errors.username = t.login.usernameRequired;
   }
   if (!values.password.trim()) {
-    errors.password = "Password is required";
+    errors.password = t.login.passwordRequired;
   }
   return errors;
 }
@@ -78,7 +79,7 @@ export default function Login() {
         setLoginError("");
         navigate("/dashboard");
       } else {
-        setLoginError("Invalid username or password");
+        setLoginError(t.login.errorInvalid);
       }
     },
     [login, navigate, remember],
@@ -96,8 +97,8 @@ export default function Login() {
       <div className="glass p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
           <Shield className="text-neon-purple mb-3" size={48} />
-          <h1 className="text-2xl font-bold text-white">TredGate QA Hub</h1>
-          <p className="text-gray-400 text-sm mt-1">Sign in to continue</p>
+          <h1 className="text-2xl font-bold text-white">{t.login.appTitle}</h1>
+          <p className="text-gray-400 text-sm mt-1">{t.login.tagline}</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -106,14 +107,14 @@ export default function Login() {
               htmlFor="username"
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
-              Username
+            {t.login.usernameLabel}
             </label>
             <input
               id="username"
               type="text"
               data-testid={TEST_IDS.login.inputUsername}
               className="input-dark"
-              placeholder="Enter username"
+              placeholder={t.login.usernamePlaceholder}
               value={values.username}
               onChange={(e) => setField("username", e.target.value)}
               onBlur={() => setFieldTouched("username")}
@@ -128,14 +129,14 @@ export default function Login() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
-              Password
+            {t.login.passwordLabel}
             </label>
             <input
               id="password"
               type="password"
               data-testid={TEST_IDS.login.inputPassword}
               className="input-dark"
-              placeholder="Enter password"
+              placeholder={t.login.passwordPlaceholder}
               value={values.password}
               onChange={(e) => setField("password", e.target.value)}
               onBlur={() => setFieldTouched("password")}
@@ -155,7 +156,7 @@ export default function Login() {
               className="w-4 h-4 rounded border-white/20 bg-white/5 text-neon-purple focus:ring-neon-purple/30"
             />
             <label htmlFor="remember" className="text-sm text-gray-400">
-              Remember me
+              {t.login.rememberMe}
             </label>
           </div>
 
@@ -173,13 +174,13 @@ export default function Login() {
             data-testid={TEST_IDS.login.btnSubmit}
             className="btn-neon-purple w-full"
           >
-            Sign In
+            {t.login.signIn}
           </button>
         </form>
 
         <div data-testid={TEST_IDS.login.userHints} className="mt-8 space-y-2">
           <p className="text-xs text-gray-500 text-center mb-3">
-            Demo credentials
+            {t.login.demoCredentials}
           </p>
           {USER_HINTS.map((hint) => (
             <div

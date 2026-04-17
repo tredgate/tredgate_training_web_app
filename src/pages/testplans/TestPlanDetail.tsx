@@ -20,6 +20,7 @@ import { useTestPlans } from "../../hooks/useTestPlans";
 import { useTestRuns } from "../../hooks/useTestRuns";
 import { useProjects } from "../../hooks/useProjects";
 import { useUsers } from "../../hooks/useUsers";
+import { t } from "../../i18n";
 import { hasPermission } from "../../utils/permissions";
 import type { Column } from "../../components/data/DataTable";
 import type { TestRun } from "../../data/entities";
@@ -70,8 +71,8 @@ export default function TestPlanDetail() {
       <div data-testid={TEST_IDS.testplanDetail.page}>
         <EmptyState
           variant="not-found"
-          title="Test Plan not found"
-          message="The test plan you're looking for doesn't exist."
+          title={t.testPlanDetail.notFoundTitle}
+          message={t.testPlanDetail.notFoundMessage}
         />
       </div>
     );
@@ -134,9 +135,9 @@ export default function TestPlanDetail() {
   };
 
   const tabs = [
-    { key: "overview", label: "Overview" },
-    { key: "cases", label: "Test Cases", badge: totalCases },
-    { key: "history", label: "Execution History", badge: planRuns.length },
+    { key: "overview", label: t.testPlanDetail.tabOverview },
+    { key: "cases", label: t.testPlanDetail.tabCases, badge: totalCases },
+    { key: "history", label: t.testPlanDetail.tabHistory, badge: planRuns.length },
   ];
 
   return (
@@ -152,15 +153,14 @@ export default function TestPlanDetail() {
                 className="btn btn-secondary"
                 data-testid={TEST_IDS.testplanDetail.btnEdit}
               >
-                Edit
+                {t.testPlanDetail.btnEdit}
               </Link>
             )}
             <button
-              onClick={handleStartRun}
               className="btn btn-primary"
               data-testid={TEST_IDS.testplanDetail.btnExecute}
             >
-              Execute Test Run
+              {t.testPlanDetail.btnExecuteRun}
             </button>
           </div>
         }
@@ -183,11 +183,11 @@ export default function TestPlanDetail() {
             {/* Plan Info Card */}
             <div className="glass p-6 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-4">
-                Plan Information
+              {t.testPlanDetail.sectionPlanInfo}
               </h3>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Status</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelStatus}</p>
                   <StatusBadge
                     data-testid="testplan-detail-status"
                     type="testplan_status"
@@ -195,17 +195,17 @@ export default function TestPlanDetail() {
                   />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Project</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelProject}</p>
                   <p className="text-white font-medium">
-                    {project?.name || "Unknown"}
+                    {project?.name || t.testPlanDetail.unknownProject}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Description</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelDescription}</p>
                   <p className="text-gray-300">{testPlan.description}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Assignee</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelAssignee}</p>
                   {assignee ? (
                     <UserAvatar
                       data-testid="testplan-detail-assignee-avatar"
@@ -215,17 +215,17 @@ export default function TestPlanDetail() {
                       size="sm"
                     />
                   ) : (
-                    <p className="text-gray-300">Unassigned</p>
+                    <p className="text-gray-300">{t.testPlanDetail.unassignedLabel}</p>
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Created</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelCreated}</p>
                   <p className="text-gray-300">
                     {formatDate(testPlan.createdAt)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Updated</p>
+                  <p className="text-sm text-gray-400 mb-1">{t.testPlanDetail.labelUpdated}</p>
                   <p className="text-gray-300">
                     {formatDate(testPlan.updatedAt)}
                   </p>
@@ -237,18 +237,18 @@ export default function TestPlanDetail() {
             <div className="grid grid-cols-3 gap-4">
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">{totalCases}</p>
-                <p className="text-sm text-gray-400">Test Cases</p>
+                <p className="text-sm text-gray-400">{t.testPlanDetail.statTestCases}</p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">{totalSteps}</p>
-                <p className="text-sm text-gray-400">Total Steps</p>
+                <p className="text-sm text-gray-400">{t.testPlanDetail.statTotalSteps}</p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-white">
                   {lastRunPassRate}%
                 </p>
                 <p className="text-sm text-gray-400">
-                  {lastRun ? "Last Run Pass Rate" : "No runs yet"}
+                  {lastRun ? t.testPlanDetail.statLastRunPassRate : t.testPlanDetail.statNoRunsYet}
                 </p>
               </div>
             </div>
@@ -262,7 +262,7 @@ export default function TestPlanDetail() {
             className="mt-6 space-y-3"
           >
             {testPlan.testCases.length === 0 ? (
-              <p className="text-gray-400">No test cases added yet.</p>
+                <p className="text-gray-400">{t.testPlanDetail.noTestCasesYet}</p>
             ) : (
               testPlan.testCases.map((testCase, caseIdx) => {
                 const isExpanded = expandedCases.has(testCase.id);
@@ -337,7 +337,7 @@ export default function TestPlanDetail() {
                 columns={[
                   {
                     key: "executorId",
-                    label: "Executed By",
+                    label: t.testPlanDetail.colExecutedBy,
                     sortable: false,
                     render: (val) => {
                       const executor = users.find(
@@ -352,13 +352,13 @@ export default function TestPlanDetail() {
                           size="sm"
                         />
                       ) : (
-                        "Unknown"
+                        t.testPlanDetail.unknownProject
                       );
                     },
                   },
                   {
                     key: "status",
-                    label: "Status",
+                    label: t.common.status,
                     sortable: true,
                     render: (val) => (
                       <StatusBadge
@@ -370,19 +370,19 @@ export default function TestPlanDetail() {
                   },
                   {
                     key: "results",
-                    label: "Results",
+                    label: t.testPlanDetail.colResults,
                     sortable: false,
                     render: (val) => {
                       const results = val as any[];
                       const passed = results.filter(
                         (r) => r.status === "passed",
                       ).length;
-                      return `${passed}/${results.length} passed`;
+                      return t.dashboard.resultsPassed(passed, results.length);
                     },
                   },
                   {
                     key: "startedAt",
-                    label: "Date",
+                    label: t.testPlanDetail.colDate,
                     sortable: true,
                     render: (val) => formatDateTime(val as string),
                   },
@@ -401,7 +401,7 @@ export default function TestPlanDetail() {
         <Modal
           isOpen={!!resultsModal.run}
           data-testid="testplan-results-modal"
-          title="Test Run Results"
+          title={t.testPlanDetail.modalResultsTitle}
           onClose={() => setResultsModal({ run: null })}
         >
           <div className="space-y-4">

@@ -8,6 +8,7 @@ import Modal from "../../components/feedback/Modal";
 import FileUpload from "../../components/forms/FileUpload";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
+import { t } from "../../i18n";
 import { useDefects } from "../../hooks/useDefects";
 import { useProjects } from "../../hooks/useProjects";
 import { useTestPlans } from "../../hooks/useTestPlans";
@@ -41,8 +42,8 @@ export default function Settings() {
       <div data-testid={TEST_IDS.settings.page}>
         <EmptyState
           variant="permission-denied"
-          title="Admin Access Required"
-          message="Only administrators can access settings."
+          title={t.settings.adminAccessTitle}
+          message={t.settings.adminAccessMessage}
         />
       </div>
     );
@@ -60,7 +61,7 @@ export default function Settings() {
       }
     });
     // Trigger seed re-initialization and reload
-    addToast("success", "Data reset to seed state. Reloading...");
+    addToast("success", t.settings.toastResetSuccess);
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -73,7 +74,7 @@ export default function Settings() {
         localStorage.removeItem(key);
       }
     });
-    addToast("success", "All data cleared. Reloading...");
+    addToast("success", t.settings.toastClearSuccess);
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -101,12 +102,12 @@ export default function Settings() {
     link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
-    addToast("success", `Data exported as ${filename}`);
+    addToast("success", t.settings.toastExportSuccess(filename));
   };
 
   const handleImportData = () => {
     if (!importedFile) {
-      addToast("error", "Please select a file to import");
+      addToast("error", t.settings.toastImportNoFile);
       return;
     }
 
@@ -123,7 +124,7 @@ export default function Settings() {
       ];
       const hasAllKeys = expectedKeys.every((key) => key in data);
       if (!hasAllKeys) {
-        addToast("error", "Invalid data format: missing required keys");
+        addToast("error", t.settings.toastImportInvalidFormat);
         return;
       }
 
@@ -134,15 +135,15 @@ export default function Settings() {
         }
       });
 
-      addToast("success", "Data imported successfully. Reloading...");
+      addToast("success", t.settings.toastImportSuccess);
       setImportModal(false);
       setImportedFile("");
       setTimeout(() => {
         window.location.reload();
       }, 500);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Invalid JSON";
-      addToast("error", `Import failed: ${message}`);
+      const message = err instanceof Error ? err.message : t.settings.toastImportInvalidJson;
+      addToast("error", t.settings.toastImportFailed(message));
     }
   };
 
@@ -180,13 +181,13 @@ export default function Settings() {
 
   return (
     <div data-testid={TEST_IDS.settings.page}>
-      <PageHeader title="Settings" />
+      <PageHeader title={t.settings.pageTitle} />
 
       <div className="space-y-6">
         {/* Data Management Card */}
         <div className="glass rounded-lg p-8">
           <h2 className="text-2xl font-bold text-white mb-6">
-            Data Management
+            {t.settings.sectionDataManagement}
           </h2>
 
           <div className="space-y-4">
@@ -195,7 +196,7 @@ export default function Settings() {
               onClick={() => setResetModal(true)}
               className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-between transition-colors"
             >
-              <span className="font-semibold">Reset to Seed Data</span>
+              <span className="font-semibold">{t.settings.btnResetToSeed}</span>
               <RotateCcw className="w-5 h-5" />
             </button>
 
@@ -204,7 +205,7 @@ export default function Settings() {
               onClick={() => setClearModal(true)}
               className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center justify-between transition-colors"
             >
-              <span className="font-semibold">Clear All Data</span>
+              <span className="font-semibold">{t.settings.btnClearAllData}</span>
               <Trash2 className="w-5 h-5" />
             </button>
 
@@ -213,7 +214,7 @@ export default function Settings() {
               onClick={handleExportData}
               className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center justify-between transition-colors"
             >
-              <span className="font-semibold">Export Data</span>
+              <span className="font-semibold">{t.settings.btnExportData}</span>
               <Download className="w-5 h-5" />
             </button>
 
@@ -222,7 +223,7 @@ export default function Settings() {
               onClick={() => setImportModal(true)}
               className="w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center justify-between transition-colors"
             >
-              <span className="font-semibold">Import Data</span>
+              <span className="font-semibold">{t.settings.btnImportData}</span>
               <Upload className="w-5 h-5" />
             </button>
           </div>
@@ -237,12 +238,12 @@ export default function Settings() {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">App Version</span>
+              <span className="text-gray-300">{t.settings.labelAppVersion}</span>
               <span className="text-white font-semibold">1.0.0</span>
             </div>
 
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">localStorage Usage</span>
+              <span className="text-gray-300">{t.settings.labelLocalStorageUsage}</span>
               <span className="text-white font-semibold">
                 {(totalBytes / 1024).toFixed(2)} KB
               </span>
@@ -251,32 +252,32 @@ export default function Settings() {
             <div className="border-t border-white/10 my-6" />
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-4">
-              Entity Counts
+              {t.settings.sectionEntityCounts}
             </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">Users</p>
+                <p className="text-gray-400 text-sm">{t.settings.labelUsers}</p>
                 <p className="text-white text-2xl font-bold">{userCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">Projects</p>
+                <p className="text-gray-400 text-sm">{t.settings.labelProjects}</p>
                 <p className="text-white text-2xl font-bold">{projectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">Defects</p>
+                <p className="text-gray-400 text-sm">{t.settings.labelDefects}</p>
                 <p className="text-white text-2xl font-bold">{defectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">Test Plans</p>
+                <p className="text-gray-400 text-sm">{t.settings.labelTestPlans}</p>
                 <p className="text-white text-2xl font-bold">{testPlanCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">Test Runs</p>
+                <p className="text-gray-400 text-sm">{t.settings.labelTestRuns}</p>
                 <p className="text-white text-2xl font-bold">{testRunCount}</p>
               </div>
             </div>
@@ -288,7 +289,7 @@ export default function Settings() {
       <Modal
         isOpen={resetModal}
         data-testid="settings-reset-modal"
-        title="Reset to Seed Data?"
+        title={t.settings.modalResetTitle}
         onClose={() => setResetModal(false)}
         footer={
           <div className="flex gap-2 justify-end">
@@ -296,7 +297,7 @@ export default function Settings() {
               className="btn btn-secondary"
               onClick={() => setResetModal(false)}
             >
-              Cancel
+              {t.settings.btnCancel}
             </button>
             <button
               className="btn btn-danger"
@@ -305,22 +306,19 @@ export default function Settings() {
                 setResetModal(false);
               }}
             >
-              Reset
+              {t.settings.btnReset}
             </button>
           </div>
         }
       >
-        <p className="text-gray-300">
-          This will reset all data to the initial seed state. This cannot be
-          undone.
-        </p>
+        <p className="text-gray-300">{t.settings.modalResetMessage}</p>
       </Modal>
 
       {/* Clear Confirmation Modal */}
       <Modal
         isOpen={clearModal}
         data-testid="settings-clear-modal"
-        title="Clear All Data?"
+        title={t.settings.modalClearTitle}
         onClose={() => setClearModal(false)}
         footer={
           <div className="flex gap-2 justify-end">
@@ -328,7 +326,7 @@ export default function Settings() {
               className="btn btn-secondary"
               onClick={() => setClearModal(false)}
             >
-              Cancel
+              {t.settings.btnCancel}
             </button>
             <button
               className="btn btn-danger"
@@ -337,21 +335,19 @@ export default function Settings() {
                 setClearModal(false);
               }}
             >
-              Clear
+              {t.settings.btnClear}
             </button>
           </div>
         }
       >
-        <p className="text-gray-300">
-          This will delete all data from localStorage. This cannot be undone.
-        </p>
+        <p className="text-gray-300">{t.settings.modalClearMessage}</p>
       </Modal>
 
       {/* Import Modal */}
       <Modal
         isOpen={importModal}
         data-testid="settings-import-modal"
-        title="Import Data"
+        title={t.settings.modalImportTitle}
         onClose={() => {
           setImportModal(false);
           setImportedFile("");
@@ -365,32 +361,30 @@ export default function Settings() {
                 setImportedFile("");
               }}
             >
-              Cancel
+              {t.settings.btnCancel}
             </button>
             <button
               className="btn btn-primary"
               onClick={handleImportData}
               disabled={!importedFile}
             >
-              Import
+              {t.settings.btnImport}
             </button>
           </div>
         }
       >
         <div className="space-y-4">
-          <p className="text-gray-300">
-            Select a JSON file exported from a previous backup.
-          </p>
+          <p className="text-gray-300">{t.settings.importInstructions}</p>
           <FileUpload
             data-testid="settings-import-file"
-            label="Import File"
+            label={t.settings.labelImportFile}
             name="importFile"
             value={importedFile ? "data.json" : ""}
             onChange={(filename) => setImportedFile(filename)}
             accept=".json"
           />
           {importedFile && (
-            <p className="text-green-400 text-sm">File loaded successfully</p>
+            <p className="text-green-400 text-sm">{t.settings.fileLoadedSuccess}</p>
           )}
         </div>
       </Modal>
