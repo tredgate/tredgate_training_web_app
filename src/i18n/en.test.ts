@@ -33,7 +33,7 @@ describe("i18n", () => {
   });
 
   it("app.name is correct", () => {
-    expect(t.app.name).toBe("TredGate QA Hub");
+    expect(t.app.name).toBe("Tredgate QA Hub");
   });
 
   it("login.signIn is correct", () => {
