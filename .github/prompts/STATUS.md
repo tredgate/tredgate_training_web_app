@@ -40,7 +40,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T21  | i18n: Centralise All UI Text                 | ✅ done    | T2                 | 2026-04-18 | 2026-04-18 | b862d46 |                                                  |
 | T22  | Discussion: Defect Colors — Component vs CSS | ⬜ pending | T7, T11            | —          | —          | —       | Decision only; implementation optional           |
 | T23  | DefectDetail & DefectForm Refactor           | ⬜ pending | T11                | —          | —          | —       |                                                  |
-| T24  | Fix TypeScript Errors in Test Files          | ✅ done    | T16                | 2026-04-18 | 2026-04-18 | —       | 56 TS errors resolved: EntityKey cast + ! assertions |
+| T24  | Fix TypeScript Errors in Test Files          | ✅ done    | T16                | 2026-04-18 | 2026-04-18 | fb47c10 | 56 TS errors resolved: EntityKey cast + ! assertions |
 | T25  | Fix DataTable Filter Options: {value,label}  | ⬜ pending | T3, T11            | —          | —          | —       | /defects crashes — FilterConfig only accepts string[] |
 
 ## Conventions
