@@ -9,10 +9,12 @@ export interface Column<T> {
   render?: (value: unknown, row: T) => React.ReactNode;
 }
 
+export type FilterOption = string | { value: string; label: string };
+
 export interface FilterConfig {
   key: string;
   label: string;
-  options: readonly string[];
+  options: readonly FilterOption[];
 }
 
 export interface DataTableProps<T extends { id: number }> {
@@ -201,11 +203,15 @@ export default function DataTable<T extends { id: number }>(
             className="input-dark"
           >
             <option value="">{filter.label}</option>
-            {filter.options.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
+            {filter.options.map((opt) => {
+              const value = typeof opt === "string" ? opt : opt.value;
+              const label = typeof opt === "string" ? opt : opt.label;
+              return (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              );
+            })}
           </select>
         ))}
       </div>

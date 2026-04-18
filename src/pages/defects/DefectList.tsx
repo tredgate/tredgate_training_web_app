@@ -152,22 +152,22 @@ export default function DefectList() {
             {
               key: "severity",
               label: t.defects.filterSeverity,
-              options: DEFECT_SEVERITIES as any,
+              options: DEFECT_SEVERITIES,
             },
             {
               key: "status",
               label: t.defects.filterStatus,
-              options: DEFECT_STATUSES as any,
+              options: DEFECT_STATUSES,
             },
             {
               key: "priority",
               label: t.defects.filterPriority,
-              options: DEFECT_PRIORITIES as any,
+              options: DEFECT_PRIORITIES,
             },
             {
               key: "projectId",
               label: t.defects.filterProject,
-              options: projectOptions as any,
+              options: projectOptions,
             },
           ]}
           pagination
