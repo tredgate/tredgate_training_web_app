@@ -199,6 +199,7 @@ export default function DefectForm() {
             error={
               form.touched.projectId ? form.errors.projectId || null : null
             }
+            placeholder="Select a project"
             options={projects.map((p) => ({
               value: p.id.toString(),
               label: p.name,
