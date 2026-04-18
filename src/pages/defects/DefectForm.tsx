@@ -95,8 +95,8 @@ export default function DefectForm() {
     : {
         title: "",
         projectId: 0,
-        severity: "",
-        priority: "",
+        severity: DEFECT_SEVERITIES[0],
+        priority: DEFECT_PRIORITIES[0],
         description: "",
         stepsToReproduce: "",
         environmentId: null,
@@ -239,7 +239,9 @@ export default function DefectForm() {
       validate: () => {
         const errors = validateStep1(form.values);
         if (Object.keys(errors).length > 0) {
-          form.setField("title", form.values.title); // Trigger validation display
+          (Object.keys(errors) as Array<keyof DefectFormData>).forEach(
+            (field) => form.setFieldTouched(field),
+          );
           return false;
         }
         return true;
@@ -305,7 +307,9 @@ export default function DefectForm() {
       validate: () => {
         const errors = validateStep2(form.values);
         if (Object.keys(errors).length > 0) {
-          form.setField("description", form.values.description);
+          (Object.keys(errors) as Array<keyof DefectFormData>).forEach(
+            (field) => form.setFieldTouched(field),
+          );
           return false;
         }
         return true;

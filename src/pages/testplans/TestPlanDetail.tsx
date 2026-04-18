@@ -48,7 +48,7 @@ interface RunResultsModalData {
 }
 
 export default function TestPlanDetail() {
-  const { id } = useParams<{ id: string }>();
+  const { planId: id } = useParams<{ planId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { testPlans, getById } = useTestPlans();

@@ -40,7 +40,7 @@ interface FormTestCase {
 }
 
 export default function TestPlanForm() {
-  const { testPlanId } = useParams<{ testPlanId: string }>();
+  const { planId: testPlanId } = useParams<{ planId: string }>();
   const navigate = useNavigate();
   const { testPlans, getById, create, update } = useTestPlans();
   const { projects } = useProjects();
@@ -94,7 +94,13 @@ export default function TestPlanForm() {
 
   const validateStep1 = (): boolean => {
     const errors = validateForm(form.values);
-    return Object.keys(errors).length === 0;
+    if (Object.keys(errors).length > 0) {
+      (Object.keys(errors) as Array<keyof FormValues>).forEach(
+        (field) => form.setFieldTouched(field),
+      );
+      return false;
+    }
+    return true;
   };
 
   const validateStep2 = (): boolean => {
@@ -245,6 +251,7 @@ export default function TestPlanForm() {
             name="projectId"
             value={form.values.projectId}
             onChange={(e) => form.setField("projectId", e.target.value)}
+            placeholder="Select a project"
             options={projects.map((p) => ({
               value: p.id.toString(),
               label: p.name,
