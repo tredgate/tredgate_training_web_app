@@ -43,6 +43,8 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T24  | Fix TypeScript Errors in Test Files          | ✅ done    | T16                | 2026-04-18 | 2026-04-18 | fb47c10 | 56 TS errors resolved: EntityKey cast + ! assertions  |
 | T25  | Fix DataTable Filter Options: {value,label}  | ✅ done    | T3, T11            | 2026-04-18 | 2026-04-18 | d1acf69 | /defects crashes — FilterConfig only accepts string[] |
 | T26  | Naming Review & Rename Pass                  | ⬜ pending | T19, T21           | —          | —          | —       | Scope: src/data, src/hooks, src/pages. Skip tests.    |
+| T27  | Rewrite README.md for current app state      | ⬜ pending | T19, T21           | —          | —          | —       | README is pre-T1 stale. Link to docs/app-overview.md. |
+| T28  | Fix Validation Messages in Form Pages        | ✅ done        | T7, T10            | 2026-04-18 | 2026-04-18 | 98e2406 | form.validate() added to step validates to populate form.errors |
 
 ## Conventions
 

@@ -160,10 +160,14 @@ export default function ProjectForm() {
       label: t.projectForm.stepBasicInfo,
       validate: () => {
         const errors = validateForm(form.values);
-        const basicErrors = ["name", "code", "description"].some(
-          (k) => k in errors,
-        );
-        return !basicErrors;
+        const step1Fields: Array<keyof FormValues> = ["name", "code", "description", "status"];
+        const step1Errors = step1Fields.filter((k) => k in errors);
+        if (step1Errors.length > 0) {
+          form.validate(); // populates form.errors state for re-render
+          step1Errors.forEach((field) => form.setFieldTouched(field));
+          return false;
+        }
+        return true;
       },
       content: (
         <div data-testid={`project-form-step-1`} className="space-y-4 py-4">
@@ -223,7 +227,12 @@ export default function ProjectForm() {
       label: t.projectForm.stepTeamAssignment,
       validate: () => {
         const errors = validateForm(form.values);
-        return !errors.leadId;
+        if (errors.leadId) {
+          form.validate(); // populates form.errors state for re-render
+          form.setFieldTouched("leadId");
+          return false;
+        }
+        return true;
       },
       content: (
         <div data-testid={`project-form-step-2`} className="space-y-4 py-4">
