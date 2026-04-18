@@ -118,7 +118,7 @@ Collapsible sidebar per architecture §11.
 - Active item highlighted with `neon-purple` accent.
 - Collapse button toggles between full sidebar (icons + labels) and icon-only mode.
 - Logout button at the bottom.
-- App logo/name at the top: "TQH" with shield icon when collapsed, "TredGate QA Hub" when expanded.
+- App logo/name at the top: "TQH" with shield icon when collapsed, "Tredgate QA Hub" when expanded.
 - Use lucide-react icons: `LayoutDashboard`, `FolderKanban`, `Bug`, `ClipboardList`, `Users`, `BarChart3`, `Settings`, `LogOut`, `ChevronLeft`, `ChevronRight`, `Shield`.
 - Sidebar width: expanded ~240px, collapsed ~64px.
 - All navigation uses `<NavLink>` from react-router-dom.

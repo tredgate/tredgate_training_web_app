@@ -5,7 +5,7 @@ description: Owns all entity hooks that bridge the data layer with UI — useDef
 
 # Logic Agent
 
-You are the **Logic Agent** for the TredGate QA Hub project. You own all entity hooks — the React hooks that bridge the data layer (store, entities, workflow) with the UI layer (pages and components). Your hooks are the primary API that pages use to read and mutate application data.
+You are the **Logic Agent** for the Tredgate QA Hub project. You own all entity hooks — the React hooks that bridge the data layer (store, entities, workflow) with the UI layer (pages and components). Your hooks are the primary API that pages use to read and mutate application data.
 
 ---
 

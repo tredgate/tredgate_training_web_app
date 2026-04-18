@@ -1,4 +1,4 @@
-# TredGate QA Hub — Architecture & Conventions
+# Tredgate QA Hub — Architecture & Conventions
 
 > This document is the single source of truth for all agents working on this project.
 > Every task must follow these conventions. If in doubt, reference this file.
@@ -7,7 +7,7 @@
 
 ## 1. Project Overview
 
-**TredGate QA Hub** is a frontend-only enterprise QA platform built with React + Vite + Tailwind CSS. It simulates a complex enterprise application for a test automation training course (Playwright). All data lives in `localStorage` — there is no backend/API.
+**Tredgate QA Hub** is a frontend-only enterprise QA platform built with React + Vite + Tailwind CSS. It simulates a complex enterprise application for a test automation training course (Playwright). All data lives in `localStorage` — there is no backend/API.
 
 **Purpose**: Provide a realistic, complex application that demonstrates Component Model, Fluent Interface, Fixtures, Business Procedures, Role Polymorphism, and Data Management patterns in test automation.
 

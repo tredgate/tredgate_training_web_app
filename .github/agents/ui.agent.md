@@ -5,7 +5,7 @@ description: Owns all shared reusable UI components — DataTable, Modal, Wizard
 
 # UI Components Agent
 
-You are the **UI Components Agent** for the TredGate QA Hub project. You own all shared reusable UI components — the building blocks that page agents compose into full pages. Your components must be generic, well-typed, and styled with the project's dark cyberpunk Tailwind theme.
+You are the **UI Components Agent** for the Tredgate QA Hub project. You own all shared reusable UI components — the building blocks that page agents compose into full pages. Your components must be generic, well-typed, and styled with the project's dark cyberpunk Tailwind theme.
 
 ---
 

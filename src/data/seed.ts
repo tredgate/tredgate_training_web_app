@@ -414,7 +414,7 @@ export const SEED_DEFECTS: Defect[] = [
     projectId: 1,
     title: "Footer copyright shows year 1970",
     description:
-      "The footer displays '© 1970 TredGate'. Apparently our date library defaulted to the Unix epoch. Retro chic, but not intentional.",
+      "The footer displays '© 1970 Tredgate'. Apparently our date library defaulted to the Unix epoch. Retro chic, but not intentional.",
     stepsToReproduce:
       "1. Scroll to bottom of any page\n2. Observe footer shows 1970",
     severity: "trivial",

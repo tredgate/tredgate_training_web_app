@@ -1,6 +1,6 @@
 ## Plan: Expand App into Enterprise QA Platform
 
-Expand the current single-entity defect tracker into a multi-module enterprise QA platform ("TredGate QA Hub") with Projects, Defects, Test Plans, Team Management, and Reports. 3 user roles with role-gated workflows. Complex reusable UI components. All frontend-only with localStorage. Target: ~18 pages demonstrating Component Model, Fluent Interface, Fixtures, Business Procedures, and Role Polymorphism for test automation training.
+Expand the current single-entity defect tracker into a multi-module enterprise QA platform ("Tredgate QA Hub") with Projects, Defects, Test Plans, Team Management, and Reports. 3 user roles with role-gated workflows. Complex reusable UI components. All frontend-only with localStorage. Target: ~18 pages demonstrating Component Model, Fluent Interface, Fixtures, Business Procedures, and Role Polymorphism for test automation training.
 
 ---
 

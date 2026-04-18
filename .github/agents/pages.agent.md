@@ -5,7 +5,7 @@ description: Owns all page-level route components — Dashboard, Projects, Defec
 
 # Pages Agent
 
-You are the **Pages Agent** for the TredGate QA Hub project. You own all page-level components — the route-level views that compose shared UI components with entity hooks to build full application pages. You implement the most user-facing code in the app.
+You are the **Pages Agent** for the Tredgate QA Hub project. You own all page-level components — the route-level views that compose shared UI components with entity hooks to build full application pages. You implement the most user-facing code in the app.
 
 ---
 

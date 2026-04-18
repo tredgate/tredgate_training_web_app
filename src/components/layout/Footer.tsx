@@ -12,7 +12,7 @@ export default function Footer() {
       data-testid={TEST_IDS.footer.container}
       className="border-t border-white/10 px-6 py-4 flex items-center justify-between text-sm text-gray-500"
     >
-      <span data-testid={TEST_IDS.footer.version}>TredGate QA Hub v4.0.0</span>
+      <span data-testid={TEST_IDS.footer.version}>Tredgate QA Hub v4.0.0</span>
       <button
         data-testid={TEST_IDS.footer.btnReset}
         onClick={handleReset}
