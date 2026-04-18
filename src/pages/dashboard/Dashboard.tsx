@@ -20,11 +20,7 @@ import DataTable from "../../components/data/DataTable";
 import StatusBadge from "../../components/feedback/StatusBadge";
 import ActivityTimeline from "../../components/display/ActivityTimeline";
 import { useAuth } from "../../hooks/useAuth";
-import { useDefects } from "../../hooks/useDefects";
-import { useProjects } from "../../hooks/useProjects";
-import { useTestPlans } from "../../hooks/useTestPlans";
-import { useTestRuns } from "../../hooks/useTestRuns";
-import { useUsers } from "../../hooks/useUsers";
+import { useDashboardData } from "../../hooks/useDashboardData";
 import { t } from "../../i18n";
 import type { Column } from "../../components/data/DataTable";
 import type { Defect, TestRun } from "../../data/entities";
@@ -32,181 +28,27 @@ import type { Defect, TestRun } from "../../data/entities";
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { defects } = useDefects();
-  const { projects } = useProjects();
-  const { testPlans } = useTestPlans();
-  const { testRuns } = useTestRuns();
-  const { users } = useUsers();
+  const data = useDashboardData();
 
-  if (!user) return null;
+  if (!user || !data) return null;
 
-  // ────────────────────────────────────────────────────────────────────────
-  // DATA FILTERING BY ROLE
-  // ────────────────────────────────────────────────────────────────────────
-
-  // My projects (for QA Lead and Admin context)
-  const myProjects = projects.filter(
-    (p) => p.leadId === user.id || p.memberIds.includes(user.id),
-  );
-
-  // My project IDs
-  const myProjectIds = myProjects.map((p) => p.id);
-
-  // Role-specific defect filtering
-  let totalDefectsCount: number;
-  let openDefectsCount: number;
-  let myDefectsForTable: Defect[];
-  let unassignedDefects: Defect[] = [];
-  let awaitingVerification: Defect[] = [];
-
-  if (user.role === "tester") {
-    // Tester: My reported defects
-    totalDefectsCount = defects.filter((d) => d.reporterId === user.id).length;
-    openDefectsCount = defects.filter(
-      (d) =>
-        d.reporterId === user.id &&
-        d.status !== "closed" &&
-        d.status !== "verified",
-    ).length;
-    myDefectsForTable = defects
-      .filter((d) => d.assigneeId === user.id)
-      .slice(0, 5);
-  } else if (user.role === "qa_lead") {
-    // QA Lead: In my projects
-    totalDefectsCount = defects.filter((d) =>
-      myProjectIds.includes(d.projectId),
-    ).length;
-    openDefectsCount = defects.filter(
-      (d) =>
-        myProjectIds.includes(d.projectId) &&
-        d.status !== "closed" &&
-        d.status !== "verified",
-    ).length;
-    myDefectsForTable = defects
-      .filter((d) => d.assigneeId === user.id)
-      .slice(0, 5);
-    unassignedDefects = defects.filter(
-      (d) => myProjectIds.includes(d.projectId) && d.status === "new",
-    );
-    awaitingVerification = defects.filter(
-      (d) => myProjectIds.includes(d.projectId) && d.status === "resolved",
-    );
-  } else {
-    // Admin: All defects
-    totalDefectsCount = defects.length;
-    openDefectsCount = defects.filter(
-      (d) => d.status !== "closed" && d.status !== "verified",
-    ).length;
-    myDefectsForTable = defects
-      .filter((d) => d.assigneeId === user.id)
-      .slice(0, 5);
-    unassignedDefects = defects.filter((d) => d.status === "new");
-    awaitingVerification = defects.filter((d) => d.status === "resolved");
-  }
-
-  // Test Plans filtering
-  let testPlansCount: number;
-  if (user.role === "tester") {
-    testPlansCount = testPlans.filter((tp) => tp.assigneeId === user.id).length;
-  } else if (user.role === "qa_lead") {
-    testPlansCount = testPlans.filter((tp) =>
-      myProjectIds.includes(tp.projectId),
-    ).length;
-  } else {
-    testPlansCount = testPlans.length;
-  }
-
-  // Pass Rate calculation
-  let passRateRuns: TestRun[];
-  if (user.role === "tester") {
-    passRateRuns = testRuns.filter((r) => r.executorId === user.id);
-  } else if (user.role === "qa_lead") {
-    passRateRuns = testRuns.filter((r) => {
-      const plan = testPlans.find((tp) => tp.id === r.testPlanId);
-      return plan && myProjectIds.includes(plan.projectId);
-    });
-  } else {
-    passRateRuns = testRuns;
-  }
-
-  const totalCases = passRateRuns.flatMap((r) => r.results).length;
-  const passedCases = passRateRuns
-    .flatMap((r) => r.results)
-    .filter((r) => r.status === "passed").length;
-  const passRate =
-    totalCases > 0 ? Math.round((passedCases / totalCases) * 100) : 0;
-
-  // My Recent Test Runs
-  const myTestRuns = testRuns
-    .filter((r) => r.executorId === user.id)
-    .sort(
-      (a, b) =>
-        new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime(),
-    )
-    .slice(0, 5);
-
-  // Activity Timeline (last 10 history entries, merged from all defects)
-  const allHistoryEntries = defects.flatMap((d) =>
-    d.history.map((h) => ({
-      ...h,
-      defectId: d.id,
-      defectTitle: d.title,
-    })),
-  );
-
-  // Filter history by role
-  let timelineHistoryEntries = allHistoryEntries;
-  if (user.role === "tester") {
-    timelineHistoryEntries = allHistoryEntries.filter((h) => {
-      const defect = defects.find((d) => d.id === h.defectId);
-      return defect && defect.reporterId === user.id;
-    });
-  } else if (user.role === "qa_lead") {
-    timelineHistoryEntries = allHistoryEntries.filter((h) => {
-      const defect = defects.find((d) => d.id === h.defectId);
-      return defect && myProjectIds.includes(defect.projectId);
-    });
-  }
-
-  const recentActivityEntries = timelineHistoryEntries
-    .sort(
-      (a, b) =>
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-    )
-    .slice(0, 10)
-    .map((h) => ({
-      id: h.id,
-      type: (h.action === "created"
-        ? "created"
-        : h.action === "commented"
-          ? "comment"
-          : "transition") as "created" | "comment" | "transition",
-      user: users.find((u) => u.id === h.userId)?.fullName || "Unknown",
-      text: `${h.details}`,
-      timestamp: h.timestamp,
-    }));
-
-  // Helper: Get project name by ID
-  const getProjectName = (projectId: number): string => {
-    return (
-      projects.find((p) => p.id === projectId)?.name ||
-      t.dashboard.unknownProject
-    );
-  };
-
-  // Helper: Get user name by ID
-  const getUserName = (userId: number): string => {
-    return (
-      users.find((u) => u.id === userId)?.fullName || t.dashboard.unknownUser
-    );
-  };
-
-  // Helper: Get test plan name by ID
-  const getTestPlanName = (planId: number): string => {
-    return (
-      testPlans.find((tp) => tp.id === planId)?.name || t.dashboard.unknownPlan
-    );
-  };
+  const {
+    totalDefectsCount,
+    openDefectsCount,
+    testPlansCount,
+    passRate,
+    myDefectsForTable,
+    myTestRuns,
+    unassignedDefects,
+    awaitingVerification,
+    recentActivityEntries,
+    getProjectName,
+    getUserName,
+    getTestPlanName,
+    users,
+    projects,
+    testPlans,
+  } = data;
 
   // ────────────────────────────────────────────────────────────────────────
   // TABLE COLUMNS
