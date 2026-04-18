@@ -33,15 +33,15 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T14  | Reports, Settings, Profile                   | ✅ done    | T2–T8              | 2026-04-17 | 2026-04-17 | a9c5d2f |                                                       |
 | T15  | Fix Cross-Task Consistency                   | ✅ done    | T1–T14 authored    | 2026-04-15 | 2026-04-15 | —       | Prompt-file edits only; no src commit                 |
 | T16  | Unit Tests                                   | ⚠️ blocked | T1                 | 2026-04-17 | —          | 38fbc76 | Tests pass at runtime; 56 TS errors in test code      |
-| T17  | E2E Smoke Validation (on-demand)             | ⬜ pending | Any of T9–T14 ✅   | —          | —          | —       | Runs on demand; never auto-triggered                  |
+| T17  | E2E Smoke Validation (on-demand)             | ⬜ pending | Any of T9–T14 ✅   | —          | —          | —       | Last run: 2026-04-18 — 8 pass / 0 fail / 0 skip       |
 | T18  | Component Cleanup (T3–T7 fixes)              | ✅ done    | T3–T7              | 2026-04-16 | 2026-04-16 | 26fd474 | Split across 4 commits (Fixes 1+6, 2, 3+4+5, 7)       |
-| T19  | Dashboard Refactor: Split to functions       | ⬜ pending | T9                 | —          | —          | —       |                                                       |
+| T19  | Dashboard Refactor: Split to functions       | ✅ done    | T9                 | 2026-04-18 | 2026-04-18 | cf449c0 | 3 commits: hook → columns → sub-components           |
 | T20  | Component Structure Review                   | ⬜ pending | T9–T14             | —          | —          | —       | Analysis + optional extraction                        |
 | T21  | i18n: Centralise All UI Text                 | ✅ done    | T2                 | 2026-04-18 | 2026-04-18 | b862d46 |                                                       |
 | T22  | Discussion: Defect Colors — Component vs CSS | ⬜ pending | T7, T11            | —          | —          | —       | Decision only; implementation optional                |
 | T23  | DefectDetail & DefectForm Refactor           | ⬜ pending | T11                | —          | —          | —       |                                                       |
 | T24  | Fix TypeScript Errors in Test Files          | ✅ done    | T16                | 2026-04-18 | 2026-04-18 | fb47c10 | 56 TS errors resolved: EntityKey cast + ! assertions  |
-| T25  | Fix DataTable Filter Options: {value,label}  | ✅ done        | T3, T11            | 2026-04-18 | 2026-04-18 | d1acf69 | /defects crashes — FilterConfig only accepts string[] |
+| T25  | Fix DataTable Filter Options: {value,label}  | ✅ done    | T3, T11            | 2026-04-18 | 2026-04-18 | d1acf69 | /defects crashes — FilterConfig only accepts string[] |
 
 ## Conventions
 
