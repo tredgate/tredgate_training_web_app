@@ -178,7 +178,7 @@ describe("workflow", () => {
     it("history entry has correct properties", () => {
       const defect = createMockDefect("new", null);
       const updated = executeTransition(defect, "assign", 1);
-      const newEntry = updated.history[updated.history.length - 1];
+      const newEntry = updated.history[updated.history.length - 1]!;
       expect(newEntry.userId).toBe(1);
       expect(newEntry.action).toBe("Assign");
       expect(newEntry.fromStatus).toBe("new");

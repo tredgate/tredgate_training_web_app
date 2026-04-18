@@ -30,10 +30,12 @@ interface TestEntity {
   updatedAt?: string;
 }
 
+const TEST_KEY = "tqh_test" as EntityKey;
+
 describe("store", () => {
   describe("getAll", () => {
     it("returns empty array when key does not exist", () => {
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toEqual([]);
     });
 
@@ -41,9 +43,9 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toEqual(testData);
     });
 
@@ -53,18 +55,18 @@ describe("store", () => {
         { id: 2, name: "Test 2", createdAt: "2025-01-02T00:00:00.000Z" },
         { id: 3, name: "Test 3", createdAt: "2025-01-03T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toHaveLength(3);
-      expect(items[0].id).toBe(1);
-      expect(items[2].id).toBe(3);
+      expect(items[0]!.id).toBe(1);
+      expect(items[2]!.id).toBe(3);
     });
   });
 
   describe("getById", () => {
     it("returns null when item not found", () => {
-      const item = getById<TestEntity>("tqh_test", 1);
+      const item = getById<TestEntity>(TEST_KEY, 1);
       expect(item).toBeNull();
     });
 
@@ -73,9 +75,9 @@ describe("store", () => {
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
         { id: 2, name: "Test 2", createdAt: "2025-01-02T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const item = getById<TestEntity>("tqh_test", 2);
+      const item = getById<TestEntity>(TEST_KEY, 2);
       expect(item).not.toBeNull();
       expect(item?.id).toBe(2);
       expect(item?.name).toBe("Test 2");
@@ -85,16 +87,16 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const item = getById<TestEntity>("tqh_test", 999);
+      const item = getById<TestEntity>(TEST_KEY, 999);
       expect(item).toBeNull();
     });
   });
 
   describe("create", () => {
     it("adds item to storage", () => {
-      const item = create<TestEntity>("tqh_test", {
+      const item = create<TestEntity>(TEST_KEY, {
         name: "Test 1",
       });
 
@@ -104,23 +106,23 @@ describe("store", () => {
     });
 
     it("persists item to storage", () => {
-      create<TestEntity>("tqh_test", { name: "Test 1" });
+      create<TestEntity>(TEST_KEY, { name: "Test 1" });
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toHaveLength(1);
-      expect(items[0].name).toBe("Test 1");
+      expect(items[0]!.name).toBe("Test 1");
     });
 
     it("auto-increments id", () => {
-      const item1 = create<TestEntity>("tqh_test", { name: "Test 1" });
-      const item2 = create<TestEntity>("tqh_test", { name: "Test 2" });
+      const item1 = create<TestEntity>(TEST_KEY, { name: "Test 1" });
+      const item2 = create<TestEntity>(TEST_KEY, { name: "Test 2" });
 
       expect(item1.id).toBe(1);
       expect(item2.id).toBe(2);
     });
 
     it("starts id from 1 for empty storage", () => {
-      const item = create<TestEntity>("tqh_test", { name: "Test 1" });
+      const item = create<TestEntity>(TEST_KEY, { name: "Test 1" });
       expect(item.id).toBe(1);
     });
 
@@ -129,15 +131,15 @@ describe("store", () => {
         { id: 5, name: "Test", createdAt: "2025-01-01T00:00:00.000Z" },
         { id: 10, name: "Test", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const item = create<TestEntity>("tqh_test", { name: "New" });
+      const item = create<TestEntity>(TEST_KEY, { name: "New" });
       expect(item.id).toBe(11);
     });
 
     it("sets createdAt timestamp", () => {
       const before = Date.now();
-      const item = create<TestEntity>("tqh_test", { name: "Test 1" });
+      const item = create<TestEntity>(TEST_KEY, { name: "Test 1" });
       const after = Date.now();
 
       const itemTime = new Date(item.createdAt).getTime();
@@ -147,7 +149,7 @@ describe("store", () => {
 
     it("sets updatedAt timestamp", () => {
       const before = Date.now();
-      const item = create<TestEntity>("tqh_test", { name: "Test 1" });
+      const item = create<TestEntity>(TEST_KEY, { name: "Test 1" });
       const after = Date.now();
 
       const itemTime = new Date(item.updatedAt || "").getTime();
@@ -161,9 +163,9 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const updated = update<TestEntity>("tqh_test", 1, { name: "Updated" });
+      const updated = update<TestEntity>(TEST_KEY, 1, { name: "Updated" });
       expect(updated.name).toBe("Updated");
     });
 
@@ -171,22 +173,22 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      update<TestEntity>("tqh_test", 1, { name: "Updated" });
+      update<TestEntity>(TEST_KEY, 1, { name: "Updated" });
 
-      const items = getAll<TestEntity>("tqh_test");
-      expect(items[0].name).toBe("Updated");
+      const items = getAll<TestEntity>(TEST_KEY);
+      expect(items[0]!.name).toBe("Updated");
     });
 
     it("throws when entity not found", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
       expect(() => {
-        update<TestEntity>("tqh_test", 999, { name: "Updated" });
+        update<TestEntity>(TEST_KEY, 999, { name: "Updated" });
       }).toThrow(/not found/);
     });
 
@@ -194,10 +196,10 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
       const before = Date.now();
-      const updated = update<TestEntity>("tqh_test", 1, { name: "Updated" });
+      const updated = update<TestEntity>(TEST_KEY, 1, { name: "Updated" });
       const after = Date.now();
 
       const itemTime = new Date(updated.updatedAt || "").getTime();
@@ -208,9 +210,9 @@ describe("store", () => {
     it("preserves createdAt", () => {
       const createdAt = "2025-01-01T00:00:00.000Z";
       const testData: TestEntity[] = [{ id: 1, name: "Test 1", createdAt }];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const updated = update<TestEntity>("tqh_test", 1, { name: "Updated" });
+      const updated = update<TestEntity>(TEST_KEY, 1, { name: "Updated" });
       expect(updated.createdAt).toBe(createdAt);
     });
 
@@ -218,9 +220,9 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      const updated = update<TestEntity>("tqh_test", 1, { name: "Updated" });
+      const updated = update<TestEntity>(TEST_KEY, 1, { name: "Updated" });
       expect(updated.id).toBe(1);
     });
   });
@@ -231,24 +233,24 @@ describe("store", () => {
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
         { id: 2, name: "Test 2", createdAt: "2025-01-02T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      remove("tqh_test", 1);
+      remove(TEST_KEY, 1);
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toHaveLength(1);
-      expect(items[0].id).toBe(2);
+      expect(items[0]!.id).toBe(2);
     });
 
     it("works with single item", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
-      remove("tqh_test", 1);
+      remove(TEST_KEY, 1);
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toHaveLength(0);
     });
 
@@ -256,10 +258,10 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Test 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
       expect(() => {
-        remove("tqh_test", 999);
+        remove(TEST_KEY, 999);
       }).not.toThrow();
     });
   });
@@ -269,18 +271,18 @@ describe("store", () => {
       const testData: TestEntity[] = [
         { id: 1, name: "Old 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
-      mockStorage.set("tqh_test", JSON.stringify(testData));
+      mockStorage.set(TEST_KEY, JSON.stringify(testData));
 
       const seedData: TestEntity[] = [
         { id: 10, name: "Seed 1", createdAt: "2025-01-10T00:00:00.000Z" },
         { id: 20, name: "Seed 2", createdAt: "2025-01-20T00:00:00.000Z" },
       ];
 
-      reset("tqh_test", seedData);
+      reset(TEST_KEY, seedData);
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toHaveLength(2);
-      expect(items[0].name).toBe("Seed 1");
+      expect(items[0]!.name).toBe("Seed 1");
     });
 
     it("initializes empty storage", () => {
@@ -288,9 +290,9 @@ describe("store", () => {
         { id: 1, name: "Seed 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
 
-      reset("tqh_test", seedData);
+      reset(TEST_KEY, seedData);
 
-      const items = getAll<TestEntity>("tqh_test");
+      const items = getAll<TestEntity>(TEST_KEY);
       expect(items).toEqual(seedData);
     });
 
@@ -299,7 +301,7 @@ describe("store", () => {
         { id: 1, name: "Seed 1", createdAt: "2025-01-01T00:00:00.000Z" },
       ];
 
-      const result = reset("tqh_test", seedData);
+      const result = reset(TEST_KEY, seedData);
       expect(result).toEqual(seedData);
     });
   });
@@ -331,37 +333,37 @@ describe("store", () => {
 
   describe("CRUD round-trip", () => {
     it("create → getById → update → getAll shows updated item", () => {
-      const created = create<TestEntity>("tqh_test", { name: "Test 1" });
+      const created = create<TestEntity>(TEST_KEY, { name: "Test 1" });
       expect(created.id).toBe(1);
 
-      const retrieved = getById<TestEntity>("tqh_test", created.id);
+      const retrieved = getById<TestEntity>(TEST_KEY, created.id);
       expect(retrieved?.name).toBe("Test 1");
 
-      const updated = update<TestEntity>("tqh_test", created.id, {
+      const updated = update<TestEntity>(TEST_KEY, created.id, {
         name: "Updated",
       });
       expect(updated.name).toBe("Updated");
 
-      const all = getAll<TestEntity>("tqh_test");
+      const all = getAll<TestEntity>(TEST_KEY);
       expect(all).toHaveLength(1);
-      expect(all[0].name).toBe("Updated");
+      expect(all[0]!.name).toBe("Updated");
     });
 
     it("multiple create, update, remove operations", () => {
-      const item1 = create<TestEntity>("tqh_test", { name: "Item 1" });
-      const item2 = create<TestEntity>("tqh_test", { name: "Item 2" });
-      const item3 = create<TestEntity>("tqh_test", { name: "Item 3" });
+      const item1 = create<TestEntity>(TEST_KEY, { name: "Item 1" });
+      const item2 = create<TestEntity>(TEST_KEY, { name: "Item 2" });
+      const item3 = create<TestEntity>(TEST_KEY, { name: "Item 3" });
 
       expect([item1.id, item2.id, item3.id]).toEqual([1, 2, 3]);
 
-      update<TestEntity>("tqh_test", 2, { name: "Item 2 Updated" });
-      remove("tqh_test", 1);
+      update<TestEntity>(TEST_KEY, 2, { name: "Item 2 Updated" });
+      remove(TEST_KEY, 1);
 
-      const all = getAll<TestEntity>("tqh_test");
+      const all = getAll<TestEntity>(TEST_KEY);
       expect(all).toHaveLength(2);
-      expect(all[0].id).toBe(2);
-      expect(all[0].name).toBe("Item 2 Updated");
-      expect(all[1].id).toBe(3);
+      expect(all[0]!.id).toBe(2);
+      expect(all[0]!.name).toBe("Item 2 Updated");
+      expect(all[1]!.id).toBe(3);
     });
   });
 });
