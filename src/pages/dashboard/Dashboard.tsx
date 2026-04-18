@@ -17,12 +17,12 @@ import {
 import PageHeader from "../../components/layout/PageHeader";
 import StatCard from "../../components/display/StatCard";
 import DataTable from "../../components/data/DataTable";
-import StatusBadge from "../../components/feedback/StatusBadge";
 import ActivityTimeline from "../../components/display/ActivityTimeline";
 import { useAuth } from "../../hooks/useAuth";
 import { useDashboardData } from "../../hooks/useDashboardData";
 import { t } from "../../i18n";
-import type { Column } from "../../components/data/DataTable";
+import { buildDefectColumns, buildTestRunColumns } from "./_columns";
+import type { ColumnHelpers } from "./_columns";
 import type { Defect, TestRun } from "../../data/entities";
 
 export default function Dashboard() {
@@ -54,141 +54,11 @@ export default function Dashboard() {
   // TABLE COLUMNS
   // ────────────────────────────────────────────────────────────────────────
 
-  const defectColumns: Column<Defect>[] = [
-    { key: "title", label: "Title", sortable: true },
-    {
-      key: "projectId",
-      label: "Project",
-      render: (value) => getProjectName(value as number),
-    },
-    {
-      key: "severity",
-      label: t.dashboard.colSeverity,
-      render: (value) => (
-        <StatusBadge
-          data-testid={TEST_IDS.dashboard.myDefectsTable}
-          type="severity"
-          value={value as any}
-        />
-      ),
-    },
-    {
-      key: "status",
-      label: t.dashboard.colStatus,
-      render: (value) => (
-        <StatusBadge
-          data-testid={TEST_IDS.dashboard.myDefectsTable}
-          type="status"
-          value={value as any}
-        />
-      ),
-    },
-    {
-      key: "priority",
-      label: t.dashboard.colPriority,
-      render: (value) => (
-        <StatusBadge
-          data-testid={TEST_IDS.dashboard.myDefectsTable}
-          type="priority"
-          value={value as any}
-        />
-      ),
-    },
-  ];
-
-  const testRunColumns: Column<TestRun>[] = [
-    {
-      key: "testPlanId",
-      label: t.dashboard.colTestPlan,
-      render: (value) => getTestPlanName(value as number),
-    },
-    {
-      key: "status",
-      label: t.dashboard.colStatus,
-      render: (value) => {
-        const status = value === "completed" ? "completed" : "in_progress";
-        return (
-          <StatusBadge
-            data-testid={TEST_IDS.dashboard.myRunsTable}
-            type="status"
-            value={status as any}
-          />
-        );
-      },
-    },
-    {
-      key: "results",
-      label: t.dashboard.colResults,
-      render: (value) => {
-        const results = value as any[];
-        const passed = results.filter((r) => r.status === "passed").length;
-        return t.dashboard.resultsPassed(passed, results.length);
-      },
-    },
-    {
-      key: "startedAt",
-      label: t.dashboard.colDate,
-      render: (value) => new Date(value as string).toLocaleDateString(),
-    },
-  ];
-
-  const unassignedColumns: Column<Defect>[] = [
-    { key: "title", label: t.dashboard.colTitle, sortable: true },
-    {
-      key: "projectId",
-      label: t.dashboard.colProject,
-      render: (value) => getProjectName(value as number),
-    },
-    {
-      key: "severity",
-      label: t.dashboard.colSeverity,
-      render: (value) => (
-        <StatusBadge
-          data-testid={TEST_IDS.dashboard.unassignedTable}
-          type="severity"
-          value={value as any}
-        />
-      ),
-    },
-    {
-      key: "reporterId",
-      label: t.dashboard.colReporter,
-      render: (value) => getUserName(value as number),
-    },
-    {
-      key: "createdAt",
-      label: t.dashboard.colCreated,
-      render: (value) => new Date(value as string).toLocaleDateString(),
-    },
-  ];
-
-  const verificationColumns: Column<Defect>[] = [
-    { key: "title", label: t.dashboard.colTitle, sortable: true },
-    {
-      key: "projectId",
-      label: t.dashboard.colProject,
-      render: (value) => getProjectName(value as number),
-    },
-    {
-      key: "severity",
-      label: t.dashboard.colSeverity,
-      render: (value) => (
-        <StatusBadge
-          data-testid={TEST_IDS.dashboard.verificationTable}
-          type="severity"
-          value={value as any}
-        />
-      ),
-    },
-    {
-      key: "assigneeId",
-      label: t.dashboard.colAssignedTo,
-      render: (value) => {
-        const assigneeId = value as number | null;
-        return assigneeId ? getUserName(assigneeId) : t.common.unassigned;
-      },
-    },
-  ];
+  const helpers: ColumnHelpers = { getProjectName, getUserName, getTestPlanName };
+  const defectColumns = buildDefectColumns("my", helpers);
+  const testRunColumns = buildTestRunColumns(helpers);
+  const unassignedColumns = buildDefectColumns("unassigned", helpers);
+  const verificationColumns = buildDefectColumns("verification", helpers);
 
   // ────────────────────────────────────────────────────────────────────────
   // RENDER
