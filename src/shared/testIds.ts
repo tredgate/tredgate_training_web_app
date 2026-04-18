@@ -3,6 +3,12 @@ import type { BadgeType } from "../components/feedback/StatusBadge";
 import type { EmptyStateVariant } from "../components/feedback/EmptyState";
 
 export const TEST_IDS = {
+  errorBoundary: {
+    container: "error-boundary",
+    message: "error-boundary-message",
+    btnRetry: "error-boundary-btn-retry",
+    btnReload: "error-boundary-btn-reload",
+  },
   login: {
     page: "login-page",
     inputUsername: "login-input-username",

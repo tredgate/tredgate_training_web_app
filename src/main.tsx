@@ -30,6 +30,7 @@ import UserDetail from "./pages/team/UserDetail";
 import Reports from "./pages/reports/Reports";
 import Settings from "./pages/settings/Settings";
 import { TEST_IDS } from "./shared/testIds";
+import ErrorBoundary from "./components/feedback/ErrorBoundary";
 
 initializeSeedData();
 
@@ -109,10 +110,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <ToastProvider>
-        <RouterProvider router={router} />
-      </ToastProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );
