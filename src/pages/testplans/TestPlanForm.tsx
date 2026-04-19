@@ -12,8 +12,6 @@ import {
   testplanFormCaseRow,
   testplanFormStepRow,
   testplanFormCaseStepsError,
-  testplanFormStepActionError,
-  testplanFormStepExpectedError,
 } from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useTestPlans } from "../../hooks/useTestPlans";
@@ -329,8 +327,7 @@ export default function TestPlanForm() {
   const steps = [
     {
       label: t.testPlanForm.stepPlanDetails,
-      validate: () =>
-        form.validateFields(["name", "projectId", "description"]),
+      validate: () => form.validateFields(["name", "projectId", "description"]),
       content: (
         <div data-testid="testplan-form-step-1" className="space-y-4 py-4">
           <TextInput
@@ -468,24 +465,20 @@ export default function TestPlanForm() {
                       }
                     />
 
-                    <div>
-                      <label className="block text-sm font-medium text-white mb-2">
-                        {t.common.preconditions}
-                      </label>
-                      <textarea
-                        data-testid={`testplan-form-case-${caseIdx}-preconditions`}
-                        value={testCase.preconditions}
-                        onChange={(e) =>
-                          handleUpdateTestCase(
-                            caseIdx,
-                            "preconditions",
-                            e.target.value,
-                          )
-                        }
-                        className="input-field w-full"
-                        rows={2}
-                      />
-                    </div>
+                    <TextArea
+                      data-testid={`testplan-form-case-${caseIdx}-preconditions`}
+                      name={`case-${caseIdx}-preconditions`}
+                      label={t.common.preconditions}
+                      value={testCase.preconditions}
+                      onChange={(e) =>
+                        handleUpdateTestCase(
+                          caseIdx,
+                          "preconditions",
+                          e.target.value,
+                        )
+                      }
+                      rows={2}
+                    />
 
                     {/* Steps */}
                     <div>
@@ -507,65 +500,47 @@ export default function TestPlanForm() {
                             data-testid={testplanFormStepRow(caseIdx, stepIdx)}
                             className="flex gap-2"
                           >
-                            <div className="flex-1">
-                              <input
-                                type="text"
-                                data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-action`}
-                                placeholder={t.testPlanForm.placeholderAction}
-                                value={step.action}
-                                onChange={(e) =>
-                                  handleUpdateStep(
-                                    caseIdx,
-                                    stepIdx,
-                                    "action",
-                                    e.target.value,
-                                  )
-                                }
-                                className="input-field w-full"
-                              />
-                              {stepErrors[caseIdx]?.[stepIdx]?.action && (
-                                <p
-                                  data-testid={testplanFormStepActionError(
-                                    caseIdx,
-                                    stepIdx,
-                                  )}
-                                  className="text-red-400 text-sm mt-1"
-                                >
-                                  {stepErrors[caseIdx][stepIdx].action}
-                                </p>
-                              )}
-                            </div>
-                            <div className="flex-1">
-                              <input
-                                type="text"
-                                data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-expected`}
-                                placeholder={
-                                  t.testPlanForm.placeholderExpectedResult
-                                }
-                                value={step.expectedResult}
-                                onChange={(e) =>
-                                  handleUpdateStep(
-                                    caseIdx,
-                                    stepIdx,
-                                    "expectedResult",
-                                    e.target.value,
-                                  )
-                                }
-                                className="input-field w-full"
-                              />
-                              {stepErrors[caseIdx]?.[stepIdx]
-                                ?.expectedResult && (
-                                <p
-                                  data-testid={testplanFormStepExpectedError(
-                                    caseIdx,
-                                    stepIdx,
-                                  )}
-                                  className="text-red-400 text-sm mt-1"
-                                >
-                                  {stepErrors[caseIdx][stepIdx].expectedResult}
-                                </p>
-                              )}
-                            </div>
+                            <TextInput
+                              data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-action`}
+                              name={`case-${caseIdx}-step-${stepIdx}-action`}
+                              label=""
+                              placeholder={t.testPlanForm.placeholderAction}
+                              value={step.action}
+                              onChange={(e) =>
+                                handleUpdateStep(
+                                  caseIdx,
+                                  stepIdx,
+                                  "action",
+                                  e.target.value,
+                                )
+                              }
+                              error={
+                                stepErrors[caseIdx]?.[stepIdx]?.action ?? null
+                              }
+                              className="flex-1"
+                            />
+                            <TextInput
+                              data-testid={`testplan-form-case-${caseIdx}-step-${stepIdx}-expected`}
+                              name={`case-${caseIdx}-step-${stepIdx}-expected`}
+                              label=""
+                              placeholder={
+                                t.testPlanForm.placeholderExpectedResult
+                              }
+                              value={step.expectedResult}
+                              onChange={(e) =>
+                                handleUpdateStep(
+                                  caseIdx,
+                                  stepIdx,
+                                  "expectedResult",
+                                  e.target.value,
+                                )
+                              }
+                              error={
+                                stepErrors[caseIdx]?.[stepIdx]
+                                  ?.expectedResult ?? null
+                              }
+                              className="flex-1"
+                            />
                             <button
                               type="button"
                               onClick={() => handleRemoveStep(caseIdx, stepIdx)}

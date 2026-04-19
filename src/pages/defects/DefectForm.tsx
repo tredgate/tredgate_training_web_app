@@ -228,12 +228,7 @@ export default function DefectForm() {
         </div>
       ),
       validate: () =>
-        form.validateFields([
-          "title",
-          "projectId",
-          "severity",
-          "priority",
-        ]),
+        form.validateFields(["title", "projectId", "severity", "priority"]),
     },
     {
       label: t.defectForm.stepDetails,
@@ -293,8 +288,7 @@ export default function DefectForm() {
           )}
         </div>
       ),
-      validate: () =>
-        form.validateFields(["description", "stepsToReproduce"]),
+      validate: () => form.validateFields(["description", "stepsToReproduce"]),
     },
     {
       label: t.defectForm.stepAssignment,

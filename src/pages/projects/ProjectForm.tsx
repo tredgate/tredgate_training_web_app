@@ -108,9 +108,7 @@ export default function ProjectForm() {
     setEnvListError(null);
     setEnvErrors(rowErrors);
 
-    return rowErrors.every(
-      (error) => !error.name && !error.type,
-    );
+    return rowErrors.every((error) => !error.name && !error.type);
   };
 
   const qaLeadUsers = users.filter(

@@ -701,7 +701,7 @@ const {
 **Step validation pattern:** Wizard step `validate` closures must be one-liners using `validateFields`:
 
 ```ts
-validate: () => form.validateFields(["name", "code", "description", "status"])
+validate: () => form.validateFields(["name", "code", "description", "status"]);
 ```
 
 One `validateFn` per form (the one passed to `useForm`), never per-step validators. `validateFields` runs the full `validateFn`, then filters the result to only the listed fields.
@@ -713,10 +713,10 @@ One `validateFn` per form (the one passed to `useForm`), never per-step validato
 // This "dance" has caused four shipped bugs (T28, T29, T32 audit).
 validate: () => {
   const errors = validateStep1(form.values);
-  Object.keys(errors).forEach(field => form.setFieldTouched(field));
+  Object.keys(errors).forEach((field) => form.setFieldTouched(field));
   form.validate();
   return Object.keys(errors).length === 0;
-}
+};
 ```
 
 ### Dynamic rows outside `useForm`

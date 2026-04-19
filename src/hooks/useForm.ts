@@ -22,21 +22,24 @@ export function useForm<T extends Record<string, unknown>>(
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
 
-  const setField = useCallback(<K extends keyof T>(name: K, value: T[K]) => {
-    setValues((previousValues) => {
-      const updatedValues = { ...previousValues, [name]: value };
-      setErrors((previousErrors) => {
-        if (previousErrors[name] === undefined) return previousErrors;
-        const validationResult = validateFn(updatedValues);
-        if (validationResult[name]) {
-          return { ...previousErrors, [name]: validationResult[name] };
-        }
-        const { [name]: _, ...remainingErrors } = previousErrors;
-        return remainingErrors as FormErrors<T>;
+  const setField = useCallback(
+    <K extends keyof T>(name: K, value: T[K]) => {
+      setValues((previousValues) => {
+        const updatedValues = { ...previousValues, [name]: value };
+        setErrors((previousErrors) => {
+          if (previousErrors[name] === undefined) return previousErrors;
+          const validationResult = validateFn(updatedValues);
+          if (validationResult[name]) {
+            return { ...previousErrors, [name]: validationResult[name] };
+          }
+          const { [name]: _, ...remainingErrors } = previousErrors;
+          return remainingErrors as FormErrors<T>;
+        });
+        return updatedValues;
       });
-      return updatedValues;
-    });
-  }, [validateFn]);
+    },
+    [validateFn],
+  );
 
   const setFieldTouched = useCallback((name: keyof T) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
