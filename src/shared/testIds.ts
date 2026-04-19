@@ -13,6 +13,8 @@ export const TEST_IDS = {
     page: "login-page",
     inputUsername: "login-input-username",
     inputPassword: "login-input-password",
+    inputUsernameError: "login-input-username-error",
+    inputPasswordError: "login-input-password-error",
     btnSubmit: "login-btn-submit",
     checkboxRemember: "login-checkbox-remember",
     error: "login-error",

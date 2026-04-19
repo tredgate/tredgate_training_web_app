@@ -49,6 +49,12 @@ export function useForm<T extends Record<string, unknown>>(
       e.preventDefault();
       const result = validateFn(values);
       setErrors(result);
+      // Mark all fields as touched so errors display immediately
+      const allTouched = Object.keys(values).reduce(
+        (acc, key) => ({ ...acc, [key]: true }),
+        {} as Partial<Record<keyof T, boolean>>,
+      );
+      setTouched(allTouched);
       if (Object.keys(result).length === 0) {
         onValid(values);
       }

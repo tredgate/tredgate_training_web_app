@@ -120,7 +120,7 @@ export default function Login() {
               onBlur={() => setFieldTouched("username")}
             />
             {touched.username && errors.username && (
-              <p className="text-red-400 text-xs mt-1">{errors.username}</p>
+              <p data-testid={TEST_IDS.login.inputUsernameError} className="text-red-400 text-xs mt-1">{errors.username}</p>
             )}
           </div>
 
@@ -142,7 +142,7 @@ export default function Login() {
               onBlur={() => setFieldTouched("password")}
             />
             {touched.password && errors.password && (
-              <p className="text-red-400 text-xs mt-1">{errors.password}</p>
+              <p data-testid={TEST_IDS.login.inputPasswordError} className="text-red-400 text-xs mt-1">{errors.password}</p>
             )}
           </div>
 
