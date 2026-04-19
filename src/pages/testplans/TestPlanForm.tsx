@@ -282,13 +282,11 @@ export default function TestPlanForm() {
             name="assigneeId"
             value={form.values.assigneeId}
             onChange={(e) => form.setField("assigneeId", e.target.value)}
-            options={[
-              { value: "", label: "— None —" },
-              ...users.map((u) => ({
-                value: u.id.toString(),
-                label: u.fullName,
-              })),
-            ]}
+            options={users.map((u) => ({
+              value: u.id.toString(),
+              label: u.fullName,
+            }))}
+            placeholder={t.common.none}
           />
         </div>
       ),

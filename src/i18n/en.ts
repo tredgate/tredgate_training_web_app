@@ -19,6 +19,7 @@ export const en = {
     noTestRuns: "No test runs",
     noDefectsReported: "No defects reported",
     none: "— None —",
+    selectPlaceholder: "— Select —",
     name: "Name",
     project: "Project",
     status: "Status",
@@ -149,6 +150,7 @@ export const en = {
     sectionHistory: "History",
     modalAssignTitle: "Assign Defect",
     labelAssignTo: "Assign to",
+    placeholderAssignee: "Select assignee",
     btnCancelAssign: "Cancel",
   },
 
@@ -174,6 +176,8 @@ export const en = {
     labelSteps: "Steps to Reproduce",
     placeholderSteps: "Step-by-step instructions to reproduce",
     labelEnvironment: "Environment",
+    placeholderEnvironment: "Select environment",
+    placeholderAssignee: "Select assignee",
     noEnvironmentHint:
       "Select a project on the previous step to see environment options",
     labelAssignTo: "Assign to (optional)",
@@ -273,6 +277,7 @@ export const en = {
     labelDescription: "Description",
     labelStatus: "Status",
     labelQaLead: "QA Lead",
+    placeholderQaLead: "Select QA Lead",
     labelTeamMembers: "Team Members",
     noEnvironmentsYet: "No environments added yet.",
     labelEnvName: "Name",

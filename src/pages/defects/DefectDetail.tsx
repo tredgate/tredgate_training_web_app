@@ -470,7 +470,7 @@ export default function DefectDetail() {
       >
         <div className="space-y-4">
           <Select
-            label="Assign to"
+            label={t.defectDetail.labelAssignTo}
             name="assignee"
             value={defect.assigneeId?.toString() || ""}
             onChange={(e) => {
@@ -482,6 +482,7 @@ export default function DefectDetail() {
               value: u.id.toString(),
               label: u.fullName,
             }))}
+            placeholder={t.defectDetail.placeholderAssignee}
             data-testid={TEST_IDS.defectDetail.modalAssignSelect}
           />
           <button

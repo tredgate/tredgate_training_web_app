@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { t } from "../../i18n";
 
 export interface SelectOption {
   value: string;
@@ -32,6 +33,10 @@ export default function Select({
   disabled = false,
   className = "",
 }: SelectProps): JSX.Element {
+  const valueMatchesOption = options.some((opt) => opt.value === value);
+  const showPlaceholder = !valueMatchesOption;
+  const placeholderText = placeholder ?? t.common.selectPlaceholder;
+
   return (
     <div className={className}>
       <label
@@ -49,7 +54,11 @@ export default function Select({
         disabled={disabled}
         className={`input-dark ${error ? "border-red-500/50 focus:border-red-500/50 focus:ring-red-500/30" : ""}`}
       >
-        {placeholder && <option value="">{placeholder}</option>}
+        {showPlaceholder && (
+          <option value="" disabled={required}>
+            {placeholderText}
+          </option>
+        )}
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}

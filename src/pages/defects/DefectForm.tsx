@@ -295,6 +295,7 @@ export default function DefectForm() {
                 value: e.id.toString(),
                 label: `${e.name} (${e.type})`,
               }))}
+              placeholder={t.defectForm.placeholderEnvironment}
               data-testid={TEST_IDS.defectForm.selectEnvironment}
             />
           )}
@@ -335,6 +336,7 @@ export default function DefectForm() {
                 value: u.id.toString(),
                 label: u.fullName,
               }))}
+              placeholder={t.defectForm.placeholderAssignee}
               data-testid={TEST_IDS.defectForm.selectAssignee}
             />
           ) : (

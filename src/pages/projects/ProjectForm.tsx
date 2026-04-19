@@ -252,6 +252,7 @@ export default function ProjectForm() {
               label: u.fullName,
             }))}
             error={form.touched.leadId ? (form.errors.leadId ?? null) : null}
+            placeholder={t.projectForm.placeholderQaLead}
             required
           />
 
