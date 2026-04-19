@@ -49,6 +49,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T30  | Audit data-testid on Validation Error Elements  | ⬜ pending | T29                | —          | —          | —       | Step 1: analysis of all pages, Step 2: fix missing test IDs     |
 | T31  | Select Empty-State Mismatch — App-Wide Audit    | ⬜ pending | T7, T10            | —          | —          | —       | Browser shows first option but form value is empty              |
 | T32  | Wizard Step Content Validation — App-Wide Audit | ⬜ pending | T28                | —          | —          | —       | Steps that block nav must show inline errors; T28 is prior art  |
+| T33  | useForm: Clear Validation Errors on Field Change | ⬜ pending | T29                | —          | —          | —       | setField re-validates errored fields so errors clear on typing  |
 
 ## Conventions
 
