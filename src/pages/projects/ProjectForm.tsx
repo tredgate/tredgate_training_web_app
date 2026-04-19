@@ -160,7 +160,12 @@ export default function ProjectForm() {
       label: t.projectForm.stepBasicInfo,
       validate: () => {
         const errors = validateForm(form.values);
-        const step1Fields: Array<keyof FormValues> = ["name", "code", "description", "status"];
+        const step1Fields: Array<keyof FormValues> = [
+          "name",
+          "code",
+          "description",
+          "status",
+        ];
         const step1Errors = step1Fields.filter((k) => k in errors);
         if (step1Errors.length > 0) {
           form.validate(); // populates form.errors state for re-render

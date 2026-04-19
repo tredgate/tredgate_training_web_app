@@ -11,6 +11,7 @@ description: "Audit & fix missing validation in Wizard step content (e.g. Enviro
 In **Create Project → Step 3 (Environments)**, clicking "Add Environment" creates an empty environment row. If the user then clicks "Next" (or "Submit") without filling in the environment name/type, the Wizard **advances or submits** without showing any inline validation errors on the empty environment fields.
 
 The `validateStep3` function in `ProjectForm.tsx` does check whether environments have names and types, but it only returns `false` — it does **not** show inline errors beneath the invalid fields, because:
+
 1. Environment fields are not managed by `useForm` (they use local `useState`).
 2. There is no `setFieldTouched` / `errors` mechanism for dynamically added rows.
 
@@ -27,9 +28,10 @@ Other forms in the app (`DefectForm`, `TestPlanForm`) may have similar patterns 
 Audit **every Wizard usage** in the app for steps that contain fields NOT managed by `useForm`. For each, record:
 
 | File | Step | Fields | Managed by useForm? | Has validation? | Shows inline errors? |
-|------|------|--------|---------------------|-----------------|----------------------|
+| ---- | ---- | ------ | ------------------- | --------------- | -------------------- |
 
 Check at minimum:
+
 - `ProjectForm.tsx` — Step 3 (Environments), Step 4 (Review)
 - `DefectForm.tsx` — all steps, especially any with dynamic content
 - `TestPlanForm.tsx` — all steps, especially test case steps
@@ -38,6 +40,7 @@ Check at minimum:
 ### Step 2: Fix
 
 For each step that validates but doesn't show errors:
+
 - Add local error state for non-useForm fields.
 - Render inline error `<p>` elements with proper `data-testid` attributes.
 - Wire the step's `validate` function to set the error state before returning `false`.

@@ -15,9 +15,7 @@ function makeUser(overrides: Partial<AuthUser> & { id: number }): AuthUser {
   };
 }
 
-function makeProject(
-  overrides: Partial<Project> & { id: number },
-): Project {
+function makeProject(overrides: Partial<Project> & { id: number }): Project {
   return {
     name: "Project",
     code: "PRJ",
@@ -93,29 +91,43 @@ describe("getScope", () => {
 
     it("defectInScope returns true only when reporterId matches", () => {
       expect(
-        scope.defectInScope(makeDefect({ id: 1, projectId: 1, reporterId: 10 })),
+        scope.defectInScope(
+          makeDefect({ id: 1, projectId: 1, reporterId: 10 }),
+        ),
       ).toBe(true);
       expect(
-        scope.defectInScope(makeDefect({ id: 2, projectId: 1, reporterId: 99 })),
+        scope.defectInScope(
+          makeDefect({ id: 2, projectId: 1, reporterId: 99 }),
+        ),
       ).toBe(false);
     });
 
     it("planInScope returns true only when assigneeId matches", () => {
       expect(
-        scope.planInScope(makeTestPlan({ id: 1, projectId: 1, assigneeId: 10 })),
+        scope.planInScope(
+          makeTestPlan({ id: 1, projectId: 1, assigneeId: 10 }),
+        ),
       ).toBe(true);
       expect(
-        scope.planInScope(makeTestPlan({ id: 2, projectId: 1, assigneeId: 99 })),
+        scope.planInScope(
+          makeTestPlan({ id: 2, projectId: 1, assigneeId: 99 }),
+        ),
       ).toBe(false);
     });
 
     it("runInScope returns true only when executorId matches", () => {
       const plans = [makeTestPlan({ id: 1, projectId: 1 })];
       expect(
-        scope.runInScope(makeTestRun({ id: 1, testPlanId: 1, executorId: 10 }), plans),
+        scope.runInScope(
+          makeTestRun({ id: 1, testPlanId: 1, executorId: 10 }),
+          plans,
+        ),
       ).toBe(true);
       expect(
-        scope.runInScope(makeTestRun({ id: 2, testPlanId: 1, executorId: 99 }), plans),
+        scope.runInScope(
+          makeTestRun({ id: 2, testPlanId: 1, executorId: 99 }),
+          plans,
+        ),
       ).toBe(false);
     });
   });
@@ -130,24 +142,24 @@ describe("getScope", () => {
     const scope = getScope(user, projects);
 
     it("defectInScope returns true for defects in user's projects", () => {
-      expect(
-        scope.defectInScope(makeDefect({ id: 1, projectId: 1 })),
-      ).toBe(true);
-      expect(
-        scope.defectInScope(makeDefect({ id: 2, projectId: 2 })),
-      ).toBe(true);
-      expect(
-        scope.defectInScope(makeDefect({ id: 3, projectId: 3 })),
-      ).toBe(false);
+      expect(scope.defectInScope(makeDefect({ id: 1, projectId: 1 }))).toBe(
+        true,
+      );
+      expect(scope.defectInScope(makeDefect({ id: 2, projectId: 2 }))).toBe(
+        true,
+      );
+      expect(scope.defectInScope(makeDefect({ id: 3, projectId: 3 }))).toBe(
+        false,
+      );
     });
 
     it("planInScope returns true for plans in user's projects", () => {
-      expect(
-        scope.planInScope(makeTestPlan({ id: 1, projectId: 1 })),
-      ).toBe(true);
-      expect(
-        scope.planInScope(makeTestPlan({ id: 2, projectId: 3 })),
-      ).toBe(false);
+      expect(scope.planInScope(makeTestPlan({ id: 1, projectId: 1 }))).toBe(
+        true,
+      );
+      expect(scope.planInScope(makeTestPlan({ id: 2, projectId: 3 }))).toBe(
+        false,
+      );
     });
 
     it("runInScope returns true for runs whose plan is in user's projects", () => {
@@ -171,14 +183,16 @@ describe("getScope", () => {
 
     it("all predicates return true for everything", () => {
       expect(
-        scope.defectInScope(makeDefect({ id: 1, projectId: 99, reporterId: 1 })),
+        scope.defectInScope(
+          makeDefect({ id: 1, projectId: 99, reporterId: 1 }),
+        ),
       ).toBe(true);
-      expect(
-        scope.planInScope(makeTestPlan({ id: 1, projectId: 99 })),
-      ).toBe(true);
-      expect(
-        scope.runInScope(makeTestRun({ id: 1, testPlanId: 99 }), []),
-      ).toBe(true);
+      expect(scope.planInScope(makeTestPlan({ id: 1, projectId: 99 }))).toBe(
+        true,
+      );
+      expect(scope.runInScope(makeTestRun({ id: 1, testPlanId: 99 }), [])).toBe(
+        true,
+      );
     });
   });
 });
@@ -226,16 +240,12 @@ describe("computePassRate", () => {
     const run1 = makeTestRun({
       id: 1,
       testPlanId: 1,
-      results: [
-        { testCaseId: 1, status: "passed", notes: "", duration: null },
-      ],
+      results: [{ testCaseId: 1, status: "passed", notes: "", duration: null }],
     });
     const run2 = makeTestRun({
       id: 2,
       testPlanId: 1,
-      results: [
-        { testCaseId: 2, status: "failed", notes: "", duration: null },
-      ],
+      results: [{ testCaseId: 2, status: "failed", notes: "", duration: null }],
     });
     expect(computePassRate([run1, run2])).toBe(50);
   });

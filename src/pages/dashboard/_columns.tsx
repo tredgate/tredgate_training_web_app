@@ -104,9 +104,7 @@ export function buildDefectColumns(
   }
 }
 
-export function buildTestRunColumns(
-  helpers: ColumnHelpers,
-): Column<TestRun>[] {
+export function buildTestRunColumns(helpers: ColumnHelpers): Column<TestRun>[] {
   const { getTestPlanName } = helpers;
 
   return [

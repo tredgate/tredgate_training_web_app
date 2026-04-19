@@ -95,8 +95,8 @@ export default function TestPlanForm() {
   const validateStep1 = (): boolean => {
     const errors = validateForm(form.values);
     if (Object.keys(errors).length > 0) {
-      (Object.keys(errors) as Array<keyof FormValues>).forEach(
-        (field) => form.setFieldTouched(field),
+      (Object.keys(errors) as Array<keyof FormValues>).forEach((field) =>
+        form.setFieldTouched(field),
       );
       return false;
     }

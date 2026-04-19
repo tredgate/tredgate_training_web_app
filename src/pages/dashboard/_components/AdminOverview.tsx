@@ -9,15 +9,10 @@ interface AdminOverviewProps {
   projects: Project[];
 }
 
-export default function AdminOverview({
-  users,
-  projects,
-}: AdminOverviewProps) {
+export default function AdminOverview({ users, projects }: AdminOverviewProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white mb-3">
-        System Overview
-      </h2>
+      <h2 className="text-lg font-semibold text-white mb-3">System Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard
           data-testid={TEST_IDS.dashboard.cardTotalUsers}

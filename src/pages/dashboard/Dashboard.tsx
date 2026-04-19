@@ -35,7 +35,11 @@ export default function Dashboard() {
     testPlans,
   } = data;
 
-  const helpers: ColumnHelpers = { getProjectName, getUserName, getTestPlanName };
+  const helpers: ColumnHelpers = {
+    getProjectName,
+    getUserName,
+    getTestPlanName,
+  };
   const defectColumns = buildDefectColumns("my", helpers);
   const testRunColumns = buildTestRunColumns(helpers);
   const unassignedColumns = buildDefectColumns("unassigned", helpers);
