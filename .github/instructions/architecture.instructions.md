@@ -696,11 +696,45 @@ const {
 
 **`setField` auto-clear:** When `setField(name, value)` is called and `errors[name]` already has a value, the hook re-runs `validateFn` against the updated values and updates or clears `errors[name]`. Fields with no existing error are not re-validated on keystroke.
 
-**Step validation pattern:** Wizard step `validate` closures should use `validateFields` instead of manually calling `validate()` + `setFieldTouched()`:
+**`handleSubmit`:** Marks **all** fields as touched before checking validation, so errors display immediately on a blank form submit.
+
+**Step validation pattern:** Wizard step `validate` closures must be one-liners using `validateFields`:
 
 ```ts
 validate: () => form.validateFields(["name", "code", "description", "status"])
 ```
+
+One `validateFn` per form (the one passed to `useForm`), never per-step validators. `validateFields` runs the full `validateFn`, then filters the result to only the listed fields.
+
+**⚠️ Deprecated pattern — do NOT use:**
+
+```ts
+// ❌ WRONG — manually calling validate() + setFieldTouched() per field.
+// This "dance" has caused four shipped bugs (T28, T29, T32 audit).
+validate: () => {
+  const errors = validateStep1(form.values);
+  Object.keys(errors).forEach(field => form.setFieldTouched(field));
+  form.validate();
+  return Object.keys(errors).length === 0;
+}
+```
+
+### Dynamic rows outside `useForm`
+
+Fields in user-managed arrays (environments in ProjectForm, test cases + steps in TestPlanForm) are **not** managed by `useForm`. They live in local `useState`. This is intentional — `useForm` does not support field arrays, and adding that would double the API surface for a 3-form app.
+
+When implementing dynamic rows, follow this pattern:
+
+1. **Parallel error state.** Store row errors in a `useState` array with one entry per row, shaped to match the row's fields (e.g. `Array<{ name?: string; type?: string }>`). For list-level errors ("at least one X required"), use a separate `useState<string | null>`.
+2. **Populate errors before returning `false`.** The step's `validate` closure must set the error state arrays before returning — otherwise the Wizard blocks advance but no errors are visible.
+3. **Render errors via shared components where possible.** `TextInput` and `Select` accept an `error` prop and render the error `<p>` with `data-testid={testId}-error`. For raw `<input>` elements not using shared components, render a `<p>` inline with `text-red-400 text-sm mt-1` classes.
+4. **Clear errors on field change.** When a row field changes, clear that field's error entry — mirrors `useForm.setField` auto-clear. When a row is added or removed, update the error array accordingly (append `{}` on add, splice on remove).
+5. **Register all testIds.** Every error element needs a `data-testid` registered in `src/shared/testIds.ts`, following the `{field-testid}-error` convention.
+
+**Reference implementations:**
+
+- `src/pages/projects/ProjectForm.tsx` Step 3 (Environments) — `envErrors` + `envListError` state.
+- `src/pages/testplans/TestPlanForm.tsx` Step 2 (Test Cases) — `testCaseErrors` + `stepErrors` + `testCaseListError` state.
 
 ---
 

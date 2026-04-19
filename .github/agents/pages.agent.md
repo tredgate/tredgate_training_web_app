@@ -224,3 +224,13 @@ After all tasks:
 - Do not add chart libraries — use tables and stat cards only (per T14 constraints).
 - Do not add new routes — all routes are defined by `@foundation` in T2. You replace placeholder components.
 - Do not add drag-and-drop, animation libraries, or features not specified in the task prompts.
+
+---
+
+## Form Validation — Read This Before Touching Any Form
+
+When adding or modifying a form:
+
+- **`useForm`-managed fields**: step `validate` must be a one-liner using `form.validateFields([...])`. Never manually call `form.setFieldTouched()` + `form.validate()` — that's the old pattern and it has been the source of four shipped bugs (T28, T29, and bugs found during the T32 audit in DefectForm + TestPlanForm).
+- **Dynamic rows (user-added arrays)**: these are NOT in `useForm`. You must add parallel error state in `useState`, populate it in the step `validate`, render errors under each row field, and clear errors on field change. See architecture doc § "Dynamic rows outside useForm" and the reference implementations in `ProjectForm.tsx` Step 3 and `TestPlanForm.tsx` Step 2.
+- If a form compiles and `validate` returns `false` but **no error appears in the UI**, you've hit the dynamic-row trap — check whether the failing field is in `useForm` or in local `useState`.

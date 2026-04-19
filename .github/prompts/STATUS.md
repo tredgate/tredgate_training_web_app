@@ -51,7 +51,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T32  | Dynamic Row Validation Errors (Project/TestPlan) | ✅ done    | T34                | 2026-04-19 | 2026-04-19 | f81a788 | Env rows + test case/step rows: add error state, render inline  |
 | T33  | useForm: Clear Validation Errors on Field Change | ✅ done    | T34                | —          | 2026-04-19 | f81a788 | Folded into T34                                                 |
 | T34  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
-| T35  | Validation Docs & Agent Warning                  | ⬜ pending | T34, T32           | —          | —          | —       | Document useForm API + dynamic-rows pattern for future agents   |
+| T35  | Validation Docs & Agent Warning                  | ✅ done    | T34, T32           | 2026-04-19 | 2026-04-19 | ff6e867 | Document useForm API + dynamic-rows pattern for future agents   |
 
 ## Conventions
 
