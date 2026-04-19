@@ -288,6 +288,9 @@ export const en = {
     validateCodeFormat: "Code must be 1-10 uppercase letters/numbers",
     validateDescriptionRequired: "Description is required",
     validateLeadRequired: "QA Lead is required",
+    validateEnvsRequired: "At least one environment is required",
+    validateEnvNameRequired: "Environment name is required",
+    validateEnvTypeRequired: "Environment type is required",
   },
 
   testPlans: {
@@ -364,6 +367,11 @@ export const en = {
     validateNameRequired: "Test plan name is required",
     validateProjectRequired: "Project is required",
     validateDescriptionRequired: "Description is required",
+    validateCasesRequired: "At least one test case is required",
+    validateCaseNameRequired: "Test case name is required",
+    validateCaseStepsRequired: "At least one step is required",
+    validateStepActionRequired: "Action is required",
+    validateStepExpectedRequired: "Expected result is required",
   },
 
   testRunExecution: {

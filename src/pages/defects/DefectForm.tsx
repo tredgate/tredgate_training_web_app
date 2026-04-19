@@ -32,25 +32,6 @@ interface DefectFormData extends Record<string, unknown> {
   relatedTestCaseIds: number[];
 }
 
-function validateStep1(values: DefectFormData): Record<string, string> {
-  const errors: Record<string, string> = {};
-  if (!values.title.trim()) errors.title = t.defectForm.validateTitleRequired;
-  if (!values.projectId)
-    errors.projectId = t.defectForm.validateProjectRequired;
-  if (!values.severity) errors.severity = t.defectForm.validateSeverityRequired;
-  if (!values.priority) errors.priority = t.defectForm.validatePriorityRequired;
-  return errors;
-}
-
-function validateStep2(values: DefectFormData): Record<string, string> {
-  const errors: Record<string, string> = {};
-  if (!values.description.trim())
-    errors.description = t.defectForm.validateDescriptionRequired;
-  if (!values.stepsToReproduce.trim())
-    errors.stepsToReproduce = t.defectForm.validateStepsRequired;
-  return errors;
-}
-
 export default function DefectForm() {
   const { defectId } = useParams<{ defectId: string }>();
   const navigate = useNavigate();
@@ -105,10 +86,19 @@ export default function DefectForm() {
       };
 
   const form = useForm<DefectFormData>(initialValues, (values) => {
-    const step1Errors = validateStep1(values);
-    if (Object.keys(step1Errors).length > 0) return step1Errors;
-    const step2Errors = validateStep2(values);
-    return step2Errors;
+    const errors: Partial<Record<keyof DefectFormData, string>> = {};
+    if (!values.title.trim()) errors.title = t.defectForm.validateTitleRequired;
+    if (!values.projectId)
+      errors.projectId = t.defectForm.validateProjectRequired;
+    if (!values.severity)
+      errors.severity = t.defectForm.validateSeverityRequired;
+    if (!values.priority)
+      errors.priority = t.defectForm.validatePriorityRequired;
+    if (!values.description.trim())
+      errors.description = t.defectForm.validateDescriptionRequired;
+    if (!values.stepsToReproduce.trim())
+      errors.stepsToReproduce = t.defectForm.validateStepsRequired;
+    return errors;
   });
 
   // Get the selected project
@@ -237,16 +227,13 @@ export default function DefectForm() {
           />
         </div>
       ),
-      validate: () => {
-        const errors = validateStep1(form.values);
-        if (Object.keys(errors).length > 0) {
-          (Object.keys(errors) as Array<keyof DefectFormData>).forEach(
-            (field) => form.setFieldTouched(field),
-          );
-          return false;
-        }
-        return true;
-      },
+      validate: () =>
+        form.validateFields([
+          "title",
+          "projectId",
+          "severity",
+          "priority",
+        ]),
     },
     {
       label: t.defectForm.stepDetails,
@@ -306,16 +293,8 @@ export default function DefectForm() {
           )}
         </div>
       ),
-      validate: () => {
-        const errors = validateStep2(form.values);
-        if (Object.keys(errors).length > 0) {
-          (Object.keys(errors) as Array<keyof DefectFormData>).forEach(
-            (field) => form.setFieldTouched(field),
-          );
-          return false;
-        }
-        return true;
-      },
+      validate: () =>
+        form.validateFields(["description", "stepsToReproduce"]),
     },
     {
       label: t.defectForm.stepAssignment,

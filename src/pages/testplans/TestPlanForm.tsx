@@ -11,6 +11,9 @@ import {
   TEST_IDS,
   testplanFormCaseRow,
   testplanFormStepRow,
+  testplanFormCaseStepsError,
+  testplanFormStepActionError,
+  testplanFormStepExpectedError,
 } from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useTestPlans } from "../../hooks/useTestPlans";
@@ -91,29 +94,68 @@ export default function TestPlanForm() {
 
   const form = useForm<FormValues>(initialValues, validateForm);
   const [testCases, setTestCases] = useState<FormTestCase[]>(initialTestCases);
-
-  const validateStep1 = (): boolean => {
-    const errors = validateForm(form.values);
-    if (Object.keys(errors).length > 0) {
-      (Object.keys(errors) as Array<keyof FormValues>).forEach((field) =>
-        form.setFieldTouched(field),
-      );
-      return false;
-    }
-    return true;
-  };
+  const [testCaseListError, setTestCaseListError] = useState<string | null>(
+    null,
+  );
+  const [testCaseErrors, setTestCaseErrors] = useState<
+    Array<{ name?: string; steps?: string }>
+  >([]);
+  const [stepErrors, setStepErrors] = useState<
+    Array<Array<{ action?: string; expectedResult?: string }>>
+  >([]);
 
   const validateStep2 = (): boolean => {
-    // At least 1 test case with at least 1 step
-    return (
-      testCases.length > 0 &&
-      testCases.every(
-        (tc) =>
-          tc.name.trim() &&
-          tc.steps.length > 0 &&
-          tc.steps.every((s) => s.action.trim() && s.expectedResult.trim()),
-      )
-    );
+    if (testCases.length === 0) {
+      setTestCaseListError(t.testPlanForm.validateCasesRequired);
+      setTestCaseErrors([]);
+      setStepErrors([]);
+      return false;
+    }
+
+    setTestCaseListError(null);
+
+    let isValid = true;
+    const caseErrorsComputed: Array<{ name?: string; steps?: string }> = [];
+    const stepErrorsComputed: Array<
+      Array<{ action?: string; expectedResult?: string }>
+    > = [];
+
+    testCases.forEach((testCase) => {
+      const caseError: { name?: string; steps?: string } = {};
+      if (!testCase.name.trim()) {
+        caseError.name = t.testPlanForm.validateCaseNameRequired;
+        isValid = false;
+      }
+      if (testCase.steps.length === 0) {
+        caseError.steps = t.testPlanForm.validateCaseStepsRequired;
+        isValid = false;
+      }
+      caseErrorsComputed.push(caseError);
+
+      const perStepErrors: Array<{
+        action?: string;
+        expectedResult?: string;
+      }> = [];
+      testCase.steps.forEach((step) => {
+        const stepError: { action?: string; expectedResult?: string } = {};
+        if (!step.action.trim()) {
+          stepError.action = t.testPlanForm.validateStepActionRequired;
+          isValid = false;
+        }
+        if (!step.expectedResult.trim()) {
+          stepError.expectedResult =
+            t.testPlanForm.validateStepExpectedRequired;
+          isValid = false;
+        }
+        perStepErrors.push(stepError);
+      });
+      stepErrorsComputed.push(perStepErrors);
+    });
+
+    setTestCaseErrors(caseErrorsComputed);
+    setStepErrors(stepErrorsComputed);
+
+    return isValid;
   };
 
   const handleAddTestCase = () => {
@@ -127,10 +169,15 @@ export default function TestPlanForm() {
         steps: [{ action: "", expectedResult: "" }],
       },
     ]);
+    setTestCaseErrors((previous) => [...previous, {}]);
+    setStepErrors((previous) => [...previous, [{}]]);
+    setTestCaseListError(null);
   };
 
   const handleRemoveTestCase = (index: number) => {
     setTestCases(testCases.filter((_, i) => i !== index));
+    setTestCaseErrors((previous) => previous.filter((_, i) => i !== index));
+    setStepErrors((previous) => previous.filter((_, i) => i !== index));
   };
 
   const handleUpdateTestCase = (
@@ -141,6 +188,17 @@ export default function TestPlanForm() {
     const updated = [...testCases];
     (updated[index] as any)[field] = value;
     setTestCases(updated);
+
+    if (field === "name") {
+      setTestCaseErrors((previous) => {
+        const updatedErrors = [...previous];
+        if (updatedErrors[index]) {
+          const { name: _, ...rest } = updatedErrors[index];
+          updatedErrors[index] = rest;
+        }
+        return updatedErrors;
+      });
+    }
   };
 
   const handleAddStep = (caseIndex: number) => {
@@ -150,6 +208,22 @@ export default function TestPlanForm() {
       tc.steps.push({ action: "", expectedResult: "" });
     }
     setTestCases(updated);
+
+    setTestCaseErrors((previous) => {
+      const updatedErrors = [...previous];
+      if (updatedErrors[caseIndex]) {
+        const { steps: _, ...rest } = updatedErrors[caseIndex];
+        updatedErrors[caseIndex] = rest;
+      }
+      return updatedErrors;
+    });
+    setStepErrors((previous) => {
+      const updatedErrors = [...previous];
+      if (updatedErrors[caseIndex]) {
+        updatedErrors[caseIndex] = [...updatedErrors[caseIndex], {}];
+      }
+      return updatedErrors;
+    });
   };
 
   const handleRemoveStep = (caseIndex: number, stepIndex: number) => {
@@ -159,6 +233,16 @@ export default function TestPlanForm() {
       tc.steps = tc.steps.filter((_, i) => i !== stepIndex);
     }
     setTestCases(updated);
+
+    setStepErrors((previous) => {
+      const updatedErrors = [...previous];
+      if (updatedErrors[caseIndex]) {
+        updatedErrors[caseIndex] = updatedErrors[caseIndex].filter(
+          (_, i) => i !== stepIndex,
+        );
+      }
+      return updatedErrors;
+    });
   };
 
   const handleUpdateStep = (
@@ -174,6 +258,19 @@ export default function TestPlanForm() {
       (step as any)[field] = value;
     }
     setTestCases(updated);
+
+    setStepErrors((previous) => {
+      const updatedErrors = [...previous];
+      const caseStepErrors = updatedErrors[caseIndex];
+      const currentStepError = caseStepErrors?.[stepIndex];
+      if (caseStepErrors && currentStepError) {
+        const updatedStepErrors = [...caseStepErrors];
+        const { [field]: _, ...rest } = currentStepError;
+        updatedStepErrors[stepIndex] = rest;
+        updatedErrors[caseIndex] = updatedStepErrors;
+      }
+      return updatedErrors;
+    });
   };
 
   const handleSubmit = () => {
@@ -232,7 +329,8 @@ export default function TestPlanForm() {
   const steps = [
     {
       label: t.testPlanForm.stepPlanDetails,
-      validate: validateStep1,
+      validate: () =>
+        form.validateFields(["name", "projectId", "description"]),
       content: (
         <div data-testid="testplan-form-step-1" className="space-y-4 py-4">
           <TextInput
@@ -306,6 +404,15 @@ export default function TestPlanForm() {
             {t.testPlanForm.btnAddTestCase}
           </button>
 
+          {testCaseListError && (
+            <p
+              data-testid={TEST_IDS.testplanForm.casesError}
+              className="text-red-400 text-sm"
+            >
+              {testCaseListError}
+            </p>
+          )}
+
           {testCases.length === 0 ? (
             <p className="text-gray-400">{t.testPlanForm.noTestCasesYet}</p>
           ) : (
@@ -325,6 +432,7 @@ export default function TestPlanForm() {
                       onChange={(e) =>
                         handleUpdateTestCase(caseIdx, "name", e.target.value)
                       }
+                      error={testCaseErrors[caseIdx]?.name ?? null}
                       required
                     />
 
@@ -384,6 +492,14 @@ export default function TestPlanForm() {
                       <label className="block text-sm font-medium text-white mb-2">
                         {t.common.steps}
                       </label>
+                      {testCaseErrors[caseIdx]?.steps && (
+                        <p
+                          data-testid={testplanFormCaseStepsError(caseIdx)}
+                          className="text-red-400 text-sm mt-1"
+                        >
+                          {testCaseErrors[caseIdx].steps}
+                        </p>
+                      )}
                       <div className="space-y-2">
                         {testCase.steps.map((step, stepIdx) => (
                           <div
@@ -407,6 +523,17 @@ export default function TestPlanForm() {
                                 }
                                 className="input-field w-full"
                               />
+                              {stepErrors[caseIdx]?.[stepIdx]?.action && (
+                                <p
+                                  data-testid={testplanFormStepActionError(
+                                    caseIdx,
+                                    stepIdx,
+                                  )}
+                                  className="text-red-400 text-sm mt-1"
+                                >
+                                  {stepErrors[caseIdx][stepIdx].action}
+                                </p>
+                              )}
                             </div>
                             <div className="flex-1">
                               <input
@@ -426,6 +553,18 @@ export default function TestPlanForm() {
                                 }
                                 className="input-field w-full"
                               />
+                              {stepErrors[caseIdx]?.[stepIdx]
+                                ?.expectedResult && (
+                                <p
+                                  data-testid={testplanFormStepExpectedError(
+                                    caseIdx,
+                                    stepIdx,
+                                  )}
+                                  className="text-red-400 text-sm mt-1"
+                                >
+                                  {stepErrors[caseIdx][stepIdx].expectedResult}
+                                </p>
+                              )}
                             </div>
                             <button
                               type="button"

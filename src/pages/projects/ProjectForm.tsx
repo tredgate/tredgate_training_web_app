@@ -53,6 +53,10 @@ export default function ProjectForm() {
   const [environments, setEnvironments] = useState<
     Array<{ name: string; type: EnvironmentType; url: string }>
   >(existingProject?.environments ?? []);
+  const [envErrors, setEnvErrors] = useState<
+    Array<{ name?: string; type?: string }>
+  >([]);
+  const [envListError, setEnvListError] = useState<string | null>(null);
   const [selectedMembers, setSelectedMembers] = useState<string[]>(
     existingProject?.memberIds.map((id) => id.toString()) ?? [],
   );
@@ -85,9 +89,28 @@ export default function ProjectForm() {
 
   const validateStep3 = (): boolean => {
     if (environments.length === 0) {
+      setEnvListError(t.projectForm.validateEnvsRequired);
+      setEnvErrors([]);
       return false;
     }
-    return environments.every((env) => env.name.trim() && env.type);
+
+    const rowErrors = environments.map((environment) => {
+      const error: { name?: string; type?: string } = {};
+      if (!environment.name.trim()) {
+        error.name = t.projectForm.validateEnvNameRequired;
+      }
+      if (!environment.type) {
+        error.type = t.projectForm.validateEnvTypeRequired;
+      }
+      return error;
+    });
+
+    setEnvListError(null);
+    setEnvErrors(rowErrors);
+
+    return rowErrors.every(
+      (error) => !error.name && !error.type,
+    );
   };
 
   const qaLeadUsers = users.filter(
@@ -96,10 +119,13 @@ export default function ProjectForm() {
 
   const handleAddEnvironment = () => {
     setEnvironments([...environments, { name: "", type: "dev", url: "" }]);
+    setEnvErrors((previous) => [...previous, {}]);
+    setEnvListError(null);
   };
 
   const handleRemoveEnvironment = (index: number) => {
     setEnvironments(environments.filter((_, i) => i !== index));
+    setEnvErrors((previous) => previous.filter((_, i) => i !== index));
   };
 
   const handleEnvironmentChange = (
@@ -110,6 +136,17 @@ export default function ProjectForm() {
     const updated = [...environments];
     (updated[index] as any)[field] = value;
     setEnvironments(updated);
+
+    if (field === "name" || field === "type") {
+      setEnvErrors((previous) => {
+        const updatedErrors = [...previous];
+        if (updatedErrors[index]) {
+          const { [field]: _, ...rest } = updatedErrors[index];
+          updatedErrors[index] = rest;
+        }
+        return updatedErrors;
+      });
+    }
   };
 
   const handleSubmit = () => {
@@ -158,22 +195,8 @@ export default function ProjectForm() {
   const steps = [
     {
       label: t.projectForm.stepBasicInfo,
-      validate: () => {
-        const errors = validateForm(form.values);
-        const step1Fields: Array<keyof FormValues> = [
-          "name",
-          "code",
-          "description",
-          "status",
-        ];
-        const step1Errors = step1Fields.filter((k) => k in errors);
-        if (step1Errors.length > 0) {
-          form.validate(); // populates form.errors state for re-render
-          step1Errors.forEach((field) => form.setFieldTouched(field));
-          return false;
-        }
-        return true;
-      },
+      validate: () =>
+        form.validateFields(["name", "code", "description", "status"]),
       content: (
         <div data-testid={`project-form-step-1`} className="space-y-4 py-4">
           <TextInput
@@ -230,15 +253,7 @@ export default function ProjectForm() {
     },
     {
       label: t.projectForm.stepTeamAssignment,
-      validate: () => {
-        const errors = validateForm(form.values);
-        if (errors.leadId) {
-          form.validate(); // populates form.errors state for re-render
-          form.setFieldTouched("leadId");
-          return false;
-        }
-        return true;
-      },
+      validate: () => form.validateFields(["leadId"]),
       content: (
         <div data-testid={`project-form-step-2`} className="space-y-4 py-4">
           <Select
@@ -275,6 +290,15 @@ export default function ProjectForm() {
       validate: validateStep3,
       content: (
         <div data-testid={`project-form-step-3`} className="space-y-4 py-4">
+          {envListError && (
+            <p
+              data-testid={TEST_IDS.projectForm.envsError}
+              className="text-red-400 text-sm"
+            >
+              {envListError}
+            </p>
+          )}
+
           {environments.length === 0 ? (
             <p className="text-gray-400">No environments added yet.</p>
           ) : (
@@ -293,6 +317,7 @@ export default function ProjectForm() {
                     onChange={(e) =>
                       handleEnvironmentChange(idx, "name", e.target.value)
                     }
+                    error={envErrors[idx]?.name ?? null}
                     className="col-span-4"
                   />
 
@@ -312,6 +337,7 @@ export default function ProjectForm() {
                       value: t,
                       label: t.charAt(0).toUpperCase() + t.slice(1),
                     }))}
+                    error={envErrors[idx]?.type ?? null}
                     className="col-span-4"
                   />
 

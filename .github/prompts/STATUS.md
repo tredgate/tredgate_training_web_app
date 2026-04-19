@@ -48,9 +48,9 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T29  | Bug: Login Page Empty Fields — No Validation     | ✅ done    | T2                 | 2026-04-19 | 2026-04-19 | 9bcc69b | useForm.handleSubmit now marks all fields touched               |
 | T30  | Audit data-testid on Validation Error Elements   | ⬜ pending | T29                | —          | —          | —       | Step 1: analysis of all pages, Step 2: fix missing test IDs     |
 | T31  | Select Empty-State Mismatch — App-Wide Audit     | ✅ done    | T7, T10            | 2026-04-19 | 2026-04-19 | 8f942e6 | Select auto-renders placeholder when value unmatched            |
-| T32  | Dynamic Row Validation Errors (Project/TestPlan) | ⬜ pending | T34                | —          | —          | —       | Env rows + test case/step rows: add error state, render inline  |
-| T33  | useForm: Clear Validation Errors on Field Change | ⬜ pending | T34                | —          | —          | —       | Folded into T34 — close when T34 lands                          |
-| T34  | Harden useForm: validateFields + auto-clear      | ⬜ pending | —                  | —          | —          | —       | Kills the recurring "forgot the dance" bug class across forms   |
+| T32  | Dynamic Row Validation Errors (Project/TestPlan) | ✅ done    | T34                | 2026-04-19 | 2026-04-19 | f81a788 | Env rows + test case/step rows: add error state, render inline  |
+| T33  | useForm: Clear Validation Errors on Field Change | ✅ done    | T34                | —          | 2026-04-19 | f81a788 | Folded into T34                                                 |
+| T34  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
 | T35  | Validation Docs & Agent Warning                  | ⬜ pending | T34, T32           | —          | —          | —       | Document useForm API + dynamic-rows pattern for future agents   |
 
 ## Conventions

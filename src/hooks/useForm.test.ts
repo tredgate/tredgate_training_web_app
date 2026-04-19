@@ -39,6 +39,15 @@ describe("useForm", () => {
       value: TestFormData[K],
     ) => {
       values = { ...values, [name]: value };
+      if (errors[name] !== undefined) {
+        const validationResult = validateFn(values);
+        if (validationResult[name]) {
+          errors = { ...errors, [name]: validationResult[name] };
+        } else {
+          const { [name]: _, ...remainingErrors } = errors;
+          errors = remainingErrors as FormErrors<TestFormData>;
+        }
+      }
     };
 
     const setFieldTouched = (name: keyof TestFormData) => {
@@ -49,6 +58,15 @@ describe("useForm", () => {
       const result = validateFn(values);
       errors = result;
       return Object.keys(result).length === 0;
+    };
+
+    const validateFields = (fields: Array<keyof TestFormData>): boolean => {
+      const result = validateFn(values);
+      errors = result;
+      for (const field of fields) {
+        touched = { ...touched, [field]: true };
+      }
+      return fields.every((field) => result[field] === undefined);
     };
 
     const reset = (newValues?: TestFormData) => {
@@ -81,6 +99,7 @@ describe("useForm", () => {
       setField,
       setFieldTouched,
       validate,
+      validateFields,
       reset,
       handleSubmit,
     };
@@ -134,6 +153,54 @@ describe("useForm", () => {
       form.setField("username", "");
 
       expect(form.values.username).toBe("");
+    });
+
+    it("re-evaluates and clears error when field with existing error becomes valid", () => {
+      const form = simulateUseForm(
+        { username: "", email: "", password: "" },
+        createMockValidate({}),
+      );
+
+      form.validate();
+      expect(form.errors.username).toBe("Username required");
+
+      form.setField("username", "testuser");
+
+      expect(form.errors.username).toBeUndefined();
+    });
+
+    it("re-evaluates and updates error when field with existing error is still invalid", () => {
+      const form = simulateUseForm(
+        { username: "", email: "", password: "" },
+        (values) => {
+          const result: FormErrors<TestFormData> = {};
+          if (!values.username) result.username = "Username required";
+          else if (values.username.length < 3)
+            result.username = "Username too short";
+          if (!values.email) result.email = "Email required";
+          if (!values.password) result.password = "Password required";
+          return result;
+        },
+      );
+
+      form.validate();
+      expect(form.errors.username).toBe("Username required");
+
+      form.setField("username", "ab");
+
+      expect(form.errors.username).toBe("Username too short");
+    });
+
+    it("does not re-validate pristine fields with no existing error", () => {
+      const form = simulateUseForm(
+        { username: "", email: "valid@test.com", password: "secret" },
+        createMockValidate({}),
+      );
+
+      form.setField("email", "changed@test.com");
+
+      expect(form.errors.email).toBeUndefined();
+      expect(form.errors.username).toBeUndefined();
     });
   });
 
@@ -198,6 +265,70 @@ describe("useForm", () => {
       expect(form.errors.username).toBeDefined();
       expect(form.errors.email).toBeDefined();
       expect(form.errors.password).toBeDefined();
+    });
+  });
+
+  describe("validateFields", () => {
+    it("returns true when none of the listed fields has an error", () => {
+      const form = simulateUseForm(
+        { username: "valid", email: "valid@test.com", password: "" },
+        createMockValidate({}),
+      );
+
+      const isValid = form.validateFields(["username", "email"]);
+
+      expect(isValid).toBe(true);
+    });
+
+    it("marks listed fields as touched", () => {
+      const form = simulateUseForm(
+        { username: "valid", email: "valid@test.com", password: "" },
+        createMockValidate({}),
+      );
+
+      form.validateFields(["username", "email"]);
+
+      expect(form.touched.username).toBe(true);
+      expect(form.touched.email).toBe(true);
+      expect(form.touched.password).toBeUndefined();
+    });
+
+    it("returns true when only unlisted fields have errors", () => {
+      const form = simulateUseForm(
+        { username: "valid", email: "valid@test.com", password: "" },
+        createMockValidate({}),
+      );
+
+      const isValid = form.validateFields(["username", "email"]);
+
+      expect(isValid).toBe(true);
+      expect(form.errors.password).toBe("Password required");
+    });
+
+    it("returns false when a listed field has an error", () => {
+      const form = simulateUseForm(
+        { username: "", email: "valid@test.com", password: "secret" },
+        createMockValidate({}),
+      );
+
+      const isValid = form.validateFields(["username"]);
+
+      expect(isValid).toBe(false);
+      expect(form.touched.username).toBe(true);
+      expect(form.errors.username).toBe("Username required");
+    });
+
+    it("populates full errors state including fields outside the list", () => {
+      const form = simulateUseForm(
+        { username: "", email: "", password: "" },
+        createMockValidate({}),
+      );
+
+      form.validateFields(["username"]);
+
+      expect(form.errors.username).toBe("Username required");
+      expect(form.errors.email).toBe("Email required");
+      expect(form.errors.password).toBe("Password required");
     });
   });
 

@@ -673,24 +673,33 @@ Single component for empty tables, not-found pages, and permission-denied screen
 
 Use for: empty DataTable results (`variant="no-results"`), 404 pages (`variant="not-found"`), permission denied (`variant="permission-denied"`).
 
-### useForm Hook API (`src/hooks/useForm.js`)
+### useForm Hook API (`src/hooks/useForm.ts`)
 
-All form pages (Login, Profile, ProjectForm, DefectForm, TestPlanForm) must use this hook. ~40 lines, no schema validator, no field-array support.
+All form pages (Login, Profile, ProjectForm, DefectForm, TestPlanForm) must use this hook. ~60 lines, no schema validator, no field-array support.
 
-```js
+```ts
 const {
   values, // current form values object
-  errors, // { fieldName: "Error message" } — populated by validate()
+  errors, // { fieldName: "Error message" } — populated by validate() / validateFields()
   touched, // { fieldName: true } — tracks which fields have been interacted with
-  setField, // (name, value) => void
+  setField, // (name, value) => void — auto-clears/updates error for that field if one exists
   setFieldTouched, // (name) => void — call on blur
   validate, // () => boolean — runs validate function, returns true if valid
+  validateFields, // (fields) => boolean — validates listed fields, marks them touched, returns true if none have errors
   reset, // (newValues?) => void — reset to initialValues or provided values
   handleSubmit, // (onValid) => (e) => void — prevents default, validates, calls onValid(values)
 } = useForm(initialValues, validateFn);
 
 // validateFn signature:
 // (values) => { fieldName: "Error message", ... } — return empty object if valid
+```
+
+**`setField` auto-clear:** When `setField(name, value)` is called and `errors[name]` already has a value, the hook re-runs `validateFn` against the updated values and updates or clears `errors[name]`. Fields with no existing error are not re-validated on keystroke.
+
+**Step validation pattern:** Wizard step `validate` closures should use `validateFields` instead of manually calling `validate()` + `setFieldTouched()`:
+
+```ts
+validate: () => form.validateFields(["name", "code", "description", "status"])
 ```
 
 ---

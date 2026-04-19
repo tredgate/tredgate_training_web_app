@@ -9,6 +9,7 @@ export interface UseFormReturn<T> {
   setField: <K extends keyof T>(name: K, value: T[K]) => void;
   setFieldTouched: (name: keyof T) => void;
   validate: () => boolean;
+  validateFields: (fields: Array<keyof T>) => boolean;
   reset: (newValues?: T) => void;
   handleSubmit: (onValid: (values: T) => void) => (e: FormEvent) => void;
 }
@@ -22,8 +23,20 @@ export function useForm<T extends Record<string, unknown>>(
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
 
   const setField = useCallback(<K extends keyof T>(name: K, value: T[K]) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
-  }, []);
+    setValues((previousValues) => {
+      const updatedValues = { ...previousValues, [name]: value };
+      setErrors((previousErrors) => {
+        if (previousErrors[name] === undefined) return previousErrors;
+        const validationResult = validateFn(updatedValues);
+        if (validationResult[name]) {
+          return { ...previousErrors, [name]: validationResult[name] };
+        }
+        const { [name]: _, ...remainingErrors } = previousErrors;
+        return remainingErrors as FormErrors<T>;
+      });
+      return updatedValues;
+    });
+  }, [validateFn]);
 
   const setFieldTouched = useCallback((name: keyof T) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
@@ -34,6 +47,22 @@ export function useForm<T extends Record<string, unknown>>(
     setErrors(result);
     return Object.keys(result).length === 0;
   }, [values, validateFn]);
+
+  const validateFields = useCallback(
+    (fields: Array<keyof T>): boolean => {
+      const result = validateFn(values);
+      setErrors(result);
+      setTouched((previousTouched) => {
+        const updatedTouched = { ...previousTouched };
+        for (const field of fields) {
+          updatedTouched[field] = true;
+        }
+        return updatedTouched;
+      });
+      return fields.every((field) => result[field] === undefined);
+    },
+    [values, validateFn],
+  );
 
   const reset = useCallback(
     (newValues?: T) => {
@@ -69,6 +98,7 @@ export function useForm<T extends Record<string, unknown>>(
     setField,
     setFieldTouched,
     validate,
+    validateFields,
     reset,
     handleSubmit,
   };

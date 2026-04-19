@@ -96,6 +96,7 @@ export const TEST_IDS = {
     selectLead: "project-form-select-lead",
     selectMembers: "project-form-select-members",
     btnAddEnv: "project-form-btn-add-env",
+    envsError: "project-form-envs-error",
   },
   defectList: {
     page: "defect-list-page",
@@ -152,6 +153,7 @@ export const TEST_IDS = {
     inputDescription: "testplan-form-input-description",
     selectAssignee: "testplan-form-select-assignee",
     btnAddCase: "testplan-form-btn-add-case",
+    casesError: "testplan-form-cases-error",
   },
   testrunExecution: {
     page: "testrun-execution-page",
@@ -304,6 +306,18 @@ export const testplanFormStepRow = (
   caseIndex: number,
   stepIndex: number,
 ): string => `testplan-form-case-${caseIndex}-step-${stepIndex}`;
+
+// ─── TestPlanForm validation error builders ───────────────────────────
+export const testplanFormCaseStepsError = (caseIndex: number): string =>
+  `testplan-form-case-${caseIndex}-steps-error`;
+export const testplanFormStepActionError = (
+  caseIndex: number,
+  stepIndex: number,
+): string => `testplan-form-case-${caseIndex}-step-${stepIndex}-action-error`;
+export const testplanFormStepExpectedError = (
+  caseIndex: number,
+  stepIndex: number,
+): string => `testplan-form-case-${caseIndex}-step-${stepIndex}-expected-error`;
 
 // ─── TestRun Execution builders ───────────────────────────────────────
 export const testrunStepBtn = (
