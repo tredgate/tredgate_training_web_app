@@ -52,7 +52,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T33  | Implement Tredgate Favicon                       | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | 03936a7 | Replace default Vite favicon with branded SVG                   |
 | T34  | Bug: Unstyled Inputs in Test Plan Wizard         | ✅ done    | T12                | 2026-04-19 | 2026-04-19 | 58a1e57 | Preconditions + Step Action/Expected use non-existent CSS class |
 | T35  | Validation Docs & Agent Warning                  | ✅ done    | T37, T32           | 2026-04-19 | 2026-04-19 | ff6e867 | Document useForm API + dynamic-rows pattern for future agents   |
-| T36  | Implement Tredgate Logos                         | ⬜ pending | T2                 | —          | —          | —       | Replace Shield icon with SVG logos in Sidebar + Login           |
+| T36  | Implement Tredgate Logos                         | ✅ done    | T2                 | 2026-04-19 | 2026-04-19 | 97bc60d | Replace Shield icon with SVG logos in Sidebar + Login           |
 | T37  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
 | T38  | useForm: Clear Validation Errors on Field Change | ✅ done    | T37                | —          | 2026-04-19 | f81a788 | Folded into T37                                                 |
 

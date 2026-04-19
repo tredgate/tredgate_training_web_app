@@ -12,7 +12,6 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  Shield,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Role } from "../../data/entities";
@@ -108,20 +107,18 @@ export default function Sidebar() {
         collapsed ? "w-16" : "w-60"
       }`}
     >
-      <div className="flex items-center gap-2 px-4 py-5 border-b border-white/10">
-        <Shield className="text-neon-purple shrink-0" size={24} />
-        {!collapsed && (
-          <span
-            data-testid={TEST_IDS.sidebar.logo}
-            className="text-lg font-bold text-white truncate"
-          >
-            {t.app.name}
-          </span>
-        )}
-        {collapsed && (
-          <span data-testid={TEST_IDS.sidebar.logo} className="sr-only">
-            TQH
-          </span>
+      <div
+        data-testid={TEST_IDS.sidebar.logo}
+        className="flex items-center px-4 py-5 border-b border-white/10"
+      >
+        {collapsed ? (
+          <span className="sr-only">{t.app.name}</span>
+        ) : (
+          <img
+            src="/tredgate-logo-white.svg"
+            alt={t.app.name}
+            className="h-7 w-auto"
+          />
         )}
       </div>
 

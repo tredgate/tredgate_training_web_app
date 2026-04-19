@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { Shield } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm, type FormErrors } from "../../hooks/useForm";
 import { TEST_IDS } from "../../shared/testIds";
@@ -96,7 +95,11 @@ export default function Login() {
     >
       <div className="glass p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <Shield className="text-neon-purple mb-3" size={48} />
+          <img
+            src="/tredgate-logo-white.svg"
+            alt={t.app.name}
+            className="w-48 h-auto mb-3"
+          />
           <h1 className="text-2xl font-bold text-white">{t.login.appTitle}</h1>
           <p className="text-gray-400 text-sm mt-1">{t.login.tagline}</p>
         </div>
