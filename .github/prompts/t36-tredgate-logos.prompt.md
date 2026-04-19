@@ -1,4 +1,4 @@
-# T32 — Implement Tredgate Logos
+# T36 — Implement Tredgate Logos
 
 **Agent:** `@ui`  
 **Depends on:** T2 ✅ (Sidebar, Login exist)

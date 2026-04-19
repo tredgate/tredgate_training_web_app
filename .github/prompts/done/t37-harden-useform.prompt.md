@@ -4,7 +4,7 @@ agent: logic
 description: "Harden useForm — setField clears errors + validateFields(fields) helper; migrate all forms"
 ---
 
-# T34 — Harden `useForm` to Prevent Recurring Validation Bugs
+# T37 — Harden `useForm` to Prevent Recurring Validation Bugs
 
 ## Background — why this exists
 

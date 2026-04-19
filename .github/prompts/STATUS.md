@@ -48,13 +48,13 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T29  | Bug: Login Page Empty Fields — No Validation     | ✅ done    | T2                 | 2026-04-19 | 2026-04-19 | 9bcc69b | useForm.handleSubmit now marks all fields touched               |
 | T30  | Audit data-testid on Validation Error Elements   | ⬜ pending | T29                | —          | —          | —       | Step 1: analysis of all pages, Step 2: fix missing test IDs     |
 | T31  | Select Empty-State Mismatch — App-Wide Audit     | ✅ done    | T7, T10            | 2026-04-19 | 2026-04-19 | 8f942e6 | Select auto-renders placeholder when value unmatched            |
-| T34  | Bug: Unstyled Inputs in Test Plan Wizard          | ✅ done    | T12                | 2026-04-19 | 2026-04-19 | 58a1e57 | Preconditions + Step Action/Expected use non-existent CSS class |
-| T32  | Implement Tredgate Logos                          | ⬜ pending | T2                 | —          | —          | —       | Replace Shield icon with SVG logos in Sidebar + Login           |
-| T33  | Implement Tredgate Favicon                        | ⬜ pending | —                  | —          | —          | —       | Replace default Vite favicon with branded SVG                   |
-| T32  | Dynamic Row Validation Errors (Project/TestPlan) | ✅ done    | T34                | 2026-04-19 | 2026-04-19 | f81a788 | Env rows + test case/step rows: add error state, render inline  |
-| T33  | useForm: Clear Validation Errors on Field Change | ✅ done    | T34                | —          | 2026-04-19 | f81a788 | Folded into T34                                                 |
-| T34  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
-| T35  | Validation Docs & Agent Warning                  | ✅ done    | T34, T32           | 2026-04-19 | 2026-04-19 | ff6e867 | Document useForm API + dynamic-rows pattern for future agents   |
+| T32  | Dynamic Row Validation Errors (Project/TestPlan) | ✅ done    | T37                | 2026-04-19 | 2026-04-19 | f81a788 | Env rows + test case/step rows: add error state, render inline  |
+| T33  | Implement Tredgate Favicon                       | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | 03936a7 | Replace default Vite favicon with branded SVG                   |
+| T34  | Bug: Unstyled Inputs in Test Plan Wizard         | ✅ done    | T12                | 2026-04-19 | 2026-04-19 | 58a1e57 | Preconditions + Step Action/Expected use non-existent CSS class |
+| T35  | Validation Docs & Agent Warning                  | ✅ done    | T37, T32           | 2026-04-19 | 2026-04-19 | ff6e867 | Document useForm API + dynamic-rows pattern for future agents   |
+| T36  | Implement Tredgate Logos                         | ⬜ pending | T2                 | —          | —          | —       | Replace Shield icon with SVG logos in Sidebar + Login           |
+| T37  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
+| T38  | useForm: Clear Validation Errors on Field Change | ✅ done    | T37                | —          | 2026-04-19 | f81a788 | Folded into T37                                                 |
 
 ## Conventions
 

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <!-- Cyan/Teal dot -->
-  <circle cx="12" cy="24" r="6" fill="#00ACC1"/>
-  <!-- Red dot -->
-  <circle cx="24" cy="24" r="6" fill="#E53935"/>
-  <!-- Orange dot -->
-  <circle cx="36" cy="24" r="6" fill="#FFB300"/>
-</svg>
