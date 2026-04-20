@@ -686,7 +686,10 @@ export default function TestPlanForm() {
             </h3>
             <div className="space-y-3">
               {testCases.map((tc, idx) => (
-                <div key={`review-case-${idx}`} className="bg-white/5 p-3 rounded-lg text-sm">
+                <div
+                  key={`review-case-${idx}`}
+                  className="bg-white/5 p-3 rounded-lg text-sm"
+                >
                   <p
                     className="font-medium text-white"
                     data-testid={testplanFormReviewCaseName(idx)}

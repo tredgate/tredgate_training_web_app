@@ -198,7 +198,10 @@ export default function ProjectForm() {
       validate: () =>
         form.validateFields(["name", "code", "description", "status"]),
       content: (
-        <div data-testid={TEST_IDS.projectForm.step1} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.projectForm.step1}
+          className="space-y-4 py-4"
+        >
           <TextInput
             data-testid={TEST_IDS.projectForm.inputName}
             label={t.projectForm.labelProjectName}
@@ -255,7 +258,10 @@ export default function ProjectForm() {
       label: t.projectForm.stepTeamAssignment,
       validate: () => form.validateFields(["leadId"]),
       content: (
-        <div data-testid={TEST_IDS.projectForm.step2} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.projectForm.step2}
+          className="space-y-4 py-4"
+        >
           <Select
             data-testid={TEST_IDS.projectForm.selectLead}
             label={t.projectForm.labelQaLead}
@@ -289,7 +295,10 @@ export default function ProjectForm() {
       label: t.projectForm.stepEnvironments,
       validate: validateStep3,
       content: (
-        <div data-testid={TEST_IDS.projectForm.step3} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.projectForm.step3}
+          className="space-y-4 py-4"
+        >
           {envListError && (
             <p
               data-testid={TEST_IDS.projectForm.envsError}
@@ -385,7 +394,10 @@ export default function ProjectForm() {
     {
       label: t.common.review,
       content: (
-        <div data-testid={TEST_IDS.projectForm.step4} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.projectForm.step4}
+          className="space-y-4 py-4"
+        >
           <div className="glass p-4 rounded-lg">
             <h3
               data-testid={TEST_IDS.projectForm.headingReviewDetails}
@@ -511,7 +523,10 @@ export default function ProjectForm() {
             ) : (
               <div className="space-y-2">
                 {environments.map((env, idx) => (
-                  <div key={`env-review-${idx}`} className="flex justify-between text-sm">
+                  <div
+                    key={`env-review-${idx}`}
+                    className="flex justify-between text-sm"
+                  >
                     <span
                       data-testid={projectFormReviewEnvName(idx)}
                       className="text-gray-400"

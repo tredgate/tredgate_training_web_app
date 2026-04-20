@@ -549,7 +549,10 @@ export default function TestPlanDetail() {
               </p>
               <div className="space-y-2">
                 {resultsModal.run.results.map((result, idx) => (
-                  <div key={`result-${result.testCaseId}`} className="bg-white/5 p-3 rounded-lg text-sm">
+                  <div
+                    key={`result-${result.testCaseId}`}
+                    className="bg-white/5 p-3 rounded-lg text-sm"
+                  >
                     <div className="flex items-center justify-between">
                       <span
                         className="text-gray-300"
