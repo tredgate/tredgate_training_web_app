@@ -58,6 +58,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T38  | useForm: Clear Validation Errors on Field Change | ✅ done    | T37                | —          | 2026-04-19 | f81a788 | Folded into T37                                                 |
 | T40  | Bug: Duplicate data-testid in Wizard Forms       | ⬜ pending | T39                | —          | —          | —       | Same testid across steps → Playwright races; scope per step     |
 | T41  | Bug: Duplicate React Keys Across Pages           | ⬜ pending | T9–T14             | —          | —          | —       | "same key `2`" warnings → stale renders + Playwright crashes    |
+| T42  | Bug: DataTable Rows Use Entity ID, Not Row Index | ⬜ pending | T3                 | —          | —          | —       | data-testid should use visible row index, not entity ID         |
 
 ## Conventions
 
