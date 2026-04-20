@@ -57,7 +57,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T37  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms    |
 | T38  | useForm: Clear Validation Errors on Field Change | ✅ done    | T37                | —          | 2026-04-19 | f81a788 | Folded into T37                                                  |
 | T40  | Bug: Duplicate data-testid in Wizard Forms       | ✅ done    | T39                | 2026-04-20 | 2026-04-20 | 2e46cc4 | Register wizard step testids in TEST_IDS; remove all raw strings |
-| T41  | Bug: Duplicate React Keys Across Pages           | 🟡 in-progress | T9–T14          | 2026-04-20 | —          | —       | Analysis complete; fix phase pending human confirmation            |
+| T41  | Bug: Duplicate React Keys Across Pages           | ✅ done    | T9–T14             | 2026-04-20 | 2026-04-20 | 896a995 | ActivityTimeline key collision fixed; all dynamic-list keys hardened |
 | T42  | Bug: DataTable Rows Use Entity ID, Not Row Index | ⬜ pending | T3                 | —          | —          | —       | data-testid should use visible row index, not entity ID          |
 
 ## Conventions
