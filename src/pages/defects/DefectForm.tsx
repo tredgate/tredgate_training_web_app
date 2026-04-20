@@ -106,9 +106,9 @@ export default function DefectForm() {
     ? projects.find((p) => p.id === form.values.projectId)
     : null;
 
-  // Get project members for assignee select
+  // Get project members for assignee select (deduplicate: leadId may also appear in memberIds)
   const projectMembers = selectedProject
-    ? [selectedProject.leadId, ...selectedProject.memberIds]
+    ? [...new Set([selectedProject.leadId, ...selectedProject.memberIds])]
         .map((uid) => users.find((u) => u.id === uid))
         .filter((u) => u !== undefined)
     : [];

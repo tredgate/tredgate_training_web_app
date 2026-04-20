@@ -76,7 +76,7 @@ export default function DefectDetail() {
   const reporter = userMap.get(defect.reporterId);
   const assignee = defect.assigneeId ? userMap.get(defect.assigneeId) : null;
   const projectMembers = project
-    ? [project.leadId, ...project.memberIds]
+    ? [...new Set([project.leadId, ...project.memberIds])]
         .map((uid) => userMap.get(uid))
         .filter((u) => u !== undefined)
     : [];
