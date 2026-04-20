@@ -299,7 +299,7 @@ export default function TestRunExecution() {
 
               return (
                 <div
-                  key={stepIdx}
+                  key={`step-${stepIdx}`}
                   className={`p-4 rounded-lg border ${
                     isCurrentStep && !isCompleted
                       ? "border-neon-purple bg-neon-purple/10"

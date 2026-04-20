@@ -309,7 +309,7 @@ export default function ProjectForm() {
           ) : (
             environments.map((env, idx) => (
               <div
-                key={idx}
+                key={`env-${idx}`}
                 data-testid={projectFormEnvRow(idx)}
                 className="glass p-4 rounded-lg"
               >
@@ -511,7 +511,7 @@ export default function ProjectForm() {
             ) : (
               <div className="space-y-2">
                 {environments.map((env, idx) => (
-                  <div key={idx} className="flex justify-between text-sm">
+                  <div key={`env-review-${idx}`} className="flex justify-between text-sm">
                     <span
                       data-testid={projectFormReviewEnvName(idx)}
                       className="text-gray-400"

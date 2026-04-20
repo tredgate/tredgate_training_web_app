@@ -65,7 +65,7 @@ export default function ActivityTimeline({
     <div data-testid={testId} className={className}>
       {entries.map((entry, i) => (
         <div
-          key={entry.id}
+          key={`${entry.type}-${entry.id}`}
           data-testid={`${testId}-entry-${entry.id}`}
           className="flex gap-4 pb-6 relative"
         >

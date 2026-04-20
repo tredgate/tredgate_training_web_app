@@ -332,7 +332,10 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepPlanDetails,
       validate: () => form.validateFields(["name", "projectId", "description"]),
       content: (
-        <div data-testid={TEST_IDS.testplanForm.step1} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.testplanForm.step1}
+          className="space-y-4 py-4"
+        >
           <TextInput
             data-testid={TEST_IDS.testplanForm.inputName}
             label={t.testPlanForm.labelName}
@@ -393,7 +396,10 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepTestCases,
       validate: validateStep2,
       content: (
-        <div data-testid={TEST_IDS.testplanForm.step2} className="space-y-4 py-4">
+        <div
+          data-testid={TEST_IDS.testplanForm.step2}
+          className="space-y-4 py-4"
+        >
           <button
             type="button"
             onClick={handleAddTestCase}
@@ -423,7 +429,7 @@ export default function TestPlanForm() {
           ) : (
             testCases.map((testCase, caseIdx) => (
               <div
-                key={caseIdx}
+                key={`case-${caseIdx}`}
                 data-testid={testplanFormCaseRow(caseIdx)}
                 className="glass p-4 rounded-lg space-y-3"
               >
@@ -507,7 +513,7 @@ export default function TestPlanForm() {
                       <div className="space-y-2">
                         {testCase.steps.map((step, stepIdx) => (
                           <div
-                            key={stepIdx}
+                            key={`step-${caseIdx}-${stepIdx}`}
                             data-testid={testplanFormStepRow(caseIdx, stepIdx)}
                             className="flex gap-2"
                           >
@@ -594,7 +600,10 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepReview,
       validate: () => true,
       content: (
-        <div data-testid={TEST_IDS.testplanForm.step3} className="space-y-6 py-4">
+        <div
+          data-testid={TEST_IDS.testplanForm.step3}
+          className="space-y-6 py-4"
+        >
           <div className="glass p-6 rounded-lg">
             <h3
               className="text-lg font-semibold text-white mb-4"
@@ -677,7 +686,7 @@ export default function TestPlanForm() {
             </h3>
             <div className="space-y-3">
               {testCases.map((tc, idx) => (
-                <div key={idx} className="bg-white/5 p-3 rounded-lg text-sm">
+                <div key={`review-case-${idx}`} className="bg-white/5 p-3 rounded-lg text-sm">
                   <p
                     className="font-medium text-white"
                     data-testid={testplanFormReviewCaseName(idx)}

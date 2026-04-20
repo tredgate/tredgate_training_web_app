@@ -664,7 +664,7 @@ export default function Reports() {
                 {topReporters.length > 0 ? (
                   topReporters.map((r, idx) => (
                     <div
-                      key={idx}
+                      key={r.name}
                       className="flex justify-between items-center p-3 bg-white/5 rounded-lg"
                     >
                       <span className="text-white">{r.name}</span>
@@ -698,7 +698,7 @@ export default function Reports() {
                 {topExecutors.length > 0 ? (
                   topExecutors.map((e, idx) => (
                     <div
-                      key={idx}
+                      key={e.name}
                       className="flex justify-between items-center p-3 bg-white/5 rounded-lg"
                     >
                       <span className="text-white">{e.name}</span>
