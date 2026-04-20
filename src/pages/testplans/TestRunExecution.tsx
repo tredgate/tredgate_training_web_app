@@ -311,7 +311,10 @@ export default function TestRunExecution() {
                       <div className="flex items-center gap-2 mb-2">
                         <span
                           className="text-sm font-medium text-gray-400"
-                          data-testid={testrunStepNumber(currentCaseIndex, stepIdx)}
+                          data-testid={testrunStepNumber(
+                            currentCaseIndex,
+                            stepIdx,
+                          )}
                         >
                           Step {stepIdx + 1}
                         </span>
@@ -324,7 +327,10 @@ export default function TestRunExecution() {
                                   ? "text-red-400"
                                   : "text-yellow-400"
                             }`}
-                            data-testid={testrunStepResultStatus(currentCaseIndex, stepIdx)}
+                            data-testid={testrunStepResultStatus(
+                              currentCaseIndex,
+                              stepIdx,
+                            )}
                           >
                             [{result.status.toUpperCase()}]
                           </span>
@@ -332,25 +338,37 @@ export default function TestRunExecution() {
                       </div>
                       <p
                         className="text-white font-medium"
-                        data-testid={testrunStepActionLabel(currentCaseIndex, stepIdx)}
+                        data-testid={testrunStepActionLabel(
+                          currentCaseIndex,
+                          stepIdx,
+                        )}
                       >
                         {t.testRunExecution.labelAction}
                       </p>
                       <p
                         className="text-gray-300 text-sm ml-2"
-                        data-testid={testrunStepActionValue(currentCaseIndex, stepIdx)}
+                        data-testid={testrunStepActionValue(
+                          currentCaseIndex,
+                          stepIdx,
+                        )}
                       >
                         {step.action}
                       </p>
                       <p
                         className="text-white font-medium mt-2"
-                        data-testid={testrunStepExpectedLabel(currentCaseIndex, stepIdx)}
+                        data-testid={testrunStepExpectedLabel(
+                          currentCaseIndex,
+                          stepIdx,
+                        )}
                       >
                         {t.testRunExecution.labelExpected}
                       </p>
                       <p
                         className="text-gray-300 text-sm ml-2"
-                        data-testid={testrunStepExpectedValue(currentCaseIndex, stepIdx)}
+                        data-testid={testrunStepExpectedValue(
+                          currentCaseIndex,
+                          stepIdx,
+                        )}
                       >
                         {step.expectedResult}
                       </p>
@@ -358,13 +376,19 @@ export default function TestRunExecution() {
                         <>
                           <p
                             className="text-white font-medium mt-2"
-                            data-testid={testrunStepNoteLabel(currentCaseIndex, stepIdx)}
+                            data-testid={testrunStepNoteLabel(
+                              currentCaseIndex,
+                              stepIdx,
+                            )}
                           >
                             {t.testRunExecution.labelNote}
                           </p>
                           <p
                             className="text-gray-300 text-sm ml-2"
-                            data-testid={testrunStepNoteValue(currentCaseIndex, stepIdx)}
+                            data-testid={testrunStepNoteValue(
+                              currentCaseIndex,
+                              stepIdx,
+                            )}
                           >
                             {result.notes}
                           </p>

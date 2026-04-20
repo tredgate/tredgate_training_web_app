@@ -170,10 +170,18 @@ export default function UserDetail() {
                 size="lg"
               />
               <div>
-                <h2 className="text-2xl font-bold text-white mb-2" data-testid={TEST_IDS.userDetail.headingName}>
+                <h2
+                  className="text-2xl font-bold text-white mb-2"
+                  data-testid={TEST_IDS.userDetail.headingName}
+                >
                   {user.fullName}
                 </h2>
-                <p className="text-gray-400 mb-3" data-testid={TEST_IDS.userDetail.textEmail}>{user.email}</p>
+                <p
+                  className="text-gray-400 mb-3"
+                  data-testid={TEST_IDS.userDetail.textEmail}
+                >
+                  {user.email}
+                </p>
                 {!isEditing ? (
                   <StatusBadge
                     data-testid={`user-badge-role`}
@@ -233,7 +241,10 @@ export default function UserDetail() {
           {/* Activity Section */}
           <div data-testid={TEST_IDS.userDetail.activity} className="space-y-6">
             <div>
-              <h3 className="text-lg font-bold text-white mb-4" data-testid={TEST_IDS.userDetail.headingRecentDefects}>
+              <h3
+                className="text-lg font-bold text-white mb-4"
+                data-testid={TEST_IDS.userDetail.headingRecentDefects}
+              >
                 {t.team.sectionRecentDefects}
               </h3>
               {recentDefects.length > 0 ? (
@@ -246,10 +257,16 @@ export default function UserDetail() {
                     >
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex-1 min-w-0">
-                          <p className="text-white font-medium truncate" data-testid={userDetailDefectTitle(defect.id)}>
+                          <p
+                            className="text-white font-medium truncate"
+                            data-testid={userDetailDefectTitle(defect.id)}
+                          >
                             {defect.title}
                           </p>
-                          <p className="text-sm text-gray-400" data-testid={userDetailDefectDate(defect.id)}>
+                          <p
+                            className="text-sm text-gray-400"
+                            data-testid={userDetailDefectDate(defect.id)}
+                          >
                             {formatDate(defect.createdAt)}
                           </p>
                         </div>
@@ -263,14 +280,20 @@ export default function UserDetail() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm" data-testid={TEST_IDS.userDetail.textNoDefects}>
+                <p
+                  className="text-gray-400 text-sm"
+                  data-testid={TEST_IDS.userDetail.textNoDefects}
+                >
                   {t.team.noDefectsReported}
                 </p>
               )}
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white mb-4" data-testid={TEST_IDS.userDetail.headingRecentRuns}>
+              <h3
+                className="text-lg font-bold text-white mb-4"
+                data-testid={TEST_IDS.userDetail.headingRecentRuns}
+              >
                 {t.team.sectionRecentRuns}
               </h3>
               {recentRuns.length > 0 ? (
@@ -286,10 +309,16 @@ export default function UserDetail() {
                       >
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
-                            <p className="text-white font-medium truncate" data-testid={userDetailRunName(run.id)}>
+                            <p
+                              className="text-white font-medium truncate"
+                              data-testid={userDetailRunName(run.id)}
+                            >
                               {planName}
                             </p>
-                            <p className="text-sm text-gray-400" data-testid={userDetailRunDate(run.id)}>
+                            <p
+                              className="text-sm text-gray-400"
+                              data-testid={userDetailRunDate(run.id)}
+                            >
                               {formatDate(run.startedAt)}
                             </p>
                           </div>
@@ -308,7 +337,12 @@ export default function UserDetail() {
                   })}
                 </div>
               ) : (
-                <p className="text-gray-400 text-sm" data-testid={TEST_IDS.userDetail.textNoRuns}>{t.team.noTestRuns}</p>
+                <p
+                  className="text-gray-400 text-sm"
+                  data-testid={TEST_IDS.userDetail.textNoRuns}
+                >
+                  {t.team.noTestRuns}
+                </p>
               )}
             </div>
           </div>
@@ -321,7 +355,10 @@ export default function UserDetail() {
             data-testid={TEST_IDS.userDetail.projects}
             className="glass p-6 rounded-lg"
           >
-            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2" data-testid={TEST_IDS.userDetail.headingProjects}>
+            <h3
+              className="text-lg font-bold text-white mb-4 flex items-center gap-2"
+              data-testid={TEST_IDS.userDetail.headingProjects}
+            >
               <Users className="w-5 h-5" />
               {t.team.sectionProjects}
             </h3>
@@ -338,7 +375,10 @@ export default function UserDetail() {
                       >
                         {proj?.name}
                       </a>
-                      <span className="text-xs text-gray-400" data-testid={userDetailProjectRole(projectId)}>
+                      <span
+                        className="text-xs text-gray-400"
+                        data-testid={userDetailProjectRole(projectId)}
+                      >
                         {projRole === "lead"
                           ? t.team.roleLead
                           : t.team.roleMember}
@@ -348,7 +388,10 @@ export default function UserDetail() {
                 })}
               </ul>
             ) : (
-              <p className="text-gray-400 text-sm" data-testid={TEST_IDS.userDetail.textNoProjects}>
+              <p
+                className="text-gray-400 text-sm"
+                data-testid={TEST_IDS.userDetail.textNoProjects}
+              >
                 {t.team.noProjectsAssigned}
               </p>
             )}
@@ -362,23 +405,53 @@ export default function UserDetail() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Bug className="w-4 h-4 text-red-400" />
-                <p className="text-sm text-gray-400" data-testid={TEST_IDS.userDetail.statDefectsReportedLabel}>Defects Reported</p>
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.userDetail.statDefectsReportedLabel}
+                >
+                  Defects Reported
+                </p>
               </div>
-              <p className="text-2xl font-bold text-white" data-testid={TEST_IDS.userDetail.statDefectsReportedValue}>{defectsReported}</p>
+              <p
+                className="text-2xl font-bold text-white"
+                data-testid={TEST_IDS.userDetail.statDefectsReportedValue}
+              >
+                {defectsReported}
+              </p>
             </div>
             <div className="border-t border-white/10 pt-4">
               <div className="flex items-center gap-2 mb-2">
                 <Bug className="w-4 h-4 text-amber-400" />
-                <p className="text-sm text-gray-400" data-testid={TEST_IDS.userDetail.statDefectsAssignedLabel}>Defects Assigned</p>
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.userDetail.statDefectsAssignedLabel}
+                >
+                  Defects Assigned
+                </p>
               </div>
-              <p className="text-2xl font-bold text-white" data-testid={TEST_IDS.userDetail.statDefectsAssignedValue}>{defectsAssigned}</p>
+              <p
+                className="text-2xl font-bold text-white"
+                data-testid={TEST_IDS.userDetail.statDefectsAssignedValue}
+              >
+                {defectsAssigned}
+              </p>
             </div>
             <div className="border-t border-white/10 pt-4">
               <div className="flex items-center gap-2 mb-2">
                 <TestTube className="w-4 h-4 text-blue-400" />
-                <p className="text-sm text-gray-400" data-testid={TEST_IDS.userDetail.statRunsExecutedLabel}>Test Runs Executed</p>
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.userDetail.statRunsExecutedLabel}
+                >
+                  Test Runs Executed
+                </p>
               </div>
-              <p className="text-2xl font-bold text-white" data-testid={TEST_IDS.userDetail.statRunsExecutedValue}>{runsExecuted}</p>
+              <p
+                className="text-2xl font-bold text-white"
+                data-testid={TEST_IDS.userDetail.statRunsExecutedValue}
+              >
+                {runsExecuted}
+              </p>
             </div>
           </div>
         </div>

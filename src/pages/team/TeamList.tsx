@@ -51,9 +51,19 @@ export default function TeamList() {
       sortable: true as const,
       render: (value: any) =>
         value ? (
-          <span className="text-green-400" data-testid={TEST_IDS.teamList.textStatusActive}>Active</span>
+          <span
+            className="text-green-400"
+            data-testid={TEST_IDS.teamList.textStatusActive}
+          >
+            Active
+          </span>
         ) : (
-          <span className="text-red-400" data-testid={TEST_IDS.teamList.textStatusInactive}>Inactive</span>
+          <span
+            className="text-red-400"
+            data-testid={TEST_IDS.teamList.textStatusInactive}
+          >
+            Inactive
+          </span>
         ),
     },
   ];

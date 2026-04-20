@@ -417,13 +417,19 @@ export default function TestPlanDetail() {
                           >
                             <p
                               className="font-medium text-gray-300 mb-1"
-                              data-testid={testplanDetailStepAction(caseIdx, stepIdx)}
+                              data-testid={testplanDetailStepAction(
+                                caseIdx,
+                                stepIdx,
+                              )}
                             >
                               Step {stepIdx + 1}: {step.action}
                             </p>
                             <p
                               className="text-gray-400 text-xs"
-                              data-testid={testplanDetailStepExpected(caseIdx, stepIdx)}
+                              data-testid={testplanDetailStepExpected(
+                                caseIdx,
+                                stepIdx,
+                              )}
                             >
                               Expected: {step.expectedResult}
                             </p>

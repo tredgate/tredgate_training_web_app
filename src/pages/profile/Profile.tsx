@@ -88,7 +88,10 @@ export default function Profile() {
                 role={user.role}
                 size="lg"
               />
-              <h1 data-testid={TEST_IDS.profile.headingName} className="text-2xl font-bold text-white mt-4">
+              <h1
+                data-testid={TEST_IDS.profile.headingName}
+                className="text-2xl font-bold text-white mt-4"
+              >
                 {user.fullName}
               </h1>
             </div>
@@ -119,7 +122,10 @@ export default function Profile() {
               {/* Read-only Fields */}
               <div className="space-y-4 pt-4 border-t border-white/10">
                 <div>
-                  <label data-testid={TEST_IDS.profile.labelRole} className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    data-testid={TEST_IDS.profile.labelRole}
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     {t.profile.labelRole}
                   </label>
                   <StatusBadge
@@ -130,10 +136,16 @@ export default function Profile() {
                 </div>
 
                 <div>
-                  <label data-testid={TEST_IDS.profile.labelUsername} className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    data-testid={TEST_IDS.profile.labelUsername}
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     {t.profile.labelUsername}
                   </label>
-                  <div data-testid={TEST_IDS.profile.textUsername} className="px-4 py-2 bg-white/5 rounded-lg text-white">
+                  <div
+                    data-testid={TEST_IDS.profile.textUsername}
+                    className="px-4 py-2 bg-white/5 rounded-lg text-white"
+                  >
                     {user.username}
                   </div>
                 </div>
@@ -160,53 +172,86 @@ export default function Profile() {
             data-testid={TEST_IDS.profile.activity}
             className="glass rounded-lg p-8"
           >
-            <h2 data-testid={TEST_IDS.profile.headingActivity} className="text-2xl font-bold text-white mb-6">
+            <h2
+              data-testid={TEST_IDS.profile.headingActivity}
+              className="text-2xl font-bold text-white mb-6"
+            >
               {t.profile.sectionMyActivity}
             </h2>
 
             <div className="space-y-4">
               {/* My Defects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p data-testid={TEST_IDS.profile.textMyDefectsLabel} className="text-gray-300 text-sm mb-1">
+                <p
+                  data-testid={TEST_IDS.profile.textMyDefectsLabel}
+                  className="text-gray-300 text-sm mb-1"
+                >
                   {t.profile.statMyDefects}
                 </p>
-                <p data-testid={TEST_IDS.profile.textMyDefectsValue} className="text-white text-3xl font-bold">
+                <p
+                  data-testid={TEST_IDS.profile.textMyDefectsValue}
+                  className="text-white text-3xl font-bold"
+                >
                   {myReportedDefects.length}
                 </p>
-                <p data-testid={TEST_IDS.profile.textMyDefectsSubtitle} className="text-gray-400 text-xs mt-1">
+                <p
+                  data-testid={TEST_IDS.profile.textMyDefectsSubtitle}
+                  className="text-gray-400 text-xs mt-1"
+                >
                   {t.profile.statReported}
                 </p>
               </div>
 
               {/* Assigned to Me */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p data-testid={TEST_IDS.profile.textAssignedLabel} className="text-gray-300 text-sm mb-1">
+                <p
+                  data-testid={TEST_IDS.profile.textAssignedLabel}
+                  className="text-gray-300 text-sm mb-1"
+                >
                   {t.profile.statAssignedToMe}
                 </p>
-                <p data-testid={TEST_IDS.profile.textAssignedValue} className="text-white text-3xl font-bold">
+                <p
+                  data-testid={TEST_IDS.profile.textAssignedValue}
+                  className="text-white text-3xl font-bold"
+                >
                   {assignedToMe.length}
                 </p>
-                <p data-testid={TEST_IDS.profile.textAssignedSubtitle} className="text-gray-400 text-xs mt-1">
+                <p
+                  data-testid={TEST_IDS.profile.textAssignedSubtitle}
+                  className="text-gray-400 text-xs mt-1"
+                >
                   {t.profile.statDefects}
                 </p>
               </div>
 
               {/* My Test Runs */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p data-testid={TEST_IDS.profile.textTestRunsLabel} className="text-gray-300 text-sm mb-1">
+                <p
+                  data-testid={TEST_IDS.profile.textTestRunsLabel}
+                  className="text-gray-300 text-sm mb-1"
+                >
                   {t.profile.statMyTestRuns}
                 </p>
-                <p data-testid={TEST_IDS.profile.textTestRunsValue} className="text-white text-3xl font-bold">
+                <p
+                  data-testid={TEST_IDS.profile.textTestRunsValue}
+                  className="text-white text-3xl font-bold"
+                >
                   {myTestRuns.length}
                 </p>
-                <p data-testid={TEST_IDS.profile.textTestRunsSubtitle} className="text-gray-400 text-xs mt-1">
+                <p
+                  data-testid={TEST_IDS.profile.textTestRunsSubtitle}
+                  className="text-gray-400 text-xs mt-1"
+                >
                   {t.profile.statExecuted}
                 </p>
               </div>
 
               {/* My Projects */}
               <div className="p-4 bg-white/5 rounded-lg">
-                <p data-testid={TEST_IDS.profile.textProjectsLabel} className="text-gray-300 text-sm mb-1">
+                <p
+                  data-testid={TEST_IDS.profile.textProjectsLabel}
+                  className="text-gray-300 text-sm mb-1"
+                >
                   {t.profile.statMyProjects}
                 </p>
                 {myProjects.length > 0 ? (
@@ -218,7 +263,10 @@ export default function Profile() {
                     ))}
                   </ul>
                 ) : (
-                  <p data-testid={TEST_IDS.profile.textNoProjects} className="text-gray-400 text-sm mt-2">
+                  <p
+                    data-testid={TEST_IDS.profile.textNoProjects}
+                    className="text-gray-400 text-sm mt-2"
+                  >
                     {t.profile.noProjects}
                   </p>
                 )}

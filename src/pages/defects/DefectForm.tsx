@@ -282,7 +282,10 @@ export default function DefectForm() {
             />
           )}
           {!selectedProject && (
-            <p className="text-sm text-gray-500" data-testid={TEST_IDS.defectForm.textSelectProjectForEnv}>
+            <p
+              className="text-sm text-gray-500"
+              data-testid={TEST_IDS.defectForm.textSelectProjectForEnv}
+            >
               Select a project on the previous step to see environment options
             </p>
           )}
@@ -313,7 +316,10 @@ export default function DefectForm() {
               data-testid={TEST_IDS.defectForm.selectAssignee}
             />
           ) : (
-            <p className="text-sm text-gray-500" data-testid={TEST_IDS.defectForm.textSelectProjectForAssign}>
+            <p
+              className="text-sm text-gray-500"
+              data-testid={TEST_IDS.defectForm.textSelectProjectForAssign}
+            >
               Select a project to assign team members
             </p>
           )}
@@ -336,7 +342,10 @@ export default function DefectForm() {
               data-testid={TEST_IDS.defectForm.selectTestCases}
             />
           ) : selectedProject ? (
-            <p className="text-sm text-gray-500" data-testid={TEST_IDS.defectForm.textNoTestCases}>
+            <p
+              className="text-sm text-gray-500"
+              data-testid={TEST_IDS.defectForm.textNoTestCases}
+            >
               No test cases found in this project's test plans
             </p>
           ) : null}
@@ -349,24 +358,41 @@ export default function DefectForm() {
         <div className="space-y-6 p-6">
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectForm.labelReviewTitle}>
+              <p
+                className="text-xs text-gray-400 mb-1"
+                data-testid={TEST_IDS.defectForm.labelReviewTitle}
+              >
                 {t.defectForm.reviewLabelTitle}
               </p>
-              <p className="text-white font-medium" data-testid={TEST_IDS.defectForm.textReviewTitle}>{form.values.title}</p>
+              <p
+                className="text-white font-medium"
+                data-testid={TEST_IDS.defectForm.textReviewTitle}
+              >
+                {form.values.title}
+              </p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectForm.labelReviewProject}>
+              <p
+                className="text-xs text-gray-400 mb-1"
+                data-testid={TEST_IDS.defectForm.labelReviewProject}
+              >
                 {t.defectForm.reviewLabelProject}
               </p>
-              <p className="text-white font-medium" data-testid={TEST_IDS.defectForm.textReviewProject}>
+              <p
+                className="text-white font-medium"
+                data-testid={TEST_IDS.defectForm.textReviewProject}
+              >
                 {selectedProject?.name || t.defectForm.reviewNotSelected}
               </p>
             </div>
 
             <div className="flex gap-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectForm.labelReviewSeverity}>
+                <p
+                  className="text-xs text-gray-400 mb-2"
+                  data-testid={TEST_IDS.defectForm.labelReviewSeverity}
+                >
                   {t.defectForm.reviewLabelSeverity}
                 </p>
                 <StatusBadge
@@ -376,7 +402,10 @@ export default function DefectForm() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectForm.labelReviewPriority}>
+                <p
+                  className="text-xs text-gray-400 mb-2"
+                  data-testid={TEST_IDS.defectForm.labelReviewPriority}
+                >
                   {t.defectForm.reviewLabelPriority}
                 </p>
                 <StatusBadge
@@ -388,27 +417,47 @@ export default function DefectForm() {
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectForm.labelReviewDescription}>
+              <p
+                className="text-xs text-gray-400 mb-2"
+                data-testid={TEST_IDS.defectForm.labelReviewDescription}
+              >
                 {t.defectForm.reviewLabelDescription}
               </p>
-              <p className="text-gray-300 text-sm" data-testid={TEST_IDS.defectForm.textReviewDescription}>{form.values.description}</p>
+              <p
+                className="text-gray-300 text-sm"
+                data-testid={TEST_IDS.defectForm.textReviewDescription}
+              >
+                {form.values.description}
+              </p>
             </div>
 
             <div>
-              <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectForm.labelReviewSteps}>
+              <p
+                className="text-xs text-gray-400 mb-2"
+                data-testid={TEST_IDS.defectForm.labelReviewSteps}
+              >
                 {t.defectForm.reviewLabelSteps}
               </p>
-              <pre className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto" data-testid={TEST_IDS.defectForm.textReviewSteps}>
+              <pre
+                className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto"
+                data-testid={TEST_IDS.defectForm.textReviewSteps}
+              >
                 {form.values.stepsToReproduce}
               </pre>
             </div>
 
             {form.values.environmentId && (
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectForm.labelReviewEnvironment}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectForm.labelReviewEnvironment}
+                >
                   {t.defectForm.reviewLabelEnvironment}
                 </p>
-                <p className="text-white font-medium" data-testid={TEST_IDS.defectForm.textReviewEnvironment}>
+                <p
+                  className="text-white font-medium"
+                  data-testid={TEST_IDS.defectForm.textReviewEnvironment}
+                >
                   {selectedProject?.environments.find(
                     (e) => e.id === form.values.environmentId,
                   )?.name || t.common.unknown}
@@ -418,7 +467,10 @@ export default function DefectForm() {
 
             {form.values.assigneeId && (
               <div>
-                <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectForm.labelReviewAssignee}>
+                <p
+                  className="text-xs text-gray-400 mb-2"
+                  data-testid={TEST_IDS.defectForm.labelReviewAssignee}
+                >
                   {t.defectForm.reviewLabelAssignedTo}
                 </p>
                 {users.find((u) => u.id === form.values.assigneeId) && (
@@ -436,7 +488,12 @@ export default function DefectForm() {
                             role={assignee.role}
                             size="sm"
                           />
-                          <span className="text-white font-medium" data-testid={TEST_IDS.defectForm.textReviewAssigneeName}>
+                          <span
+                            className="text-white font-medium"
+                            data-testid={
+                              TEST_IDS.defectForm.textReviewAssigneeName
+                            }
+                          >
                             {assignee.fullName}
                           </span>
                         </>

@@ -254,7 +254,10 @@ export default function Reports() {
       {activeTab === "defect-trends" && (
         <div className="space-y-6 mt-6">
           <div className="glass rounded-lg p-6 space-y-4">
-            <h3 data-testid={TEST_IDS.reports.headingFilters} className="text-lg font-semibold text-white">
+            <h3
+              data-testid={TEST_IDS.reports.headingFilters}
+              className="text-lg font-semibold text-white"
+            >
               {t.reports.filterLabel}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -315,7 +318,10 @@ export default function Reports() {
 
           <div className="space-y-6">
             <div className="glass rounded-lg p-6">
-              <h3 data-testid={TEST_IDS.reports.headingSeverity} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.reports.headingSeverity}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.reports.tableSeverityTitle}
               </h3>
               <table
@@ -324,13 +330,22 @@ export default function Reports() {
               >
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th data-testid={TEST_IDS.reports.colSeverity} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colSeverity}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colSeverity}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colSeverityCount} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colSeverityCount}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colCount}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colSeverityPct} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colSeverityPct}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colPctOfTotal}
                     </th>
                   </tr>
@@ -354,7 +369,10 @@ export default function Reports() {
             </div>
 
             <div className="glass rounded-lg p-6">
-              <h3 data-testid={TEST_IDS.reports.headingStatus} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.reports.headingStatus}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.reports.tableStatusTitle}
               </h3>
               <table
@@ -363,13 +381,22 @@ export default function Reports() {
               >
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th data-testid={TEST_IDS.reports.colStatus} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colStatus}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colStatus}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colStatusCount} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colStatusCount}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colCount}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colStatusPct} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colStatusPct}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colPctOfTotal}
                     </th>
                   </tr>
@@ -393,7 +420,10 @@ export default function Reports() {
             </div>
 
             <div className="glass rounded-lg p-6">
-              <h3 data-testid={TEST_IDS.reports.headingProject} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.reports.headingProject}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.reports.tableProjectTitle}
               </h3>
               <table
@@ -402,19 +432,34 @@ export default function Reports() {
               >
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th data-testid={TEST_IDS.reports.colProjectName} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colProjectName}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colProject}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colProjectTotal} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colProjectTotal}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colTotal}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colProjectOpen} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colProjectOpen}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colOpen}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colProjectResolved} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colProjectResolved}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colResolved}
                     </th>
-                    <th data-testid={TEST_IDS.reports.colProjectClosed} className="text-left py-3 px-4 text-gray-300">
+                    <th
+                      data-testid={TEST_IDS.reports.colProjectClosed}
+                      className="text-left py-3 px-4 text-gray-300"
+                    >
                       {t.reports.colClosed}
                     </th>
                   </tr>
@@ -465,7 +510,10 @@ export default function Reports() {
           </div>
 
           <div className="glass rounded-lg p-6">
-            <h3 data-testid={TEST_IDS.reports.headingPlansSummary} className="text-lg font-semibold text-white mb-4">
+            <h3
+              data-testid={TEST_IDS.reports.headingPlansSummary}
+              className="text-lg font-semibold text-white mb-4"
+            >
               {t.reports.tablePlansSummaryTitle}
             </h3>
             <table
@@ -474,22 +522,40 @@ export default function Reports() {
             >
               <thead>
                 <tr className="border-b border-white/10">
-                  <th data-testid={TEST_IDS.reports.colPlanName} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanName}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colPlanName}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colPlanProject} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanProject}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colProject}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colPlanCases} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanCases}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colCases}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colPlanRuns} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanRuns}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colRuns}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colPlanLastRun} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanLastRun}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colLastRun}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colPlanPassRate} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colPlanPassRate}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colPassRate}
                   </th>
                 </tr>
@@ -516,7 +582,10 @@ export default function Reports() {
       {activeTab === "team-workload" && (
         <div className="space-y-6 mt-6">
           <div className="glass rounded-lg p-6">
-            <h3 data-testid={TEST_IDS.reports.headingWorkload} className="text-lg font-semibold text-white mb-4">
+            <h3
+              data-testid={TEST_IDS.reports.headingWorkload}
+              className="text-lg font-semibold text-white mb-4"
+            >
               {t.reports.tableWorkloadTitle}
             </h3>
             <table
@@ -525,22 +594,40 @@ export default function Reports() {
             >
               <thead>
                 <tr className="border-b border-white/10">
-                  <th data-testid={TEST_IDS.reports.colWorkloadName} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadName}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colName}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colWorkloadRole} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadRole}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colRole}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colWorkloadAssigned} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadAssigned}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colAssigned}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colWorkloadReported} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadReported}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colReported}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colWorkloadExecuted} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadExecuted}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colExecuted}
                   </th>
-                  <th data-testid={TEST_IDS.reports.colWorkloadOpenItems} className="text-left py-3 px-4 text-gray-300">
+                  <th
+                    data-testid={TEST_IDS.reports.colWorkloadOpenItems}
+                    className="text-left py-3 px-4 text-gray-300"
+                  >
                     {t.reports.colOpenItems}
                   </th>
                 </tr>
@@ -564,7 +651,10 @@ export default function Reports() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="glass rounded-lg p-6">
-              <h3 data-testid={TEST_IDS.reports.headingTopReporters} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.reports.headingTopReporters}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.reports.topReportersTitle}
               </h3>
               <div
@@ -584,13 +674,21 @@ export default function Reports() {
                     </div>
                   ))
                 ) : (
-                  <p data-testid={TEST_IDS.reports.textNoReporters} className="text-gray-400">{t.reports.noReportersYet}</p>
+                  <p
+                    data-testid={TEST_IDS.reports.textNoReporters}
+                    className="text-gray-400"
+                  >
+                    {t.reports.noReportersYet}
+                  </p>
                 )}
               </div>
             </div>
 
             <div className="glass rounded-lg p-6">
-              <h3 data-testid={TEST_IDS.reports.headingTopExecutors} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.reports.headingTopExecutors}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.reports.topExecutorsTitle}
               </h3>
               <div
@@ -610,7 +708,12 @@ export default function Reports() {
                     </div>
                   ))
                 ) : (
-                  <p data-testid={TEST_IDS.reports.textNoExecutors} className="text-gray-400">{t.reports.noExecutorsYet}</p>
+                  <p
+                    data-testid={TEST_IDS.reports.textNoExecutors}
+                    className="text-gray-400"
+                  >
+                    {t.reports.noExecutorsYet}
+                  </p>
                 )}
               </div>
             </div>

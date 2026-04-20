@@ -138,12 +138,20 @@ export default function ProjectDetail() {
         <div className="mt-6 space-y-6">
           {/* Project Info Card */}
           <div className="glass p-6 rounded-lg">
-            <h3 data-testid={TEST_IDS.projectDetail.headingProjectInfo} className="text-lg font-semibold text-white mb-4">
+            <h3
+              data-testid={TEST_IDS.projectDetail.headingProjectInfo}
+              className="text-lg font-semibold text-white mb-4"
+            >
               {t.projectDetail.sectionProjectInfo}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p data-testid={TEST_IDS.projectDetail.labelStatus} className="text-sm text-gray-400">{t.common.status}</p>
+                <p
+                  data-testid={TEST_IDS.projectDetail.labelStatus}
+                  className="text-sm text-gray-400"
+                >
+                  {t.common.status}
+                </p>
                 <StatusBadge
                   data-testid="project-detail-badge-status"
                   type="project_status"
@@ -152,7 +160,10 @@ export default function ProjectDetail() {
                 />
               </div>
               <div>
-                <p data-testid={TEST_IDS.projectDetail.labelQALead} className="text-sm text-gray-400">
+                <p
+                  data-testid={TEST_IDS.projectDetail.labelQALead}
+                  className="text-sm text-gray-400"
+                >
                   {t.projectDetail.labelQALead}
                 </p>
                 <div className="mt-2">
@@ -167,18 +178,44 @@ export default function ProjectDetail() {
                 </div>
               </div>
               <div className="col-span-2">
-                <p data-testid={TEST_IDS.projectDetail.labelDescription} className="text-sm text-gray-400">{t.common.description}</p>
-                <p data-testid={TEST_IDS.projectDetail.textDescription} className="text-white mt-1">{project.description}</p>
+                <p
+                  data-testid={TEST_IDS.projectDetail.labelDescription}
+                  className="text-sm text-gray-400"
+                >
+                  {t.common.description}
+                </p>
+                <p
+                  data-testid={TEST_IDS.projectDetail.textDescription}
+                  className="text-white mt-1"
+                >
+                  {project.description}
+                </p>
               </div>
               <div>
-                <p data-testid={TEST_IDS.projectDetail.labelCreatedAt} className="text-sm text-gray-400">{t.common.createdAt}</p>
-                <p data-testid={TEST_IDS.projectDetail.textCreatedAt} className="text-white mt-1">
+                <p
+                  data-testid={TEST_IDS.projectDetail.labelCreatedAt}
+                  className="text-sm text-gray-400"
+                >
+                  {t.common.createdAt}
+                </p>
+                <p
+                  data-testid={TEST_IDS.projectDetail.textCreatedAt}
+                  className="text-white mt-1"
+                >
                   {formatDate(project.createdAt)}
                 </p>
               </div>
               <div>
-                <p data-testid={TEST_IDS.projectDetail.labelUpdatedAt} className="text-sm text-gray-400">{t.common.updatedAt}</p>
-                <p data-testid={TEST_IDS.projectDetail.textUpdatedAt} className="text-white mt-1">
+                <p
+                  data-testid={TEST_IDS.projectDetail.labelUpdatedAt}
+                  className="text-sm text-gray-400"
+                >
+                  {t.common.updatedAt}
+                </p>
+                <p
+                  data-testid={TEST_IDS.projectDetail.textUpdatedAt}
+                  className="text-white mt-1"
+                >
                   {formatDate(project.updatedAt)}
                 </p>
               </div>
@@ -188,7 +225,10 @@ export default function ProjectDetail() {
           {/* Environments Table */}
           {project.environments.length > 0 && (
             <div className="glass p-6 rounded-lg">
-              <h3 data-testid={TEST_IDS.projectDetail.headingEnvironments} className="text-lg font-semibold text-white mb-4">
+              <h3
+                data-testid={TEST_IDS.projectDetail.headingEnvironments}
+                className="text-lg font-semibold text-white mb-4"
+              >
                 {t.projectDetail.sectionEnvironments}
               </h3>
               <table
@@ -197,10 +237,16 @@ export default function ProjectDetail() {
               >
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th data-testid={TEST_IDS.projectDetail.envHeaderName} className="text-left py-2 px-4 text-sm font-medium text-gray-400">
+                    <th
+                      data-testid={TEST_IDS.projectDetail.envHeaderName}
+                      className="text-left py-2 px-4 text-sm font-medium text-gray-400"
+                    >
                       {t.common.name}
                     </th>
-                    <th data-testid={TEST_IDS.projectDetail.envHeaderUrl} className="text-left py-2 px-4 text-sm font-medium text-gray-400">
+                    <th
+                      data-testid={TEST_IDS.projectDetail.envHeaderUrl}
+                      className="text-left py-2 px-4 text-sm font-medium text-gray-400"
+                    >
                       URL
                     </th>
                   </tr>
@@ -212,9 +258,22 @@ export default function ProjectDetail() {
                       data-testid={projectDetailEnvRow(env.id)}
                       className="border-b border-white/5 hover:bg-white/5"
                     >
-                      <td data-testid={projectDetailEnvCellName(env.id)} className="py-3 px-4 text-white">{env.name}</td>
-                      <td data-testid={projectDetailEnvCellType(env.id)} className="py-3 px-4 text-gray-400">{env.type}</td>
-                      <td data-testid={projectDetailEnvCellUrl(env.id)} className="py-3 px-4 text-blue-400 truncate">
+                      <td
+                        data-testid={projectDetailEnvCellName(env.id)}
+                        className="py-3 px-4 text-white"
+                      >
+                        {env.name}
+                      </td>
+                      <td
+                        data-testid={projectDetailEnvCellType(env.id)}
+                        className="py-3 px-4 text-gray-400"
+                      >
+                        {env.type}
+                      </td>
+                      <td
+                        data-testid={projectDetailEnvCellUrl(env.id)}
+                        className="py-3 px-4 text-blue-400 truncate"
+                      >
                         {env.url}
                       </td>
                     </tr>
@@ -298,7 +357,10 @@ export default function ProjectDetail() {
           </>
         }
       >
-        <p data-testid={TEST_IDS.projectDetail.textDeleteConfirm} className="text-gray-300">
+        <p
+          data-testid={TEST_IDS.projectDetail.textDeleteConfirm}
+          className="text-gray-300"
+        >
           {t.projectDetail.modalDeleteConfirm(project.name)}
         </p>
       </Modal>
@@ -449,7 +511,12 @@ function TeamTabContent({ members }: TeamTabContentProps) {
   return (
     <div data-testid={TEST_IDS.projectDetail.teamList} className="space-y-3">
       {members.length === 0 ? (
-        <p data-testid={TEST_IDS.projectDetail.textEmptyTeam} className="text-gray-400">{t.projectDetail.emptyTeam}</p>
+        <p
+          data-testid={TEST_IDS.projectDetail.textEmptyTeam}
+          className="text-gray-400"
+        >
+          {t.projectDetail.emptyTeam}
+        </p>
       ) : (
         members.map((member) => (
           <div
@@ -464,8 +531,18 @@ function TeamTabContent({ members }: TeamTabContentProps) {
                 role={member.role}
               />
               <div>
-                <p data-testid={projectDetailMemberName(member.id)} className="text-white font-medium">{member.fullName}</p>
-                <p data-testid={projectDetailMemberEmail(member.id)} className="text-sm text-gray-400">{member.email}</p>
+                <p
+                  data-testid={projectDetailMemberName(member.id)}
+                  className="text-white font-medium"
+                >
+                  {member.fullName}
+                </p>
+                <p
+                  data-testid={projectDetailMemberEmail(member.id)}
+                  className="text-sm text-gray-400"
+                >
+                  {member.email}
+                </p>
               </div>
             </div>
             <StatusBadge

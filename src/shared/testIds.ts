@@ -528,8 +528,7 @@ export const projectFormReviewEnvUrl = (index: number): string =>
   `project-form-review-env-url-${index}`;
 
 // ─── Login hint builders ───────────────────────────────────────────────
-export const loginHintItem = (role: string): string =>
-  `login-hint-${role}`;
+export const loginHintItem = (role: string): string => `login-hint-${role}`;
 export const loginHintRole = (role: string): string =>
   `login-hint-role-${role}`;
 export const loginHintCredentials = (role: string): string =>
@@ -606,10 +605,8 @@ export const testrunStepBtn = (
   stepIdx: number,
   verdict: "pass" | "fail" | "skip",
 ): string => `testrun-step-${caseIdx}-${stepIdx}-${verdict}`;
-export const testrunStepNumber = (
-  caseIdx: number,
-  stepIdx: number,
-): string => `testrun-step-${caseIdx}-${stepIdx}-number`;
+export const testrunStepNumber = (caseIdx: number, stepIdx: number): string =>
+  `testrun-step-${caseIdx}-${stepIdx}-number`;
 export const testrunStepResultStatus = (
   caseIdx: number,
   stepIdx: number,

@@ -211,14 +211,28 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.description}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingDescription}>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingDescription}
+            >
               {t.defectDetail.sectionDescription}
             </h3>
-            <p className="text-gray-300 mb-6" data-testid={TEST_IDS.defectDetail.textDescription}>{defect.description}</p>
-            <h4 className="text-sm font-semibold text-gray-200 mb-2" data-testid={TEST_IDS.defectDetail.headingSteps}>
+            <p
+              className="text-gray-300 mb-6"
+              data-testid={TEST_IDS.defectDetail.textDescription}
+            >
+              {defect.description}
+            </p>
+            <h4
+              className="text-sm font-semibold text-gray-200 mb-2"
+              data-testid={TEST_IDS.defectDetail.headingSteps}
+            >
               {t.defectDetail.sectionStepsToReproduce}
             </h4>
-            <pre className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto" data-testid={TEST_IDS.defectDetail.textSteps}>
+            <pre
+              className="text-sm text-gray-400 bg-black/20 p-4 rounded border border-white/5 overflow-auto"
+              data-testid={TEST_IDS.defectDetail.textSteps}
+            >
               {defect.stepsToReproduce}
             </pre>
           </div>
@@ -228,10 +242,18 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.comments}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingComments}>Comments</h3>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingComments}
+            >
+              Comments
+            </h3>
 
             {defect.comments.length === 0 ? (
-              <p className="text-gray-500 mb-6" data-testid={TEST_IDS.defectDetail.textNoComments}>
+              <p
+                className="text-gray-500 mb-6"
+                data-testid={TEST_IDS.defectDetail.textNoComments}
+              >
                 {t.defectDetail.noCommentsYet}
               </p>
             ) : (
@@ -255,15 +277,24 @@ export default function DefectDetail() {
                           />
                         )}
                         <div>
-                          <p className="text-sm font-medium text-gray-200" data-testid={defectCommentAuthor(comment.id)}>
+                          <p
+                            className="text-sm font-medium text-gray-200"
+                            data-testid={defectCommentAuthor(comment.id)}
+                          >
                             {commentUser?.fullName || t.common.unknown}
                           </p>
-                          <p className="text-xs text-gray-500" data-testid={defectCommentDate(comment.id)}>
+                          <p
+                            className="text-xs text-gray-500"
+                            data-testid={defectCommentDate(comment.id)}
+                          >
                             {formatDate(comment.createdAt)}
                           </p>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-400 ml-9" data-testid={defectCommentText(comment.id)}>
+                      <p
+                        className="text-sm text-gray-400 ml-9"
+                        data-testid={defectCommentText(comment.id)}
+                      >
                         {comment.text}
                       </p>
                     </div>
@@ -301,10 +332,18 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.cardStatus}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingStatus}>Status</h3>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingStatus}
+            >
+              Status
+            </h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelCurrentStatus}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelCurrentStatus}
+                >
                   {t.defectDetail.labelCurrentStatus}
                 </p>
                 <StatusBadge
@@ -314,7 +353,10 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelSeverity}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelSeverity}
+                >
                   {t.defectDetail.labelSeverity}
                 </p>
                 <StatusBadge
@@ -324,7 +366,10 @@ export default function DefectDetail() {
                 />
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelPriority}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelPriority}
+                >
                   {t.defectDetail.labelPriority}
                 </p>
                 <StatusBadge
@@ -341,12 +386,18 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.cardAssignment}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingAssignment}>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingAssignment}
+            >
               {t.defectDetail.sectionAssignment}
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectDetail.labelReporter}>
+                <p
+                  className="text-xs text-gray-400 mb-2"
+                  data-testid={TEST_IDS.defectDetail.labelReporter}
+                >
                   {t.defectDetail.labelReporter}
                 </p>
                 {reporter ? (
@@ -358,18 +409,27 @@ export default function DefectDetail() {
                       role={reporter.role}
                       size="sm"
                     />
-                    <span className="text-sm text-gray-300" data-testid={TEST_IDS.defectDetail.textReporterName}>
+                    <span
+                      className="text-sm text-gray-300"
+                      data-testid={TEST_IDS.defectDetail.textReporterName}
+                    >
                       {reporter.fullName}
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500" data-testid={TEST_IDS.defectDetail.textReporterUnknown}>
+                  <span
+                    className="text-sm text-gray-500"
+                    data-testid={TEST_IDS.defectDetail.textReporterUnknown}
+                  >
                     {t.common.unknown}
                   </span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-2" data-testid={TEST_IDS.defectDetail.labelAssignee}>
+                <p
+                  className="text-xs text-gray-400 mb-2"
+                  data-testid={TEST_IDS.defectDetail.labelAssignee}
+                >
                   {t.defectDetail.labelAssignee}
                 </p>
                 {assignee ? (
@@ -381,12 +441,18 @@ export default function DefectDetail() {
                       role={assignee.role}
                       size="sm"
                     />
-                    <span className="text-sm text-gray-300" data-testid={TEST_IDS.defectDetail.textAssigneeName}>
+                    <span
+                      className="text-sm text-gray-300"
+                      data-testid={TEST_IDS.defectDetail.textAssigneeName}
+                    >
                       {assignee.fullName}
                     </span>
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-500" data-testid={TEST_IDS.defectDetail.textUnassigned}>
+                  <span
+                    className="text-sm text-gray-500"
+                    data-testid={TEST_IDS.defectDetail.textUnassigned}
+                  >
                     {t.common.unassigned}
                   </span>
                 )}
@@ -399,10 +465,18 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.cardDetails}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingDetails}>Details</h3>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingDetails}
+            >
+              Details
+            </h3>
             <div className="space-y-3 text-sm">
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelProject}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelProject}
+                >
                   {t.defectDetail.labelProject}
                 </p>
                 {project ? (
@@ -414,36 +488,66 @@ export default function DefectDetail() {
                     {project.name}
                   </Link>
                 ) : (
-                  <span className="text-gray-500" data-testid={TEST_IDS.defectDetail.textProjectUnknown}>{t.common.unknown}</span>
+                  <span
+                    className="text-gray-500"
+                    data-testid={TEST_IDS.defectDetail.textProjectUnknown}
+                  >
+                    {t.common.unknown}
+                  </span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelEnvironment}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelEnvironment}
+                >
                   {t.defectDetail.labelEnvironment}
                 </p>
                 {defect.environmentId ? (
-                  <span className="text-gray-300" data-testid={TEST_IDS.defectDetail.textEnvironment}>
+                  <span
+                    className="text-gray-300"
+                    data-testid={TEST_IDS.defectDetail.textEnvironment}
+                  >
                     {project?.environments.find(
                       (e) => e.id === defect.environmentId,
                     )?.name || t.common.unknown}
                   </span>
                 ) : (
-                  <span className="text-gray-500" data-testid={TEST_IDS.defectDetail.textEnvironmentNotSpecified}>{t.common.notSpecified}</span>
+                  <span
+                    className="text-gray-500"
+                    data-testid={
+                      TEST_IDS.defectDetail.textEnvironmentNotSpecified
+                    }
+                  >
+                    {t.common.notSpecified}
+                  </span>
                 )}
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelCreated}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelCreated}
+                >
                   {t.defectDetail.labelCreated}
                 </p>
-                <span className="text-gray-300" data-testid={TEST_IDS.defectDetail.textCreated}>
+                <span
+                  className="text-gray-300"
+                  data-testid={TEST_IDS.defectDetail.textCreated}
+                >
                   {formatDate(defect.createdAt)}
                 </span>
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-1" data-testid={TEST_IDS.defectDetail.labelUpdated}>
+                <p
+                  className="text-xs text-gray-400 mb-1"
+                  data-testid={TEST_IDS.defectDetail.labelUpdated}
+                >
                   {t.defectDetail.labelUpdated}
                 </p>
-                <span className="text-gray-300" data-testid={TEST_IDS.defectDetail.textUpdated}>
+                <span
+                  className="text-gray-300"
+                  data-testid={TEST_IDS.defectDetail.textUpdated}
+                >
                   {formatDate(defect.updatedAt)}
                 </span>
               </div>
@@ -455,7 +559,12 @@ export default function DefectDetail() {
             className="glass p-6 rounded-lg"
             data-testid={TEST_IDS.defectDetail.timeline}
           >
-            <h3 className="text-lg font-semibold text-white mb-4" data-testid={TEST_IDS.defectDetail.headingHistory}>History</h3>
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.defectDetail.headingHistory}
+            >
+              History
+            </h3>
             <ActivityTimeline
               data-testid={TEST_IDS.defectDetail.timeline}
               entries={allActivities}

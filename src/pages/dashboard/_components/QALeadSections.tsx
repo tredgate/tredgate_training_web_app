@@ -23,7 +23,10 @@ export default function QALeadSections({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingUnassigned}>
+        <h2
+          className="text-lg font-semibold text-white mb-3"
+          data-testid={TEST_IDS.dashboard.headingUnassigned}
+        >
           {t.dashboard.sectionUnassignedDefects}
         </h2>
         <DataTable<Defect>
@@ -37,7 +40,10 @@ export default function QALeadSections({
         />
       </div>
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingVerification}>
+        <h2
+          className="text-lg font-semibold text-white mb-3"
+          data-testid={TEST_IDS.dashboard.headingVerification}
+        >
           {t.dashboard.sectionAwaitingVerification}
         </h2>
         <DataTable<Defect>
