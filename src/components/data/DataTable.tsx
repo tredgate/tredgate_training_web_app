@@ -266,12 +266,12 @@ export default function DataTable<T extends { id: number }>(
                 </td>
               </tr>
             ) : (
-              pageData.map((row) => {
+              pageData.map((row, rowIndex) => {
                 const rowKeyValue = String(row[keyField as keyof T]);
                 return (
                   <tr
                     key={rowKeyValue}
-                    data-testid={`${testIdPrefix}-row-${rowKeyValue}`}
+                    data-testid={`${testIdPrefix}-row-${rowIndex}`}
                     onClick={() => onRowClick && onRowClick(row)}
                     className={`border-b border-white/10 ${
                       onRowClick ? "hover:bg-white/5 cursor-pointer" : ""
@@ -280,7 +280,7 @@ export default function DataTable<T extends { id: number }>(
                     {selectable && (
                       <td className="px-4 py-3 w-10">
                         <input
-                          data-testid={`${testIdPrefix}-checkbox-row-${rowKeyValue}`}
+                          data-testid={`${testIdPrefix}-checkbox-row-${rowIndex}`}
                           type="checkbox"
                           checked={selectedIds.has(rowKeyValue)}
                           onChange={(e) =>
@@ -294,7 +294,7 @@ export default function DataTable<T extends { id: number }>(
                     {columns.map((col) => (
                       <td
                         key={String(col.key)}
-                        data-testid={`${testIdPrefix}-cell-${String(col.key)}-${rowKeyValue}`}
+                        data-testid={`${testIdPrefix}-cell-${String(col.key)}-${rowIndex}`}
                         className="px-4 py-3 text-gray-100"
                       >
                         {col.render
