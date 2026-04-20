@@ -7,7 +7,18 @@ import {
   XCircle,
   SkipForward,
 } from "lucide-react";
-import { TEST_IDS, testrunStepBtn } from "../../shared/testIds";
+import {
+  TEST_IDS,
+  testrunStepBtn,
+  testrunStepNumber,
+  testrunStepResultStatus,
+  testrunStepActionLabel,
+  testrunStepActionValue,
+  testrunStepExpectedLabel,
+  testrunStepExpectedValue,
+  testrunStepNoteLabel,
+  testrunStepNoteValue,
+} from "../../shared/testIds";
 import PageHeader from "../../components/layout/PageHeader";
 import Modal from "../../components/feedback/Modal";
 import EmptyState from "../../components/feedback/EmptyState";
@@ -220,13 +231,19 @@ export default function TestRunExecution() {
         {/* Progress bar */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-400">
+            <span
+              className="text-gray-400"
+              data-testid={TEST_IDS.testrunExecution.textProgressCases}
+            >
               {t.testRunExecution.progressLabel(
                 currentCaseIndex + 1,
                 testPlan.testCases.length,
               )}
             </span>
-            <span className="text-gray-400">
+            <span
+              className="text-gray-400"
+              data-testid={TEST_IDS.testrunExecution.textProgressPercent}
+            >
               {t.testRunExecution.progressComplete(Math.round(progressPercent))}
             </span>
           </div>
@@ -243,11 +260,17 @@ export default function TestRunExecution() {
 
         {/* Current test case card */}
         <div className="glass p-6 rounded-lg">
-          <h2 className="text-xl font-semibold text-white mb-2">
+          <h2
+            className="text-xl font-semibold text-white mb-2"
+            data-testid={TEST_IDS.testrunExecution.headingCurrentCase}
+          >
             {currentCase.name}
           </h2>
           {currentCase.description && (
-            <p className="text-gray-400 text-sm mb-4">
+            <p
+              className="text-gray-400 text-sm mb-4"
+              data-testid={TEST_IDS.testrunExecution.textCurrentCaseDescription}
+            >
               {currentCase.description}
             </p>
           )}
@@ -255,7 +278,10 @@ export default function TestRunExecution() {
           {/* Case status if completed */}
           {currentCaseFullyExecuted && (
             <div className="mb-4 p-3 bg-white/5 rounded-lg text-sm">
-              <p className="text-gray-300">
+              <p
+                className="text-gray-300"
+                data-testid={TEST_IDS.testrunExecution.textCaseStatus}
+              >
                 <span className="text-green-400">✓</span> Passed: {casePassed} ·{" "}
                 <span className="text-red-400">✗</span> Failed: {caseFailed} ·{" "}
                 <span className="text-yellow-400">⊘</span> Skipped:{" "}
@@ -283,7 +309,10 @@ export default function TestRunExecution() {
                   <div className="flex items-start gap-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-medium text-gray-400">
+                        <span
+                          className="text-sm font-medium text-gray-400"
+                          data-testid={testrunStepNumber(currentCaseIndex, stepIdx)}
+                        >
                           Step {stepIdx + 1}
                         </span>
                         {isCompleted && result && (
@@ -295,29 +324,48 @@ export default function TestRunExecution() {
                                   ? "text-red-400"
                                   : "text-yellow-400"
                             }`}
+                            data-testid={testrunStepResultStatus(currentCaseIndex, stepIdx)}
                           >
                             [{result.status.toUpperCase()}]
                           </span>
                         )}
                       </div>
-                      <p className="text-white font-medium">
+                      <p
+                        className="text-white font-medium"
+                        data-testid={testrunStepActionLabel(currentCaseIndex, stepIdx)}
+                      >
                         {t.testRunExecution.labelAction}
                       </p>
-                      <p className="text-gray-300 text-sm ml-2">
+                      <p
+                        className="text-gray-300 text-sm ml-2"
+                        data-testid={testrunStepActionValue(currentCaseIndex, stepIdx)}
+                      >
                         {step.action}
                       </p>
-                      <p className="text-white font-medium mt-2">
+                      <p
+                        className="text-white font-medium mt-2"
+                        data-testid={testrunStepExpectedLabel(currentCaseIndex, stepIdx)}
+                      >
                         {t.testRunExecution.labelExpected}
                       </p>
-                      <p className="text-gray-300 text-sm ml-2">
+                      <p
+                        className="text-gray-300 text-sm ml-2"
+                        data-testid={testrunStepExpectedValue(currentCaseIndex, stepIdx)}
+                      >
                         {step.expectedResult}
                       </p>
                       {result?.notes && (
                         <>
-                          <p className="text-white font-medium mt-2">
+                          <p
+                            className="text-white font-medium mt-2"
+                            data-testid={testrunStepNoteLabel(currentCaseIndex, stepIdx)}
+                          >
                             {t.testRunExecution.labelNote}
                           </p>
-                          <p className="text-gray-300 text-sm ml-2">
+                          <p
+                            className="text-gray-300 text-sm ml-2"
+                            data-testid={testrunStepNoteValue(currentCaseIndex, stepIdx)}
+                          >
                             {result.notes}
                           </p>
                         </>
@@ -427,7 +475,10 @@ export default function TestRunExecution() {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-white mb-2">
+              <label
+                className="block text-sm font-medium text-white mb-2"
+                data-testid={TEST_IDS.testrunExecution.labelFailNote}
+              >
                 {t.testRunExecution.labelFailureNote}
               </label>
               <textarea
@@ -436,18 +487,21 @@ export default function TestRunExecution() {
                 placeholder={t.testRunExecution.placeholderFailureNote}
                 className="input-field w-full"
                 rows={3}
+                data-testid={TEST_IDS.testrunExecution.inputFailNote}
               />
             </div>
             <div className="flex gap-2 justify-end">
               <button
                 onClick={() => setFailNoteModal(null)}
                 className="btn btn-ghost"
+                data-testid={TEST_IDS.testrunExecution.btnCancelFail}
               >
                 {t.common.cancel}
               </button>
               <button
                 onClick={handleFailNoteSubmit}
                 className="btn btn-primary"
+                data-testid={TEST_IDS.testrunExecution.btnRecordFailure}
               >
                 {t.testRunExecution.btnRecordFailure}
               </button>

@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm, type FormErrors } from "../../hooks/useForm";
-import { TEST_IDS } from "../../shared/testIds";
+import { TEST_IDS, loginHintItem, loginHintRole, loginHintCredentials } from "../../shared/testIds";
 import { t } from "../../i18n";
 
 interface LoginFormValues {
@@ -100,14 +100,15 @@ export default function Login() {
             alt={t.app.name}
             className="w-48 h-auto mb-3"
           />
-          <h1 className="text-2xl font-bold text-white">{t.login.appTitle}</h1>
-          <p className="text-gray-400 text-sm mt-1">{t.login.tagline}</p>
+          <h1 data-testid={TEST_IDS.login.headingTitle} className="text-2xl font-bold text-white">{t.login.appTitle}</h1>
+          <p data-testid={TEST_IDS.login.textTagline} className="text-gray-400 text-sm mt-1">{t.login.tagline}</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
             <label
               htmlFor="username"
+              data-testid={TEST_IDS.login.labelUsername}
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
               {t.login.usernameLabel}
@@ -130,6 +131,7 @@ export default function Login() {
           <div>
             <label
               htmlFor="password"
+              data-testid={TEST_IDS.login.labelPassword}
               className="block text-sm font-medium text-gray-300 mb-1.5"
             >
               {t.login.passwordLabel}
@@ -158,7 +160,7 @@ export default function Login() {
               onChange={(e) => setRemember(e.target.checked)}
               className="w-4 h-4 rounded border-white/20 bg-white/5 text-neon-purple focus:ring-neon-purple/30"
             />
-            <label htmlFor="remember" className="text-sm text-gray-400">
+            <label htmlFor="remember" data-testid={TEST_IDS.login.labelRemember} className="text-sm text-gray-400">
               {t.login.rememberMe}
             </label>
           </div>
@@ -182,18 +184,19 @@ export default function Login() {
         </form>
 
         <div data-testid={TEST_IDS.login.userHints} className="mt-8 space-y-2">
-          <p className="text-xs text-gray-500 text-center mb-3">
+          <p data-testid={TEST_IDS.login.textDemoCredentials} className="text-xs text-gray-500 text-center mb-3">
             {t.login.demoCredentials}
           </p>
           {USER_HINTS.map((hint) => (
             <div
               key={hint.role}
+              data-testid={loginHintItem(hint.role)}
               className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs ${hint.color}`}
             >
-              <span className="font-medium capitalize">
+              <span data-testid={loginHintRole(hint.role)} className="font-medium capitalize">
                 {hint.role.replace("_", " ")}
               </span>
-              <span>
+              <span data-testid={loginHintCredentials(hint.role)}>
                 {hint.username} / {hint.password}
               </span>
             </div>

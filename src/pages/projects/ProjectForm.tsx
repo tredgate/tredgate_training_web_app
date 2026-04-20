@@ -12,6 +12,8 @@ import {
   TEST_IDS,
   projectFormEnvRow,
   projectFormEnvRemove,
+  projectFormReviewEnvName,
+  projectFormReviewEnvUrl,
 } from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useProjects } from "../../hooks/useProjects";
@@ -298,7 +300,7 @@ export default function ProjectForm() {
           )}
 
           {environments.length === 0 ? (
-            <p className="text-gray-400">No environments added yet.</p>
+            <p data-testid={TEST_IDS.projectForm.textNoEnvironments} className="text-gray-400">No environments added yet.</p>
           ) : (
             environments.map((env, idx) => (
               <div
@@ -380,30 +382,30 @@ export default function ProjectForm() {
       content: (
         <div data-testid={`project-form-step-4`} className="space-y-4 py-4">
           <div className="glass p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3 data-testid={TEST_IDS.projectForm.headingReviewDetails} className="text-lg font-semibold text-white mb-4">
               Project Details
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-400">Name:</span>
-                <span className="text-white">{form.values.name}</span>
+                <span data-testid={TEST_IDS.projectForm.labelReviewName} className="text-gray-400">Name:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewName} className="text-white">{form.values.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Code:</span>
-                <span className="text-white">
+                <span data-testid={TEST_IDS.projectForm.labelReviewCode} className="text-gray-400">Code:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewCode} className="text-white">
                   {form.values.code.toUpperCase()}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Status:</span>
-                <span className="text-white">
+                <span data-testid={TEST_IDS.projectForm.labelReviewStatus} className="text-gray-400">Status:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewStatus} className="text-white">
                   {form.values.status.charAt(0).toUpperCase() +
                     form.values.status.slice(1)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Description:</span>
-                <span className="text-white max-w-xs text-right">
+                <span data-testid={TEST_IDS.projectForm.labelReviewDescription} className="text-gray-400">Description:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewDescription} className="text-white max-w-xs text-right">
                   {form.values.description}
                 </span>
               </div>
@@ -411,40 +413,40 @@ export default function ProjectForm() {
           </div>
 
           <div className="glass p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3 data-testid={TEST_IDS.projectForm.headingReviewTeam} className="text-lg font-semibold text-white mb-4">
               Team Information
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-400">QA Lead:</span>
-                <span className="text-white">
+                <span data-testid={TEST_IDS.projectForm.labelReviewLead} className="text-gray-400">QA Lead:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewLead} className="text-white">
                   {users.find((u) => u.id === parseInt(form.values.leadId, 10))
                     ?.fullName || "-"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Team Members:</span>
-                <span className="text-white">{selectedMembers.length}</span>
+                <span data-testid={TEST_IDS.projectForm.labelReviewMembers} className="text-gray-400">Team Members:</span>
+                <span data-testid={TEST_IDS.projectForm.textReviewMembers} className="text-white">{selectedMembers.length}</span>
               </div>
             </div>
           </div>
 
           <div className="glass p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3 data-testid={TEST_IDS.projectForm.headingReviewEnvs} className="text-lg font-semibold text-white mb-4">
               Environments
             </h3>
             {environments.length === 0 ? (
-              <p className="text-gray-400 text-sm">
+              <p data-testid={TEST_IDS.projectForm.textNoEnvsConfigured} className="text-gray-400 text-sm">
                 No environments configured
               </p>
             ) : (
               <div className="space-y-2">
                 {environments.map((env, idx) => (
                   <div key={idx} className="flex justify-between text-sm">
-                    <span className="text-gray-400">
+                    <span data-testid={projectFormReviewEnvName(idx)} className="text-gray-400">
                       {env.name} ({env.type})
                     </span>
-                    <span className="text-blue-400 text-right truncate">
+                    <span data-testid={projectFormReviewEnvUrl(idx)} className="text-blue-400 text-right truncate">
                       {env.url}
                     </span>
                   </div>

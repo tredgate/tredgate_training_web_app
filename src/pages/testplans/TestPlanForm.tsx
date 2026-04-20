@@ -12,6 +12,9 @@ import {
   testplanFormCaseRow,
   testplanFormStepRow,
   testplanFormCaseStepsError,
+  testplanFormCaseStepsLabel,
+  testplanFormReviewCaseName,
+  testplanFormReviewCaseSteps,
 } from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
 import { useTestPlans } from "../../hooks/useTestPlans";
@@ -411,7 +414,12 @@ export default function TestPlanForm() {
           )}
 
           {testCases.length === 0 ? (
-            <p className="text-gray-400">{t.testPlanForm.noTestCasesYet}</p>
+            <p
+              className="text-gray-400"
+              data-testid={TEST_IDS.testplanForm.textNoCases}
+            >
+              {t.testPlanForm.noTestCasesYet}
+            </p>
           ) : (
             testCases.map((testCase, caseIdx) => (
               <div
@@ -482,7 +490,10 @@ export default function TestPlanForm() {
 
                     {/* Steps */}
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">
+                      <label
+                        className="block text-sm font-medium text-white mb-2"
+                        data-testid={testplanFormCaseStepsLabel(caseIdx)}
+                      >
                         {t.common.steps}
                       </label>
                       {testCaseErrors[caseIdx]?.steps && (
@@ -585,39 +596,68 @@ export default function TestPlanForm() {
       content: (
         <div data-testid="testplan-form-step-3" className="space-y-6 py-4">
           <div className="glass p-6 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.testplanForm.headingReviewSummary}
+            >
               {t.testPlanForm.sectionPlanSummary}
             </h3>
             <div className="space-y-2 text-sm">
               <div>
-                <span className="text-gray-400">
+                <span
+                  className="text-gray-400"
+                  data-testid={TEST_IDS.testplanForm.labelReviewName}
+                >
                   {t.testPlanForm.reviewLabelName}
                 </span>
-                <span className="text-white ml-2">{form.values.name}</span>
+                <span
+                  className="text-white ml-2"
+                  data-testid={TEST_IDS.testplanForm.textReviewName}
+                >
+                  {form.values.name}
+                </span>
               </div>
               <div>
-                <span className="text-gray-400">
+                <span
+                  className="text-gray-400"
+                  data-testid={TEST_IDS.testplanForm.labelReviewProject}
+                >
                   {t.testPlanForm.reviewLabelProject}
                 </span>
-                <span className="text-white ml-2">
+                <span
+                  className="text-white ml-2"
+                  data-testid={TEST_IDS.testplanForm.textReviewProject}
+                >
                   {projects.find(
                     (p) => p.id.toString() === form.values.projectId,
                   )?.name || "—"}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">
+                <span
+                  className="text-gray-400"
+                  data-testid={TEST_IDS.testplanForm.labelReviewDescription}
+                >
                   {t.testPlanForm.reviewLabelDescription}
                 </span>
-                <span className="text-white ml-2">
+                <span
+                  className="text-white ml-2"
+                  data-testid={TEST_IDS.testplanForm.textReviewDescription}
+                >
                   {form.values.description}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">
+                <span
+                  className="text-gray-400"
+                  data-testid={TEST_IDS.testplanForm.labelReviewAssignee}
+                >
                   {t.testPlanForm.reviewLabelAssignee}
                 </span>
-                <span className="text-white ml-2">
+                <span
+                  className="text-white ml-2"
+                  data-testid={TEST_IDS.testplanForm.textReviewAssignee}
+                >
                   {form.values.assigneeId
                     ? users.find(
                         (u) => u.id.toString() === form.values.assigneeId,
@@ -629,14 +669,25 @@ export default function TestPlanForm() {
           </div>
 
           <div className="glass p-6 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3
+              className="text-lg font-semibold text-white mb-4"
+              data-testid={TEST_IDS.testplanForm.headingReviewCases}
+            >
               Test Cases ({testCases.length})
             </h3>
             <div className="space-y-3">
               {testCases.map((tc, idx) => (
                 <div key={idx} className="bg-white/5 p-3 rounded-lg text-sm">
-                  <p className="font-medium text-white">{tc.name}</p>
-                  <p className="text-gray-400 text-xs">
+                  <p
+                    className="font-medium text-white"
+                    data-testid={testplanFormReviewCaseName(idx)}
+                  >
+                    {tc.name}
+                  </p>
+                  <p
+                    className="text-gray-400 text-xs"
+                    data-testid={testplanFormReviewCaseSteps(idx)}
+                  >
                     {tc.steps.length} step{tc.steps.length !== 1 ? "s" : ""}
                   </p>
                 </div>

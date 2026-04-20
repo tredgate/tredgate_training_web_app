@@ -187,7 +187,7 @@ export default function Settings() {
       <div className="space-y-6">
         {/* Data Management Card */}
         <div className="glass rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">
+          <h2 data-testid={TEST_IDS.settings.headingDataManagement} className="text-2xl font-bold text-white mb-6">
             {t.settings.sectionDataManagement}
           </h2>
 
@@ -237,63 +237,63 @@ export default function Settings() {
           data-testid={TEST_IDS.settings.systemInfo}
           className="glass rounded-lg p-8"
         >
-          <h2 className="text-2xl font-bold text-white mb-6">System Info</h2>
+          <h2 data-testid={TEST_IDS.settings.headingSystemInfo} className="text-2xl font-bold text-white mb-6">System Info</h2>
 
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">
+              <span data-testid={TEST_IDS.settings.labelAppVersion} className="text-gray-300">
                 {t.settings.labelAppVersion}
               </span>
-              <span className="text-white font-semibold">1.0.0</span>
+              <span data-testid={TEST_IDS.settings.textAppVersion} className="text-white font-semibold">1.0.0</span>
             </div>
 
             <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-              <span className="text-gray-300">
+              <span data-testid={TEST_IDS.settings.labelStorageUsage} className="text-gray-300">
                 {t.settings.labelLocalStorageUsage}
               </span>
-              <span className="text-white font-semibold">
+              <span data-testid={TEST_IDS.settings.textStorageUsage} className="text-white font-semibold">
                 {(totalBytes / 1024).toFixed(2)} KB
               </span>
             </div>
 
             <div className="border-t border-white/10 my-6" />
 
-            <h3 className="text-lg font-semibold text-white mt-6 mb-4">
+            <h3 data-testid={TEST_IDS.settings.headingEntityCounts} className="text-lg font-semibold text-white mt-6 mb-4">
               {t.settings.sectionEntityCounts}
             </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">{t.settings.labelUsers}</p>
-                <p className="text-white text-2xl font-bold">{userCount}</p>
+                <p data-testid={TEST_IDS.settings.labelUsers} className="text-gray-400 text-sm">{t.settings.labelUsers}</p>
+                <p data-testid={TEST_IDS.settings.textUsersCount} className="text-white text-2xl font-bold">{userCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">
+                <p data-testid={TEST_IDS.settings.labelProjects} className="text-gray-400 text-sm">
                   {t.settings.labelProjects}
                 </p>
-                <p className="text-white text-2xl font-bold">{projectCount}</p>
+                <p data-testid={TEST_IDS.settings.textProjectsCount} className="text-white text-2xl font-bold">{projectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">
+                <p data-testid={TEST_IDS.settings.labelDefects} className="text-gray-400 text-sm">
                   {t.settings.labelDefects}
                 </p>
-                <p className="text-white text-2xl font-bold">{defectCount}</p>
+                <p data-testid={TEST_IDS.settings.textDefectsCount} className="text-white text-2xl font-bold">{defectCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">
+                <p data-testid={TEST_IDS.settings.labelTestPlans} className="text-gray-400 text-sm">
                   {t.settings.labelTestPlans}
                 </p>
-                <p className="text-white text-2xl font-bold">{testPlanCount}</p>
+                <p data-testid={TEST_IDS.settings.textTestPlansCount} className="text-white text-2xl font-bold">{testPlanCount}</p>
               </div>
 
               <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-gray-400 text-sm">
+                <p data-testid={TEST_IDS.settings.labelTestRuns} className="text-gray-400 text-sm">
                   {t.settings.labelTestRuns}
                 </p>
-                <p className="text-white text-2xl font-bold">{testRunCount}</p>
+                <p data-testid={TEST_IDS.settings.textTestRunsCount} className="text-white text-2xl font-bold">{testRunCount}</p>
               </div>
             </div>
           </div>
@@ -326,7 +326,7 @@ export default function Settings() {
           </div>
         }
       >
-        <p className="text-gray-300">{t.settings.modalResetMessage}</p>
+        <p data-testid={TEST_IDS.settings.textResetConfirm} className="text-gray-300">{t.settings.modalResetMessage}</p>
       </Modal>
 
       {/* Clear Confirmation Modal */}
@@ -355,7 +355,7 @@ export default function Settings() {
           </div>
         }
       >
-        <p className="text-gray-300">{t.settings.modalClearMessage}</p>
+        <p data-testid={TEST_IDS.settings.textClearConfirm} className="text-gray-300">{t.settings.modalClearMessage}</p>
       </Modal>
 
       {/* Import Modal */}
@@ -389,7 +389,7 @@ export default function Settings() {
         }
       >
         <div className="space-y-4">
-          <p className="text-gray-300">{t.settings.importInstructions}</p>
+          <p data-testid={TEST_IDS.settings.textImportInstructions} className="text-gray-300">{t.settings.importInstructions}</p>
           <FileUpload
             data-testid="settings-import-file"
             label={t.settings.labelImportFile}
@@ -399,7 +399,7 @@ export default function Settings() {
             accept=".json"
           />
           {importedFile && (
-            <p className="text-green-400 text-sm">
+            <p data-testid={TEST_IDS.settings.textFileLoaded} className="text-green-400 text-sm">
               {t.settings.fileLoadedSuccess}
             </p>
           )}

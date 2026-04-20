@@ -7,6 +7,13 @@ import {
   dataTableRow,
   testplanCase,
   testplanCaseToggle,
+  testplanDetailCaseName,
+  testplanDetailCaseDescription,
+  testplanDetailCaseStepsLabel,
+  testplanDetailStepAction,
+  testplanDetailStepExpected,
+  testplanDetailResultCase,
+  testplanDetailResultNote,
 } from "../../shared/testIds";
 import PageHeader from "../../components/layout/PageHeader";
 import Tabs from "../../components/navigation/Tabs";
@@ -186,12 +193,18 @@ export default function TestPlanDetail() {
           >
             {/* Plan Info Card */}
             <div className="glass p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-white mb-4">
+              <h3
+                className="text-lg font-semibold text-white mb-4"
+                data-testid={TEST_IDS.testplanDetail.headingPlanInfo}
+              >
                 {t.testPlanDetail.sectionPlanInfo}
               </h3>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelStatus}
+                  >
                     {t.testPlanDetail.labelStatus}
                   </p>
                   <StatusBadge
@@ -201,21 +214,38 @@ export default function TestPlanDetail() {
                   />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelProject}
+                  >
                     {t.testPlanDetail.labelProject}
                   </p>
-                  <p className="text-white font-medium">
+                  <p
+                    className="text-white font-medium"
+                    data-testid={TEST_IDS.testplanDetail.textProject}
+                  >
                     {project?.name || t.testPlanDetail.unknownProject}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelDescription}
+                  >
                     {t.testPlanDetail.labelDescription}
                   </p>
-                  <p className="text-gray-300">{testPlan.description}</p>
+                  <p
+                    className="text-gray-300"
+                    data-testid={TEST_IDS.testplanDetail.textDescription}
+                  >
+                    {testPlan.description}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelAssignee}
+                  >
                     {t.testPlanDetail.labelAssignee}
                   </p>
                   {assignee ? (
@@ -227,24 +257,39 @@ export default function TestPlanDetail() {
                       size="sm"
                     />
                   ) : (
-                    <p className="text-gray-300">
+                    <p
+                      className="text-gray-300"
+                      data-testid={TEST_IDS.testplanDetail.textUnassigned}
+                    >
                       {t.testPlanDetail.unassignedLabel}
                     </p>
                   )}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelCreated}
+                  >
                     {t.testPlanDetail.labelCreated}
                   </p>
-                  <p className="text-gray-300">
+                  <p
+                    className="text-gray-300"
+                    data-testid={TEST_IDS.testplanDetail.textCreated}
+                  >
                     {formatDate(testPlan.createdAt)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">
+                  <p
+                    className="text-sm text-gray-400 mb-1"
+                    data-testid={TEST_IDS.testplanDetail.labelUpdated}
+                  >
                     {t.testPlanDetail.labelUpdated}
                   </p>
-                  <p className="text-gray-300">
+                  <p
+                    className="text-gray-300"
+                    data-testid={TEST_IDS.testplanDetail.textUpdated}
+                  >
                     {formatDate(testPlan.updatedAt)}
                   </p>
                 </div>
@@ -254,22 +299,44 @@ export default function TestPlanDetail() {
             {/* Summary Stats */}
             <div className="grid grid-cols-3 gap-4">
               <div className="glass p-4 rounded-lg text-center">
-                <p className="text-2xl font-bold text-white">{totalCases}</p>
-                <p className="text-sm text-gray-400">
+                <p
+                  className="text-2xl font-bold text-white"
+                  data-testid={TEST_IDS.testplanDetail.statTotalCasesValue}
+                >
+                  {totalCases}
+                </p>
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.testplanDetail.statTotalCasesLabel}
+                >
                   {t.testPlanDetail.statTestCases}
                 </p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
-                <p className="text-2xl font-bold text-white">{totalSteps}</p>
-                <p className="text-sm text-gray-400">
+                <p
+                  className="text-2xl font-bold text-white"
+                  data-testid={TEST_IDS.testplanDetail.statTotalStepsValue}
+                >
+                  {totalSteps}
+                </p>
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.testplanDetail.statTotalStepsLabel}
+                >
                   {t.testPlanDetail.statTotalSteps}
                 </p>
               </div>
               <div className="glass p-4 rounded-lg text-center">
-                <p className="text-2xl font-bold text-white">
+                <p
+                  className="text-2xl font-bold text-white"
+                  data-testid={TEST_IDS.testplanDetail.statPassRateValue}
+                >
                   {lastRunPassRate}%
                 </p>
-                <p className="text-sm text-gray-400">
+                <p
+                  className="text-sm text-gray-400"
+                  data-testid={TEST_IDS.testplanDetail.statPassRateLabel}
+                >
                   {lastRun
                     ? t.testPlanDetail.statLastRunPassRate
                     : t.testPlanDetail.statNoRunsYet}
@@ -286,7 +353,12 @@ export default function TestPlanDetail() {
             className="mt-6 space-y-3"
           >
             {testPlan.testCases.length === 0 ? (
-              <p className="text-gray-400">{t.testPlanDetail.noTestCasesYet}</p>
+              <p
+                className="text-gray-400"
+                data-testid={TEST_IDS.testplanDetail.textNoCases}
+              >
+                {t.testPlanDetail.noTestCasesYet}
+              </p>
             ) : (
               testPlan.testCases.map((testCase, caseIdx) => {
                 const isExpanded = expandedCases.has(testCase.id);
@@ -304,12 +376,18 @@ export default function TestPlanDetail() {
                           ) : (
                             <ChevronDown size={18} className="text-gray-400" />
                           )}
-                          <h4 className="font-medium text-white">
+                          <h4
+                            className="font-medium text-white"
+                            data-testid={testplanDetailCaseName(caseIdx)}
+                          >
                             {testCase.name}
                           </h4>
                         </div>
                         {testCase.description && (
-                          <p className="text-sm text-gray-400 ml-6 mt-1">
+                          <p
+                            className="text-sm text-gray-400 ml-6 mt-1"
+                            data-testid={testplanDetailCaseDescription(caseIdx)}
+                          >
                             {testCase.description}
                           </p>
                         )}
@@ -326,7 +404,10 @@ export default function TestPlanDetail() {
                         className="mt-4 ml-6 space-y-2"
                         data-testid={testplanCase(caseIdx)}
                       >
-                        <p className="text-xs text-gray-500 font-semibold mb-3">
+                        <p
+                          className="text-xs text-gray-500 font-semibold mb-3"
+                          data-testid={testplanDetailCaseStepsLabel(caseIdx)}
+                        >
                           STEPS
                         </p>
                         {testCase.steps.map((step, stepIdx) => (
@@ -334,10 +415,16 @@ export default function TestPlanDetail() {
                             key={stepIdx}
                             className="bg-white/5 p-3 rounded-lg text-sm"
                           >
-                            <p className="font-medium text-gray-300 mb-1">
+                            <p
+                              className="font-medium text-gray-300 mb-1"
+                              data-testid={testplanDetailStepAction(caseIdx, stepIdx)}
+                            >
                               Step {stepIdx + 1}: {step.action}
                             </p>
-                            <p className="text-gray-400 text-xs">
+                            <p
+                              className="text-gray-400 text-xs"
+                              data-testid={testplanDetailStepExpected(caseIdx, stepIdx)}
+                            >
                               Expected: {step.expectedResult}
                             </p>
                           </div>
@@ -355,7 +442,12 @@ export default function TestPlanDetail() {
         {activeTab === "history" && (
           <div data-testid={TEST_IDS.testplanDetail.history} className="mt-6">
             {planRuns.length === 0 ? (
-              <p className="text-gray-400">No test runs yet.</p>
+              <p
+                className="text-gray-400"
+                data-testid={TEST_IDS.testplanDetail.textNoRuns}
+              >
+                No test runs yet.
+              </p>
             ) : (
               <DataTable<TestRun>
                 columns={[
@@ -430,7 +522,12 @@ export default function TestPlanDetail() {
         >
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-400 mb-1">Status</p>
+              <p
+                className="text-sm text-gray-400 mb-1"
+                data-testid={TEST_IDS.testplanDetail.modalLabelStatus}
+              >
+                Status
+              </p>
               <StatusBadge
                 data-testid="testplan-results-run-status"
                 type="testrun_status"
@@ -438,12 +535,20 @@ export default function TestPlanDetail() {
               />
             </div>
             <div>
-              <p className="text-sm text-gray-400 mb-2">Results</p>
+              <p
+                className="text-sm text-gray-400 mb-2"
+                data-testid={TEST_IDS.testplanDetail.modalLabelResults}
+              >
+                Results
+              </p>
               <div className="space-y-2">
                 {resultsModal.run.results.map((result, idx) => (
                   <div key={idx} className="bg-white/5 p-3 rounded-lg text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-300">
+                      <span
+                        className="text-gray-300"
+                        data-testid={testplanDetailResultCase(idx)}
+                      >
                         Test Case {result.testCaseId}
                       </span>
                       <StatusBadge
@@ -453,7 +558,10 @@ export default function TestPlanDetail() {
                       />
                     </div>
                     {result.notes && (
-                      <p className="text-gray-400 text-xs mt-1">
+                      <p
+                        className="text-gray-400 text-xs mt-1"
+                        data-testid={testplanDetailResultNote(idx)}
+                      >
                         Note: {result.notes}
                       </p>
                     )}
@@ -462,15 +570,31 @@ export default function TestPlanDetail() {
               </div>
             </div>
             <div>
-              <p className="text-sm text-gray-400 mb-1">Started</p>
-              <p className="text-gray-300">
+              <p
+                className="text-sm text-gray-400 mb-1"
+                data-testid={TEST_IDS.testplanDetail.modalLabelStarted}
+              >
+                Started
+              </p>
+              <p
+                className="text-gray-300"
+                data-testid={TEST_IDS.testplanDetail.modalTextStarted}
+              >
                 {formatDateTime(resultsModal.run.startedAt)}
               </p>
             </div>
             {resultsModal.run.completedAt && (
               <div>
-                <p className="text-sm text-gray-400 mb-1">Completed</p>
-                <p className="text-gray-300">
+                <p
+                  className="text-sm text-gray-400 mb-1"
+                  data-testid={TEST_IDS.testplanDetail.modalLabelCompleted}
+                >
+                  Completed
+                </p>
+                <p
+                  className="text-gray-300"
+                  data-testid={TEST_IDS.testplanDetail.modalTextCompleted}
+                >
                   {formatDateTime(resultsModal.run.completedAt)}
                 </p>
               </div>

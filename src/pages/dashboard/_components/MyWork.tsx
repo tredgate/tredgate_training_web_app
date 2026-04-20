@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/data/DataTable";
+import { TEST_IDS } from "../../../shared/testIds";
 import { t } from "../../../i18n";
 import type { Column } from "../../../components/data/DataTable";
 import type { Defect, TestRun, TestPlan } from "../../../data/entities";
@@ -24,7 +25,7 @@ export default function MyWork({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3">
+        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingMyDefects}>
           {t.dashboard.sectionMyAssignedDefects}
         </h2>
         <DataTable<Defect>
@@ -38,7 +39,7 @@ export default function MyWork({
         />
       </div>
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3">
+        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingMyRuns}>
           {t.dashboard.sectionMyRecentRuns}
         </h2>
         <DataTable<TestRun>

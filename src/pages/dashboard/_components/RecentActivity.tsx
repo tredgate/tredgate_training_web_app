@@ -10,7 +10,7 @@ interface RecentActivityProps {
 export default function RecentActivity({ entries }: RecentActivityProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white mb-3">
+      <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingRecentActivity}>
         {t.dashboard.sectionRecentActivity}
       </h2>
       <div className="glass p-6">

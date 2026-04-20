@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/data/DataTable";
+import { TEST_IDS } from "../../../shared/testIds";
 import { t } from "../../../i18n";
 import type { Column } from "../../../components/data/DataTable";
 import type { Defect } from "../../../data/entities";
@@ -22,7 +23,7 @@ export default function QALeadSections({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3">
+        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingUnassigned}>
           {t.dashboard.sectionUnassignedDefects}
         </h2>
         <DataTable<Defect>
@@ -36,7 +37,7 @@ export default function QALeadSections({
         />
       </div>
       <div>
-        <h2 className="text-lg font-semibold text-white mb-3">
+        <h2 className="text-lg font-semibold text-white mb-3" data-testid={TEST_IDS.dashboard.headingVerification}>
           {t.dashboard.sectionAwaitingVerification}
         </h2>
         <DataTable<Defect>
