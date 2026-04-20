@@ -56,6 +56,8 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T36  | Implement Tredgate Logos                         | ✅ done    | T2                 | 2026-04-19 | 2026-04-19 | 97bc60d | Replace Shield icon with SVG logos in Sidebar + Login           |
 | T37  | Harden useForm: validateFields + auto-clear      | ✅ done    | —                  | 2026-04-19 | 2026-04-19 | f81a788 | Kills the recurring "forgot the dance" bug class across forms   |
 | T38  | useForm: Clear Validation Errors on Field Change | ✅ done    | T37                | —          | 2026-04-19 | f81a788 | Folded into T37                                                 |
+| T40  | Bug: Duplicate data-testid in Wizard Forms       | ⬜ pending | T39                | —          | —          | —       | Same testid across steps → Playwright races; scope per step     |
+| T41  | Bug: Duplicate React Keys Across Pages           | ⬜ pending | T9–T14             | —          | —          | —       | "same key `2`" warnings → stale renders + Playwright crashes    |
 
 ## Conventions
 
