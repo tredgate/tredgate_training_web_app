@@ -332,7 +332,7 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepPlanDetails,
       validate: () => form.validateFields(["name", "projectId", "description"]),
       content: (
-        <div data-testid="testplan-form-step-1" className="space-y-4 py-4">
+        <div data-testid={TEST_IDS.testplanForm.step1} className="space-y-4 py-4">
           <TextInput
             data-testid={TEST_IDS.testplanForm.inputName}
             label={t.testPlanForm.labelName}
@@ -393,7 +393,7 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepTestCases,
       validate: validateStep2,
       content: (
-        <div data-testid="testplan-form-step-2" className="space-y-4 py-4">
+        <div data-testid={TEST_IDS.testplanForm.step2} className="space-y-4 py-4">
           <button
             type="button"
             onClick={handleAddTestCase}
@@ -594,7 +594,7 @@ export default function TestPlanForm() {
       label: t.testPlanForm.stepReview,
       validate: () => true,
       content: (
-        <div data-testid="testplan-form-step-3" className="space-y-6 py-4">
+        <div data-testid={TEST_IDS.testplanForm.step3} className="space-y-6 py-4">
           <div className="glass p-6 rounded-lg">
             <h3
               className="text-lg font-semibold text-white mb-4"

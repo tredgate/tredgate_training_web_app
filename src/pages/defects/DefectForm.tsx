@@ -162,7 +162,7 @@ export default function DefectForm() {
     {
       label: t.defectForm.stepBasicInfo,
       content: (
-        <div className="space-y-6 p-6">
+        <div data-testid={TEST_IDS.defectForm.step1} className="space-y-6 p-6">
           <TextInput
             label={t.defectForm.labelTitle}
             name="title"
@@ -233,7 +233,7 @@ export default function DefectForm() {
     {
       label: t.defectForm.stepDetails,
       content: (
-        <div className="space-y-6 p-6">
+        <div data-testid={TEST_IDS.defectForm.step2} className="space-y-6 p-6">
           <TextArea
             label={t.defectForm.labelDescription}
             name="description"
@@ -296,7 +296,7 @@ export default function DefectForm() {
     {
       label: t.defectForm.stepAssignment,
       content: (
-        <div className="space-y-6 p-6">
+        <div data-testid={TEST_IDS.defectForm.step3} className="space-y-6 p-6">
           {selectedProject ? (
             <Select
               label={t.defectForm.labelAssignTo}
@@ -355,7 +355,7 @@ export default function DefectForm() {
     {
       label: t.defectForm.stepReview,
       content: (
-        <div className="space-y-6 p-6">
+        <div data-testid={TEST_IDS.defectForm.step4} className="space-y-6 p-6">
           <div className="space-y-4">
             <div>
               <p
@@ -396,7 +396,7 @@ export default function DefectForm() {
                   {t.defectForm.reviewLabelSeverity}
                 </p>
                 <StatusBadge
-                  data-testid="defect-form-review-severity"
+                  data-testid={TEST_IDS.defectForm.textReviewSeverity}
                   type="severity"
                   value={form.values.severity as any}
                 />
@@ -409,7 +409,7 @@ export default function DefectForm() {
                   {t.defectForm.reviewLabelPriority}
                 </p>
                 <StatusBadge
-                  data-testid="defect-form-review-priority"
+                  data-testid={TEST_IDS.defectForm.textReviewPriority}
                   type="priority"
                   value={form.values.priority as any}
                 />
@@ -482,7 +482,7 @@ export default function DefectForm() {
                       return assignee ? (
                         <>
                           <UserAvatar
-                            data-testid="defect-form-review-assignee"
+                            data-testid={TEST_IDS.defectForm.textReviewAssignee}
                             fullName={assignee.fullName}
                             avatarColor={`#${(assignee.id * 9999).toString(16).padStart(6, "0")}`}
                             role={assignee.role}
