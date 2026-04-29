@@ -109,7 +109,7 @@ export default function Combobox({
         {isOpen && (
           <div
             data-testid={`${testId}-dropdown`}
-            className="absolute z-10 mt-1 w-full glass p-2 max-h-64 overflow-y-auto border border-white/10"
+            className="absolute z-50 mt-1 w-full glass p-2 max-h-64 overflow-y-auto border border-white/10"
           >
             <input
               ref={searchRef}
