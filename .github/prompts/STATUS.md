@@ -59,6 +59,7 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T40  | Bug: Duplicate data-testid in Wizard Forms       | ✅ done    | T39                | 2026-04-20 | 2026-04-20 | 2e46cc4 | Register wizard step testids in TEST_IDS; remove all raw strings     |
 | T41  | Bug: Duplicate React Keys Across Pages           | ✅ done    | T9–T14             | 2026-04-20 | 2026-04-20 | 896a995 | ActivityTimeline key collision fixed; all dynamic-list keys hardened |
 | T42  | Bug: DataTable Rows Use Entity ID, Not Row Index | ✅ done    | T3                 | 2026-04-20 | 2026-04-20 | 6901ac7 | DataTable.tsx: row/cell/checkbox testids use rowIndex, not entity id |
+| T43  | Heroku Dyno Startup for Vite SPA                 | ✅ done    | —                  | 2026-04-21 | 2026-04-21 | 88ba459 | Added Node static server + npm start + heroku-postbuild             |
 
 ## Conventions
 
