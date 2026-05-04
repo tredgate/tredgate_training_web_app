@@ -501,6 +501,7 @@ export default function TestPlanForm() {
                         data-testid={testplanFormCaseStepsLabel(caseIdx)}
                       >
                         {t.common.steps}
+                        <span className="text-red-400 ml-1">*</span>
                       </label>
                       {testCaseErrors[caseIdx]?.steps && (
                         <p
@@ -509,6 +510,19 @@ export default function TestPlanForm() {
                         >
                           {testCaseErrors[caseIdx].steps}
                         </p>
+                      )}
+                      {testCase.steps.length > 0 && (
+                        <div className="flex gap-2 mb-1">
+                          <p className="flex-1 text-xs text-gray-400 px-1">
+                            {t.testPlanForm.placeholderAction}
+                            <span className="text-red-400 ml-1">*</span>
+                          </p>
+                          <p className="flex-1 text-xs text-gray-400 px-1">
+                            {t.testPlanForm.placeholderExpectedResult}
+                            <span className="text-red-400 ml-1">*</span>
+                          </p>
+                          <div className="w-10" />
+                        </div>
                       )}
                       <div className="space-y-2">
                         {testCase.steps.map((step, stepIdx) => (
