@@ -10,7 +10,16 @@ A single env var, `VITE_DEBUG_EXERCISE`, flips on four scattered breakages used 
 ## The four breakages
 
 1. **Renamed `data-testid`s** (`src/pages/projects/ProjectForm.tsx`, `src/pages/testplans/TestPlanForm.tsx`)
-   - Five selectors swap to plausible-refactor names (e.g. `testplan-form-input-name` becomes `testplan-form-name-field`).
+   - Five selectors swap to plausible-refactor names. Mapping:
+
+   | Element | Original (off) | Renamed (debug mode) |
+   | --- | --- | --- |
+   | Project wizard — Project Name input | `project-form-input-name` | `project-form-name-field` |
+   | Project wizard — QA Lead select | `project-form-select-lead` | `project-form-lead-dropdown` |
+   | Test Plan wizard — Plan Name input | `testplan-form-input-name` | `testplan-form-name-field` |
+   | Test Plan wizard — Project select | `testplan-form-select-project` | `testplan-form-project-dropdown` |
+   | Test Plan wizard — "Add Test Case" button | `testplan-form-btn-add-case` | `testplan-form-add-case-btn` |
+
    - Student symptom: `locator.fill()` or `locator.click()` times out with "no element matches selector".
 
 2. **Extra wizard step** (`src/pages/projects/ProjectForm.tsx`)
