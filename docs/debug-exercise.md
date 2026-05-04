@@ -4,7 +4,7 @@ A single env var, `VITE_DEBUG_EXERCISE`, flips on four scattered breakages used 
 
 ## Enabling
 
-- **Local dev:** `VITE_DEBUG_EXERCISE=true npm run dev`
+- **Local dev:** `npm run dev:exercise` (cross-platform — uses `cross-env` under the hood, so it works on macOS, Linux, and Windows shells alike). Plain `npm run dev` runs the app with the toggle off.
 - **Heroku:** add config var `VITE_DEBUG_EXERCISE=true` and trigger a redeploy. `heroku-postbuild` runs `vite build`, which bakes the var into the bundle. Flipping the var requires a fresh build — there is no runtime toggle. Plan for a redeploy between cohorts.
 
 ## The four breakages
