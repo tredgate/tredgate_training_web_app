@@ -7,6 +7,36 @@ A single env var, `VITE_DEBUG_EXERCISE`, flips on four scattered breakages used 
 - **Local dev:** `npm run dev:exercise` (cross-platform — uses `cross-env` under the hood, so it works on macOS, Linux, and Windows shells alike). Plain `npm run dev` runs the app with the toggle off.
 - **Heroku:** add config var `VITE_DEBUG_EXERCISE=true` and trigger a redeploy. `heroku-postbuild` runs `vite build`, which bakes the var into the bundle. Flipping the var requires a fresh build — there is no runtime toggle. Plan for a redeploy between cohorts.
 
+## Heroku setup
+
+`VITE_DEBUG_EXERCISE` is a **build-time** variable — Vite bakes its value into the bundle during `heroku-postbuild`. Setting the config var alone only restarts the dyno; the existing bundle is unchanged. **You need a fresh build for the toggle to take effect.**
+
+### Turn it on
+
+```bash
+heroku config:set VITE_DEBUG_EXERCISE=true --app <your-app>
+git commit --allow-empty -m "rebuild for debug exercise"
+git push heroku main
+```
+
+If your app is GitHub-connected, skip the empty-commit dance and use **Deploy → Manual deploy** in the Heroku dashboard instead — that triggers a fresh build with the current config vars.
+
+### Turn it off
+
+```bash
+heroku config:unset VITE_DEBUG_EXERCISE --app <your-app>
+git commit --allow-empty -m "rebuild without debug exercise"
+git push heroku main
+```
+
+### Verify
+
+```bash
+heroku config:get VITE_DEBUG_EXERCISE --app <your-app>
+```
+
+After the build log shows `Build succeeded`, open the deployed app and confirm the four breakages are active (or absent). Watching `heroku logs --tail` during the push is helpful — you should see the `vite build` step run.
+
 ## The four breakages
 
 1. **Renamed `data-testid`s** (`src/pages/projects/ProjectForm.tsx`, `src/pages/testplans/TestPlanForm.tsx`)
