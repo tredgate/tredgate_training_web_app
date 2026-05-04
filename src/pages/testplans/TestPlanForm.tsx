@@ -500,6 +500,7 @@ export default function TestPlanForm() {
                           e.target.value,
                         )
                       }
+                      required={DEBUG_EXERCISE}
                       error={testCaseErrors[caseIdx]?.description ?? null}
                     />
 
