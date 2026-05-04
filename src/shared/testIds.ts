@@ -217,6 +217,8 @@ export const TEST_IDS = {
     selectEnvironment: "defect-form-select-environment",
     selectAssignee: "defect-form-select-assignee",
     selectTestCases: "defect-form-select-test-cases",
+    selectTestCasesSearch: "defect-form-select-test-cases-search",
+    selectTestCasesNoResults: "defect-form-select-test-cases-no-results",
     textSelectProjectForEnv: "defect-form-text-select-project-for-env",
     textSelectProjectForAssign: "defect-form-text-select-project-for-assign",
     textNoTestCases: "defect-form-text-no-test-cases",

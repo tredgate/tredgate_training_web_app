@@ -7,7 +7,7 @@ export interface SelectOption {
   label: string;
 }
 
-export interface MultiSelectProps {
+export interface ComboboxProps {
   "data-testid": string;
   label: string;
   name: string;
@@ -21,7 +21,7 @@ export interface MultiSelectProps {
   className?: string;
 }
 
-export default function MultiSelect({
+export default function Combobox({
   "data-testid": testId,
   label,
   name,
@@ -33,9 +33,11 @@ export default function MultiSelect({
   required = false,
   disabled = false,
   className = "",
-}: MultiSelectProps): JSX.Element {
+}: ComboboxProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -44,6 +46,7 @@ export default function MultiSelect({
         !containerRef.current.contains(e.target as Node)
       ) {
         setIsOpen(false);
+        setSearch("");
       }
     };
 
@@ -51,12 +54,25 @@ export default function MultiSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isOpen && searchRef.current) {
+      searchRef.current.focus();
+    }
+    if (!isOpen) {
+      setSearch("");
+    }
+  }, [isOpen]);
+
   const handleToggleOption = (optionValue: string) => {
     const newValue = value.includes(optionValue)
       ? value.filter((v) => v !== optionValue)
       : [...value, optionValue];
     onChange(newValue);
   };
+
+  const filteredOptions = options.filter((opt) =>
+    opt.label.toLowerCase().includes(search.toLowerCase()),
+  );
 
   const selectedCount = value.length;
   const displayText =
@@ -93,23 +109,42 @@ export default function MultiSelect({
         {isOpen && (
           <div
             data-testid={`${testId}-dropdown`}
-            className="absolute z-50 mt-1 w-full glass bg-gray-900/80 p-2 max-h-48 overflow-y-auto border border-white/10"
+            className="absolute z-50 mt-1 w-full glass bg-gray-900/80 p-2 max-h-64 overflow-y-auto border border-white/10"
           >
-            {options.map((opt) => (
-              <label
-                key={opt.value}
-                data-testid={`${testId}-option-${opt.value}`}
-                className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer"
+            <input
+              ref={searchRef}
+              type="text"
+              data-testid={`${testId}-search`}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search..."
+              className="input-dark text-sm mb-2"
+            />
+
+            {filteredOptions.length === 0 ? (
+              <p
+                data-testid={`${testId}-no-results`}
+                className="text-sm text-gray-500 px-2 py-1.5"
               >
-                <input
-                  type="checkbox"
-                  checked={value.includes(opt.value)}
-                  onChange={() => handleToggleOption(opt.value)}
-                  className="w-4 h-4 rounded border-white/20 bg-white/5 text-neon-purple focus:ring-neon-purple/30"
-                />
-                <span className="text-sm text-gray-300">{opt.label}</span>
-              </label>
-            ))}
+                No results
+              </p>
+            ) : (
+              filteredOptions.map((opt) => (
+                <label
+                  key={opt.value}
+                  data-testid={`${testId}-option-${opt.value}`}
+                  className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={value.includes(opt.value)}
+                    onChange={() => handleToggleOption(opt.value)}
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 text-neon-purple focus:ring-neon-purple/30"
+                  />
+                  <span className="text-sm text-gray-300">{opt.label}</span>
+                </label>
+              ))
+            )}
           </div>
         )}
       </div>

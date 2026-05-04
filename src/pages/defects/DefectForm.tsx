@@ -7,7 +7,7 @@ import StatusBadge from "../../components/feedback/StatusBadge";
 import TextInput from "../../components/forms/TextInput";
 import TextArea from "../../components/forms/TextArea";
 import Select from "../../components/forms/Select";
-import MultiSelect from "../../components/forms/MultiSelect";
+import Combobox from "../../components/forms/Combobox";
 import UserAvatar from "../../components/display/UserAvatar";
 import { TEST_IDS } from "../../shared/testIds";
 import { useForm } from "../../hooks/useForm";
@@ -325,7 +325,7 @@ export default function DefectForm() {
           )}
 
           {selectedProject && projectTestCases.length > 0 ? (
-            <MultiSelect
+            <Combobox
               label={t.defectForm.labelRelatedTestCases}
               name="relatedTestCaseIds"
               value={form.values.relatedTestCaseIds.map((id) => id.toString())}

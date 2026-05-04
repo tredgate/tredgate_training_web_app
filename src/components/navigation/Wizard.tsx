@@ -50,7 +50,7 @@ export default function Wizard({
   return (
     <div
       data-testid={`${testIdPrefix}-wizard`}
-      className={`glass overflow-hidden ${className}`}
+      className={`glass ${className}`}
     >
       {/* Step Indicator */}
       <div
