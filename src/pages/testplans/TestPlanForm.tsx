@@ -28,6 +28,8 @@ import type {
   TestCasePriority,
 } from "../../data/entities";
 
+const DEBUG_EXERCISE = import.meta.env.VITE_DEBUG_EXERCISE === "true";
+
 interface FormValues extends Record<string, unknown> {
   name: string;
   projectId: string;
@@ -99,7 +101,7 @@ export default function TestPlanForm() {
     null,
   );
   const [testCaseErrors, setTestCaseErrors] = useState<
-    Array<{ name?: string; steps?: string }>
+    Array<{ name?: string; description?: string; steps?: string }>
   >([]);
   const [stepErrors, setStepErrors] = useState<
     Array<Array<{ action?: string; expectedResult?: string }>>
@@ -116,15 +118,24 @@ export default function TestPlanForm() {
     setTestCaseListError(null);
 
     let isValid = true;
-    const caseErrorsComputed: Array<{ name?: string; steps?: string }> = [];
+    const caseErrorsComputed: Array<{
+      name?: string;
+      description?: string;
+      steps?: string;
+    }> = [];
     const stepErrorsComputed: Array<
       Array<{ action?: string; expectedResult?: string }>
     > = [];
 
     testCases.forEach((testCase) => {
-      const caseError: { name?: string; steps?: string } = {};
+      const caseError: { name?: string; description?: string; steps?: string } =
+        {};
       if (!testCase.name.trim()) {
         caseError.name = t.testPlanForm.validateCaseNameRequired;
+        isValid = false;
+      }
+      if (DEBUG_EXERCISE && !testCase.description.trim()) {
+        caseError.description = "Description is required";
         isValid = false;
       }
       if (testCase.steps.length === 0) {
@@ -307,7 +318,7 @@ export default function TestPlanForm() {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       } as Omit<TestPlan, "id">);
-      navigate(`/test-plans/${created.id}`);
+      navigate(DEBUG_EXERCISE ? "/test-plans" : `/test-plans/${created.id}`);
     }
   };
 
@@ -337,7 +348,11 @@ export default function TestPlanForm() {
           className="space-y-4 py-4"
         >
           <TextInput
-            data-testid={TEST_IDS.testplanForm.inputName}
+            data-testid={
+              DEBUG_EXERCISE
+                ? "testplan-form-name-field"
+                : TEST_IDS.testplanForm.inputName
+            }
             label={t.testPlanForm.labelName}
             name="name"
             value={form.values.name}
@@ -347,7 +362,11 @@ export default function TestPlanForm() {
           />
 
           <Select
-            data-testid={TEST_IDS.testplanForm.selectProject}
+            data-testid={
+              DEBUG_EXERCISE
+                ? "testplan-form-project-dropdown"
+                : TEST_IDS.testplanForm.selectProject
+            }
             label={t.testPlanForm.labelProject}
             name="projectId"
             value={form.values.projectId}
@@ -404,7 +423,11 @@ export default function TestPlanForm() {
             type="button"
             onClick={handleAddTestCase}
             className="btn btn-secondary"
-            data-testid={TEST_IDS.testplanForm.btnAddCase}
+            data-testid={
+              DEBUG_EXERCISE
+                ? "testplan-form-add-case-btn"
+                : TEST_IDS.testplanForm.btnAddCase
+            }
           >
             <Plus size={18} />
             {t.testPlanForm.btnAddTestCase}
@@ -477,6 +500,7 @@ export default function TestPlanForm() {
                           e.target.value,
                         )
                       }
+                      error={testCaseErrors[caseIdx]?.description ?? null}
                     />
 
                     <TextArea

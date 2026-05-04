@@ -26,6 +26,8 @@ import type {
   EnvironmentType,
 } from "../../data/entities";
 
+const DEBUG_EXERCISE = import.meta.env.VITE_DEBUG_EXERCISE === "true";
+
 interface FormValues extends Record<string, unknown> {
   name: string;
   code: string;
@@ -62,6 +64,7 @@ export default function ProjectForm() {
   const [selectedMembers, setSelectedMembers] = useState<string[]>(
     existingProject?.memberIds.map((id) => id.toString()) ?? [],
   );
+  const [projectTags, setProjectTags] = useState<string>("");
 
   const validateForm = (values: FormValues) => {
     const errors: Partial<Record<keyof FormValues, string>> = {};
@@ -203,7 +206,11 @@ export default function ProjectForm() {
           className="space-y-4 py-4"
         >
           <TextInput
-            data-testid={TEST_IDS.projectForm.inputName}
+            data-testid={
+              DEBUG_EXERCISE
+                ? "project-form-name-field"
+                : TEST_IDS.projectForm.inputName
+            }
             label={t.projectForm.labelProjectName}
             name="name"
             value={form.values.name}
@@ -263,7 +270,11 @@ export default function ProjectForm() {
           className="space-y-4 py-4"
         >
           <Select
-            data-testid={TEST_IDS.projectForm.selectLead}
+            data-testid={
+              DEBUG_EXERCISE
+                ? "project-form-lead-dropdown"
+                : TEST_IDS.projectForm.selectLead
+            }
             label={t.projectForm.labelQaLead}
             name="leadId"
             value={form.values.leadId}
@@ -291,6 +302,28 @@ export default function ProjectForm() {
         </div>
       ),
     },
+    ...(DEBUG_EXERCISE
+      ? [
+          {
+            label: "Tags",
+            content: (
+              <div
+                data-testid="project-form-step-tags"
+                className="space-y-4 py-4"
+              >
+                <TextInput
+                  data-testid="project-form-input-tags"
+                  label="Project tags"
+                  name="tags"
+                  value={projectTags}
+                  onChange={(e) => setProjectTags(e.target.value)}
+                  placeholder="comma-separated, optional"
+                />
+              </div>
+            ),
+          },
+        ]
+      : []),
     {
       label: t.projectForm.stepEnvironments,
       validate: validateStep3,

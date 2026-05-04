@@ -59,6 +59,8 @@ Keep this file short: just the table + minimal notes. No prose logs.
 | T40  | Bug: Duplicate data-testid in Wizard Forms       | ✅ done    | T39                | 2026-04-20 | 2026-04-20 | 2e46cc4 | Register wizard step testids in TEST_IDS; remove all raw strings     |
 | T41  | Bug: Duplicate React Keys Across Pages           | ✅ done    | T9–T14             | 2026-04-20 | 2026-04-20 | 896a995 | ActivityTimeline key collision fixed; all dynamic-list keys hardened |
 | T42  | Bug: DataTable Rows Use Entity ID, Not Row Index | ✅ done    | T3                 | 2026-04-20 | 2026-04-20 | 6901ac7 | DataTable.tsx: row/cell/checkbox testids use rowIndex, not entity id |
+| T43  | API Theatre: Mock HTTP for DevTools MCP Course   | ⬜ pending | T1                 | —          | —          | —       | Fire-and-forget XHR so Chrome DevTools MCP has real traffic to show  |
+| T44  | Playwright Course: Toggleable App Breakages      | ✅ done    | T10, T12           | 2026-05-04 | 2026-05-04 | pending | VITE_DEBUG_EXERCISE flag — 4 scattered breakages for student debug   |
 
 ## Conventions
 
