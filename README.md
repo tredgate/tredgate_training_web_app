@@ -1,4 +1,4 @@
-# Defect Containment Board
+# QA HUB
 
 This project is prepared for the AI Test Automation training. The main goal is to have a simple only web application that will be used for testing purposes.
 
